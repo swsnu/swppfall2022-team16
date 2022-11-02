@@ -19,10 +19,16 @@ jobs:
           organization: swsnu
           token:
             secure: "J1izyVWJBwDcvwRAbzlHh37sd2E5r2+YJvnxerYKqppVw+CYjuXeC0WHXKx3nk7SHCqQ26V9wk/24vX7LORxe5oGmgb2TQ4l4JmFxQWqxvvROqEgeNMHSl6dXJ/5EIFL4hYB0Td9JcNbqGYdISYEHlmAYULaUpDQJ1ULjO7BH2qtUBRMGzKWh8FSZLgdueGpepO4WaToBWwZLS+32EaD7n+hBEF5l3+gHTyrxJQK4JoDbNu+4F0uLF+U7WVdkwL/2Wy1AQqhINOL5OfKkJJzVH2YySX6goJdOBQPvekTsqKeunc3jL3FpsDgk1bSLAkmlx3jB8/usDHtGoTh/ibujEzpNlp1xRu6YlYkQ/991Yt7I5Uoc4loyY7gT00lH58jgLRYIPeyccm3PhwqtpbGi2OXQjTxtKV/roQNBrufluLnLDJYtqu/04fQOZnybIfhTNtlso6UriPZEXF9KiIT7Hamn4GDcS37OYInBLlNFcJSAARCi3K0ZrNv3NT2xhrSoXsN+oUgdTYG/IEIi35siQW3SQjrpri4LMXpIf8RiDZvUNCSfhtw9YDKZ/4xNY8B8WB1UvC0IC+YodPCLevYNCNNo79UlfrpL7T17BXmTFbIxw6AXqe4I83rKPyPMJbQtmmxpHNSULxc1/C8YKTWWI6VeGxGWuf/UIkn/DYJhJY="
+      
       install:
         - cd frontend
         - npm install
+        - pip install coveralls
+        - npm global add coveralls
+        - gem install coveralls-lcov
       script:
         - ./node_modules/.bin/eslint src
         - npm run test -- --coverage --watchAll=false
+        - coveralls-lcov -v -n coverage/lcov.info > coverage.json
+        - coveralls --merge=../frontend/coverage.json
         - cd .. && sonar-scanner
