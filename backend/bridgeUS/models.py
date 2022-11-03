@@ -5,8 +5,8 @@ class CustomUser(AbstractUser):
     height = models.IntegerField()
     weight = models.IntegerField()
 
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class UserShop(models.Model):
     user = models.ForeignKey(
@@ -15,8 +15,8 @@ class UserShop(models.Model):
     )
 
     favorite_clothes = models.TextField()
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class ShopItem(models.Model):
     seller = models.ForeignKey(
@@ -28,8 +28,8 @@ class ShopItem(models.Model):
     rating = models.FloatField()
     star = models.TextField()
     type = models.TextField()
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class ShopItemDetail(models.Model):
     mainItem = models.ForeignKey(
@@ -40,8 +40,8 @@ class ShopItemDetail(models.Model):
     color = models.TextField()
     size = models.TextField()
     left_amount = models.TextField()
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Review(models.Model):
     title = models.CharField(max_length=64)
@@ -53,8 +53,8 @@ class Review(models.Model):
         on_delete = models.CASCADE,
     )
     
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
     review = models.ForeignKey(
@@ -69,5 +69,5 @@ class Comment(models.Model):
         on_delete = models.CASCADE,
     )
 
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
