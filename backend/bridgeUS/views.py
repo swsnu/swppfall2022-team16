@@ -50,7 +50,19 @@ def signout(request):
     logout(request)
     return HttpResponse(status=204)
 
-def article(request):
+def usershop(request):
+    pass
+
+def shopitemlist(request):
+    pass
+
+def shopitem(request):
+    pass
+
+def shopitemdetail(request):
+    pass
+
+def reviewlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
@@ -58,7 +70,7 @@ def article(request):
         return HttpResponse(status=401)
 
     if request.method == 'GET':
-        if Article.objects.count() <= 0:
+        if Review.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
         article_all_list = [{ 'title' : article.title, 'content' : article.content, 'author': article.author.id } for article in Article.objects.all()]
@@ -69,24 +81,24 @@ def article(request):
         article_content = json.loads(body)['content']
         article_author = request.user
 
-        article = Article(title=article_title, content=article_content, author=article_author)
+        article = Review(title=article_title, content=article_content, author=article_author)
 
         article.save()
         
         response_dict = {'id': article.id, 'title': article.title, 'content': article.content, 'author': article_author.id }
         return HttpResponse(json.dumps(response_dict), content_type="application/json", status=201)
 
-def article_detail(request, article_id):
+def review(request, article_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not Article.objects.filter(id=article_id).exists():
+    if not Review.objects.filter(id=article_id).exists():
         return HttpResponse(status=404)
 
-    article = Article.objects.get(id=article_id)
+    article = Review.objects.get(id=article_id)
 
     if article.author.id != request.user.id and (request.method == 'PUT' or request.method == 'DELETE'):
         return HttpResponse(status=403)
@@ -111,17 +123,17 @@ def article_detail(request, article_id):
         article.delete()
         return HttpResponse(status=200)
 
-def article_comments(request, article_id):
+def reviewcomment(request, article_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not Article.objects.filter(id=article_id).exists():
+    if not Review.objects.filter(id=article_id).exists():
         return HttpResponse(status=404)
 
-    article = Article.objects.get(id=article_id)
+    article = Review.objects.get(id=article_id)
 
     if request.method == 'GET':
         comment_list = Comment.objects.filter(article=article)
