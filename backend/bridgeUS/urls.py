@@ -6,8 +6,12 @@ urlpatterns = [
     path('token/', views.token, name='token'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
-    path('article/', views.article, name='article'),
-    path('article/<int:article_id>/', views.article_detail, name='article_detail'),
-    path('article/<int:article_id>/comment/', views.article_comments, name='article_comments'),
-    path('comment/<int:comment_id>/', views.comment, name='comment'),
+    path('usershop/<int:user_id>', views.usershop, name='usershop'),
+    path('shopitem/', views.shopitemlist, name='shopitemlist'),
+    path('shopitem/<int:item_id>/', views.shopitem, name='shopitem'),
+    path('shopitem/<int:item_id>/shopitemdetail/', views.shopitemdetail, name='shopitem_detail'),
+    path('review/', views.reviewlist, name='reviewlist'),
+    path('review/<int:review_id>/', views.review, name='review'),
+    path('review/<int:review_id>/comment/', views.reviewcomment, name='reviewcomment'),
+    path('comment/<int:comment_id>/', views.comment, name='comment')
 ]
