@@ -15,6 +15,10 @@ class UserShop(models.Model):
     )
 
     favorite_clothes = models.TextField()
+    credits = models.TextField()
+    cart = models.TextField()
+    purchased_item = models.TextField()
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
