@@ -2,18 +2,25 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
-from json.decoder import JSONDecodeError
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+
 import json
 
-from bridgeUS.models import Review, Comment
+from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment
 
 def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
         password = req_data['password']
-        User.objects.create_user(username=username, password=password)
+
+        created_user = CustomUser.objects.create_user(username=username, password=password)
+
+        # create default usershopmodel
+        usershop = UserShop(user=created_user)
+
+        usershop.save()
+        
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -50,17 +57,167 @@ def signout(request):
     logout(request)
     return HttpResponse(status=204)
 
-def usershop(request):
-    pass
+def usershop(request, user_id):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    if not User.objects.filter(id=user_id).exists():
+        return HttpResponse(status=404)
+
+    user = User.objects.first(id=user_id)    
+
+    if not UserShop.objects.filter(user=user).exists():
+        return HttpResponse(status=404)
+
+    usershop = UserShop.objects.filter(user=user).first()    
+
+    response_dict = { 'id' : usershop.id, 'favorite_clothes' : usershop.favorite_clothes, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
+    return JsonResponse(response_dict, safe=False, status=200)
 
 def shopitemlist(request):
-    pass
+    if request.method != 'GET' and request.method != 'POST':
+        return HttpResponseNotAllowed(['GET', 'POST'])
 
-def shopitem(request):
-    pass
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
 
-def shopitemdetail(request):
-    pass
+    if request.method == 'GET':
+        if ShopItem.objects.count() <= 0:
+            return JsonResponse([{}], safe=False, status=204)
+
+        shopitem_all_list = [{ 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star' : shopitem.star, 'type' : shopitem.type } 
+        for shopitem in ShopItem.objects.all()]
+    
+        return JsonResponse(shopitem_all_list, safe=False, status=200)
+    else:
+        body = request.body.decode()
+        shopitem_price = json.loads(body)['price']
+        shopitem_type = json.loads(body)['type']
+        shopitem_seller = request.user
+
+        shopitem = ShopItem(seller=shopitem_seller, price=shopitem_price, type=shopitem_type)
+
+        shopitem.save()
+        
+        response_dict = {'id': shopitem.id, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star': shopitem.star, 'type': shopitem.type }
+        return JsonResponse(response_dict, status=201)
+    
+
+def shopitem(request, item_id):
+    if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
+        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    if not ShopItem.objects.filter(id=item_id).exists():
+        return HttpResponse(status=404)
+
+    shopitem = ShopItem.objects.get(id=item_id)
+
+    if shopitem.seller.id != request.user.id and (request.method == 'PUT' or request.method == 'DELETE'):
+        return HttpResponse(status=403)
+
+    if request.method == 'GET':
+        response_dict = { 'id': shopitem.id, 'seller' : shopitem.seller.id ,'price' : shopitem.price, 'rating': shopitem.rating, 'star': shopitem.star, 'type': shopitem.type }
+        return JsonResponse(response_dict, status=200)
+    elif request.method == 'PUT':
+        body = request.body.decode()
+
+        shopitem_star = json.loads(body)['star']
+        shopitem_rating = json.loads(body)['rating']
+        shopitem_price = json.loads(body)['price']
+        shopitem_type = json.loads(body)['type']
+
+
+        shopitem.star = shopitem_star
+        shopitem.rating = shopitem_rating
+        shopitem.price = shopitem_price
+        shopitem.type = shopitem_type
+
+        shopitem.save()
+
+        response_dict = { 'id': shopitem.id, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star': shopitem.star, 'type': shopitem.type }
+        return JsonResponse(response_dict, status=200)
+    else:
+        shopitem.delete()
+        return HttpResponse(status=200)
+
+def shopitemdetail_list(request, item_id):
+    if request.method != 'GET' and request.method != 'POST':
+        return HttpResponseNotAllowed(['GET', 'POST'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    if not ShopItem.objects.filter(id=item_id).exists():
+        return HttpResponse(status=404)
+
+    shopitem = ShopItem.objects.filter(id=item_id)
+    
+    detail_list= ShopItemDetail.objects.filter(shopitem=shopitem)
+
+    if request.method == 'GET':
+        if detail_list.count() <= 0:
+            return JsonResponse([{}], safe=False, status=204)
+
+        detail_all_list = [{ 'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount } 
+        for detail in detail_list]
+    
+        return JsonResponse(detail_all_list, safe=False, status=200)
+    else:
+        body = request.body.decode()
+        detail_color = json.loads(body)['color']
+        detail_size = json.loads(body)['size']
+        detail_left_amount = json.loads(body)['left_amount']
+
+        detail = ShopItemDetail(main_item=shopitem, color=detail_color, size=detail_size, left_amount=detail_left_amount)
+
+        detail.save()
+        
+        response_dict = {'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }
+        return JsonResponse(response_dict, status=201)
+    
+
+def shopitemdetail(request, detail_id):
+    if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
+        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    if not ShopItemDetail.objects.filter(id=detail_id).exists():
+        return HttpResponse(status=404)
+
+    detail = ShopItemDetail.objects.get(id=detail_id)
+
+    if detail.main_item.seller.id != request.user.id and (request.method == 'PUT' or request.method == 'DELETE'):
+        return HttpResponse(status=403)
+
+    if request.method == 'GET':
+        response_dict = {'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }
+        return JsonResponse(response_dict, status=200)
+    elif request.method == 'PUT':
+        body = request.body.decode()
+
+        shopitemdetail_color = json.loads(body)['color']
+        shopitemdetail_size = json.loads(body)['size']
+        shopitemdetail_left_amount = json.loads(body)['left_amount']
+
+        detail.color = shopitemdetail_color
+        detail.size = shopitemdetail_size
+        detail.left_amount = shopitemdetail_left_amount
+
+        detail.save()
+
+        response_dict = {'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }
+        return JsonResponse(response_dict, status=200)
+    else:
+        detail.delete()
+        return HttpResponse(status=200)
 
 def reviewlist(request):
     if request.method != 'GET' and request.method != 'POST':
@@ -73,87 +230,87 @@ def reviewlist(request):
         if Review.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        article_all_list = [{ 'title' : article.title, 'content' : article.content, 'author': article.author.id } for article in Article.objects.all()]
-        return JsonResponse(article_all_list, safe=False, status=200)
+        review_all_list = [{ 'title' : review.title, 'content' : review.content, 'author': review.author.id } for review in Review.objects.all()]
+        return JsonResponse(review_all_list, safe=False, status=200)
     else:
         body = request.body.decode()
-        article_title = json.loads(body)['title']
-        article_content = json.loads(body)['content']
-        article_author = request.user
+        review_title = json.loads(body)['title']
+        review_content = json.loads(body)['content']
+        review_author = request.user
 
-        article = Review(title=article_title, content=article_content, author=article_author)
+        review = Review(title=review_title, content=review_content, author=review_author)
 
-        article.save()
+        review.save()
         
-        response_dict = {'id': article.id, 'title': article.title, 'content': article.content, 'author': article_author.id }
-        return HttpResponse(json.dumps(response_dict), content_type="application/json", status=201)
+        response_dict = {'id': review.id, 'title': review.title, 'content': review.content, 'author': review.author.id }
+        return JsonResponse(response_dict, status=201)
 
-def review(request, article_id):
+def review(request, review_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not Review.objects.filter(id=article_id).exists():
+    if not Review.objects.filter(id=review_id).exists():
         return HttpResponse(status=404)
 
-    article = Review.objects.get(id=article_id)
+    review = Review.objects.get(id=review_id)
 
-    if article.author.id != request.user.id and (request.method == 'PUT' or request.method == 'DELETE'):
+    if review.author.id != request.user.id and (request.method == 'PUT' or request.method == 'DELETE'):
         return HttpResponse(status=403)
 
     if request.method == 'GET':
-        response_dict = { 'title': article.title, 'content': article.content, 'author': article.author.id }
+        response_dict = { 'title': review.title, 'content': review.content, 'author': review.author.id }
         return JsonResponse(response_dict, status=200)
     elif request.method == 'PUT':
         body = request.body.decode()
-        article_title = json.loads(body)['title']
-        article_content = json.loads(body)['content']
+        review_title = json.loads(body)['title']
+        review_content = json.loads(body)['content']
 
 
-        article.title = article_title
-        article.content = article_content
+        review.title = review_title
+        review.content = review_content
 
-        article.save()
+        review.save()
 
-        response_dict = {"id": article_id, "title": article.title, "content": article.content, "author" : article.author.id }
-        return HttpResponse(json.dumps(response_dict), content_type="application/json", status=200)
+        response_dict = {"id": review_id, "title": review.title, "content": review.content, "author" : review.author.id }
+        return JsonResponse(response_dict, status=200)
     else:
-        article.delete()
+        review.delete()
         return HttpResponse(status=200)
 
-def reviewcomment(request, article_id):
+def reviewcomment(request, review_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not Review.objects.filter(id=article_id).exists():
+    if not Review.objects.filter(id=review_id).exists():
         return HttpResponse(status=404)
 
-    article = Review.objects.get(id=article_id)
+    review = Review.objects.get(id=review_id)
 
     if request.method == 'GET':
-        comment_list = Comment.objects.filter(article=article)
+        comment_list = Comment.objects.filter(review=review)
 
         if comment_list.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        comment_json_list = [{ 'article' : comment.article.id, 'content' : comment.content, 'author': comment.author.id } for comment in comment_list]
+        comment_json_list = [{ 'review' : comment.review.id, 'content' : comment.content, 'author': comment.author.id } for comment in comment_list]
         return JsonResponse(comment_json_list, safe=False, status=200)
     else:
         body = request.body.decode()
         comment_content = json.loads(body)['content']
         comment_author = request.user
 
-        comment = Comment(article=article, content=comment_content, author=comment_author)
+        comment = Comment(review=review, content=comment_content, author=comment_author)
 
         comment.save()
         
-        response_dict = {'id': comment.id, 'article': comment.article.id, 'content': comment.content, 'author': comment_author.id }
-        return HttpResponse(json.dumps(response_dict), content_type="application/json", status=201)
+        response_dict = {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment_author.id }
+        return JsonResponse(response_dict, status=201)
 
 def comment(request, comment_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
@@ -171,7 +328,7 @@ def comment(request, comment_id):
         return HttpResponse(status=403)
 
     if request.method == 'GET':
-        response_dict = { 'article': comment.article.id, 'content': comment.content, 'author': comment.author.id }
+        response_dict = { 'review': comment.review.id, 'content': comment.content, 'author': comment.author.id }
         return JsonResponse(response_dict, status=200)
     elif request.method == 'PUT':
         body = request.body.decode()
@@ -181,8 +338,8 @@ def comment(request, comment_id):
 
         comment.save()
 
-        response_dict = {"id": comment_id, "article": comment.article.id, "content": comment.content, "author" : comment.author.id }
-        return HttpResponse(json.dumps(response_dict), content_type="application/json", status=200)
+        response_dict = {"id": comment_id, "review": comment.review.id, "content": comment.content, "author" : comment.author.id }
+        return JsonResponse(response_dict, status=200)
     else:
         comment.delete()
         return HttpResponse(status=200)

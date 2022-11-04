@@ -36,7 +36,7 @@ class ShopItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class ShopItemDetail(models.Model):
-    mainItem = models.ForeignKey(
+    main_item = models.ForeignKey(
         ShopItem,   
         on_delete = models.CASCADE,
     )   
