@@ -11,6 +11,7 @@ import MyPage from './pages/MyPage'
 import CommunityPage from './pages/CommunityPage'
 import PostPage from './pages/PostPage'
 import ReviewPage from './pages/ReviewPage'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App (): JSX.Element {
   return (
