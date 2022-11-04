@@ -15,7 +15,7 @@ class UserShop(models.Model):
     )
 
     favorite_clothes = models.TextField()
-    credits = models.TextField()
+    credit = models.FloatField()
     cart = models.TextField()
     purchased_item = models.TextField()
 
@@ -30,7 +30,7 @@ class ShopItem(models.Model):
     
     price = models.FloatField()
     rating = models.FloatField()
-    star = models.TextField()
+    star = models.IntegerField()
     type = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
