@@ -37,7 +37,7 @@ class ShopItem(models.Model):
 
 class ShopItemDetail(models.Model):
     mainItem = models.ForeignKey(
-        CustomUser,   
+        ShopItem,   
         on_delete = models.CASCADE,
     )   
     
