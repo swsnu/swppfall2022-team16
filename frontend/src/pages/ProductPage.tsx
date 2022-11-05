@@ -8,14 +8,19 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
+import { fetchReviews, selectReview } from '../store/slices/review'
 /*eslint-disable */
 
 export default function ProductPage (): JSX.Element {
+  const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
+  const reviewState = useSelector(selectReview)
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchReviews())
   }, [dispatch])
 
   return (<div>
@@ -35,18 +40,11 @@ export default function ProductPage (): JSX.Element {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <Review />
-        </Col>
-        <Col>
-          <Review />
-        </Col>
-        <Col>
-          <Review />
-        </Col>
-        <Col>
-          <Review />
-        </Col>
+        {
+          reviewState.reviews.map((review) => <Col>
+            <Review key={review.id} review={review}/>
+          </Col>)
+        }
       </Row>
     </Container>
     <Footer/>
