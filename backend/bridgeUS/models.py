@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    height = models.IntegerField()
-    weight = models.IntegerField()
-    gender = models.TextField()
+    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
+    gender = models.TextField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -15,10 +15,10 @@ class UserShop(models.Model):
         on_delete = models.CASCADE,
     )
 
-    favorite_clothes = models.TextField()
-    credit = models.FloatField()
-    cart = models.TextField()
-    purchased_item = models.TextField()
+    favorite_clothes = models.TextField(null=True)
+    credit = models.FloatField(null=True)
+    cart = models.TextField(null=True)
+    purchased_item = models.TextField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -29,10 +29,10 @@ class ShopItem(models.Model):
         on_delete = models.CASCADE,
     )   
     
-    price = models.FloatField()
-    rating = models.FloatField()
-    star = models.IntegerField()
-    type = models.TextField()
+    price = models.FloatField(null=True)
+    rating = models.FloatField(null=True)
+    star = models.IntegerField(null=True)
+    type = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -42,16 +42,16 @@ class ShopItemDetail(models.Model):
         on_delete = models.CASCADE,
     )   
     
-    color = models.TextField()
-    size = models.TextField()
-    left_amount = models.TextField()
+    color = models.TextField(null=True)
+    size = models.TextField(null=True)
+    left_amount = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Review(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(null=True, max_length=64)
     
-    content = models.TextField()
+    content = models.TextField(null=True)
 
     author = models.ForeignKey(
         CustomUser,   
@@ -67,7 +67,7 @@ class Comment(models.Model):
         on_delete = models.CASCADE,
     )
 
-    content = models.TextField()
+    content = models.TextField(null=True)
 
     author = models.ForeignKey(
         CustomUser,   
