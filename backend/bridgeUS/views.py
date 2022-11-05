@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 
 import json
 
-from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment
+from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment, UserOrder
 
 @ensure_csrf_cookie
 def signup(request):
@@ -228,6 +228,22 @@ def shopitemdetail(request, detail_id):
     else:
         detail.delete()
         return HttpResponse(status=200)
+
+@ensure_csrf_cookie
+def userorderlist(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    if request.method == 'GET':
+        if UserOrder.objects.count() <= 0:
+            return JsonResponse([{}], safe=False, status=204)
+
+        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.orderd_item.id, 'status': userorder.order_status } for userorder in UserOrder.objects.all()]
+        return JsonResponse(userorder_all_list, safe=False, status=200)
+
 
 @ensure_csrf_cookie
 def reviewlist(request):

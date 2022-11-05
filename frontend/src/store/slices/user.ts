@@ -29,6 +29,7 @@ export const login = createAsyncThunk(
     'bridgeus/login',
     async (form: { username: string, password: string }, { dispatch }) => {
       const response = await axios.post('/api/signin/', form)
+      dispatch(userActions.login(response.data))
       return response.data
     }
 )

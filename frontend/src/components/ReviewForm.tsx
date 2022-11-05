@@ -16,7 +16,7 @@ export default function ReviewForm (): JSX.Element {
         </Form.Group>
         <Form.Group className='Upload_Photo' controlId = "reviewForm">
         <Form.Label>Upload Your Photo</Form.Label>
-        <Form.Control type = "image" placeholder=''/>
+        <Form.Control type = "file" placeholder=''/>
         </Form.Group>
         <Form.Select aria-label = "Rating">
           <option>Rank Your Outfit</option>

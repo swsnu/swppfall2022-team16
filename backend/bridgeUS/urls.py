@@ -11,6 +11,7 @@ urlpatterns = [
     path('shopitem/<int:item_id>/', views.shopitem, name='shopitem'),
     path('shopitem/<int:item_id>/shopitemdetail/', views.shopitemdetail_list, name='shopitem_detail_list'),
     path('shopitemdetail/<int:detail_id>/', views.shopitemdetail, name='shopitemdetail'),
+    path('userorder/', views.userorderlist, name='userorderlist'),
     path('review/', views.reviewlist, name='reviewlist'),
     path('review/<int:review_id>/', views.review, name='review'),
     path('review/<int:review_id>/comment/', views.reviewcomment, name='reviewcomment'),
