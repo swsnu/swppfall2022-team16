@@ -3,6 +3,7 @@ import Banner from '../components/Banner'
 import Filter from '../components/Filter'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
+/*eslint-disable */
 
 export default function MainPage (): JSX.Element {
   return (<div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+/*eslint-disable */
 
 export default function ShopItem (): JSX.Element {
   return <div>
