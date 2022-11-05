@@ -51,6 +51,7 @@ def signin(request):
     else:
         return HttpResponseNotAllowed(['POST'])    
 
+@ensure_csrf_cookie
 def signout(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -60,7 +61,8 @@ def signout(request):
 
     logout(request)
     return HttpResponse(status=204)
-
+    
+@ensure_csrf_cookie
 def usershop(request, user_id):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])

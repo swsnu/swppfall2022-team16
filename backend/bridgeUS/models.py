@@ -49,6 +49,22 @@ class ShopItemDetail(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class UserOrder(models.Model):
+    user = models.ForeignKey(
+        CustomUser,   
+        on_delete = models.CASCADE,
+    )
+
+    orderd_item = models.ForeignKey(
+        ShopItem,   
+        on_delete = models.CASCADE,
+    )    
+
+    order_status = models.TextField(null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class Review(models.Model):
     title = models.CharField(null=True, max_length=64)
     
