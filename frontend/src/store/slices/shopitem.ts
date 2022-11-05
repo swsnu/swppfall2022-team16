@@ -11,7 +11,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 export interface ShopItemInfo {
     id: number
     name: string
-    seller_id: number
+    seller: number
     price: number
     rating: number
     star: number
