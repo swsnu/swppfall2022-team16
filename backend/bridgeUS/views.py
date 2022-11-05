@@ -12,6 +12,7 @@ def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
+        email = req_data['email']    
         password = req_data['password']
 
         created_user = CustomUser.objects.create_user(username=username, password=password)
@@ -35,9 +36,9 @@ def token(request):
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
-        username = req_data['username']
+        email = req_data['email']
         password = req_data['password']
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)            
