@@ -1,43 +1,37 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { Stack } from 'react-bootstrap'
-import OrderDetailForm from './OrderDetailForm'
+import { Col, Container, Row, Stack } from 'react-bootstrap'
 /*eslint-disable */
 
-export default function OrderForm (): JSX.Element {
-  return <div>
-    {/*Need to make a new form for the product info */}
-    <Stack direction = 'vertical' gap = {3}>
-      <h3>Your Order</h3>
-      <OrderDetailForm/>
-      <Stack direction = 'horizontal' gap= {5}>
-        <Card style={{ width: '10rem' }}>
-          <Card.Body>
-            <Card.Title>Express Shipping</Card.Title>
-            <Card.Text>
-              1-3 Business days
-            </Card.Text>
-            <Card.Text>
-              $10.00
-            </Card.Text>
-            <Button variant="primary">Select</Button>
-          </Card.Body>
-        </Card>
-        <Card style={{ width: '10rem' }}>
-          <Card.Body>
-            <Card.Title>Standard Shipping</Card.Title>
-            <Card.Text>
-              4-7 Business days
-            </Card.Text>
-            <Card.Text>
-              $5.00
-            </Card.Text>
-            <Button variant="primary">Select</Button>
-          </Card.Body>
-        </Card>
+export interface IProps {
+  itemName: string | undefined;
+  sellerName: string | undefined;
+  color: string;
+  size: string;
+  quantity: number;
+}
+
+export default function OrderForm (props : IProps): JSX.Element {
+  return (
+    <Stack direction="horizontal" gap={3}>
+      <img src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg"/>
+      <Stack direction="vertical" gap ={3}>
+        <h1>{props.itemName}</h1>
+        <p>{props.sellerName}</p>
+        <Container>
+          <Row>
+            <Col>Color</Col>
+            <Col>Size</Col>
+            <Col>Quantity</Col>
+          </Row>
+          <Row>
+            <Col>{props.color}</Col>
+            <Col>{props.size}</Col>
+            <Col>{props.quantity}</Col>
+          </Row>
+        </Container>
       </Stack>
-      
     </Stack>
-  </div>
+  );
 }
