@@ -31,6 +31,7 @@ class ShopItem(models.Model):
     )   
     
     name = models.TextField(null=True)
+    image_url = models.TextField(null=True)
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
     star = models.IntegerField(null=True)
