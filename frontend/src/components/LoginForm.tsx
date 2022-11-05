@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import { login } from '../store/slices/bridgeus'
+/*eslint-disable */
 
 export default function LoginForm (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()

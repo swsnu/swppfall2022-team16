@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
+
+/*eslint-disable */
 
 export default function SignupForm (): JSX.Element {
   const [name, setName] = useState('Full name');

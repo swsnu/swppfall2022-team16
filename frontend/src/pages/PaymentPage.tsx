@@ -1,4 +1,5 @@
 import React from 'react'
+/*eslint-disable */
 
 export default function PaymentPage (): JSX.Element {
   return (<div>
