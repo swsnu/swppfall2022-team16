@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar'
 
 export default function TopBar (): JSX.Element {
   return (
-    <>
+  <>
     <Navbar sticky = "top" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href="./">{' '}BridgeUs</Navbar.Brand>
