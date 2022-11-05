@@ -26,7 +26,6 @@ export default function Banner (): JSX.Element {
         src="./bannerCarousel.png"
         alt="Second slide"
       />
-
       <Carousel.Caption>
         <button onClick = {()=> navigate('./search/:id')} >SHOP NOW</button>
       </Carousel.Caption>
@@ -37,7 +36,6 @@ export default function Banner (): JSX.Element {
         src="./carousel2.png"
         alt="Third slide"
       />
-
       <Carousel.Caption>
         <button onClick = {()=> navigate('./search/:id')} >SHOP NOW</button>
       </Carousel.Caption>
