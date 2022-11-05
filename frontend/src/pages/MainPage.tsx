@@ -6,7 +6,6 @@ import TopBar from '../components/TopBar'
 
 export default function MainPage (): JSX.Element {
   return <div>
-    <h1>MainPage</h1>
     <TopBar />
     <Banner />
     {
