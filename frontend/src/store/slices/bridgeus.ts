@@ -4,17 +4,25 @@ import { RootState } from '..'
 
 export interface UserInfo {
   id: number
-  
+  name: string
+  sex: string
+  orders: OrderInfo[]
 }
 
 export interface ProductInfo {
+  id: number
   img_url: string
   name: string
+  seller_id: number
+  price: number
+  rating: number
 }
 
 export interface PostInfo {
+  id: number
   img_url: string
   title: string
+  content: string
 }
 
 export interface OrderInfo {
@@ -23,10 +31,18 @@ export interface OrderInfo {
 
 export interface BridgeusState {
   login_info: UserInfo | null
+  users: UserInfo[]
+  products: ProductInfo[]
+  posts: PostInfo[]
+  orders: OrderInfo[]
 }
 
 const initialState: BridgeusState = {
-  login_info: null
+  login_info: null,
+  users: [],
+  products: [],
+  posts: [],
+  orders: []
 }
 
 export const login = createAsyncThunk(
