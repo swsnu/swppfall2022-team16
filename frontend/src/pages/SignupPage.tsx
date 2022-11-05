@@ -1,8 +1,9 @@
 import React from 'react'
+import SignupForm from '../components/SignupForm'
+/*eslint-disable */
 
 export default function SignupPage (): JSX.Element {
-  return <div>
-    <h1>SignupPage</h1>
-    <p>Hi!</p>
-  </div>
+  return (<div>
+    <SignupForm />
+  </div>)
 }

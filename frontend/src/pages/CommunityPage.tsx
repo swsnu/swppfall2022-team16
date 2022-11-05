@@ -1,8 +1,8 @@
 import React from 'react'
+/*eslint-disable */
 
 export default function CommunityPage (): JSX.Element {
-  return <div>
+  return (<div>
     <h1>CommunityPage</h1>
-    <p>Hi! Testing taemin push</p>
-  </div>
+  </div>)
 }
