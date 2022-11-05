@@ -25,7 +25,7 @@ export default function MainPage (): JSX.Element {
         </Col>
         {
           [0, 1, 2, 3].map((i) => <Col>
-            <Filter key={i} />
+            <Filter key={i}/>
           </Col>)
         }
       </Row>
