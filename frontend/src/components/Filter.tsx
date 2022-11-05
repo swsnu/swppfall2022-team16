@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
@@ -12,14 +12,29 @@ export interface theFilter {
 
 }
 
-export default function Filter (): JSX.Element {
+export const filters = [
+  { category: "artist", options: ["aespa", "BTS"]},
+  { category: "color", options: ["red", "blue", "black", "white"]},
+  { category: "size", options: ["S", "M", "L", "XL"]}
+]
+
+export default function Filter (props: { category: string, options: string[] }): JSX.Element {
+  const [selected, setSelected] = useState<string>(props.category)
+
   return (
-    <>
-      <DropdownButton id="dropdown-basic-button" title = "filter">
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-    </DropdownButton>
-        </>
+    <div>
+      <DropdownButton id="dropdown-basic-button" title = {selected}>
+        <Dropdown.Item>{props.category}</Dropdown.Item>
+        <Dropdown.Divider />
+        {
+          props.options.map((option) => <Dropdown.Item onClick={() => {setSelected(option)}} >
+            {option}
+          </Dropdown.Item>)
+        }
+        {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+      </DropdownButton>
+    </div>
   )
 }
