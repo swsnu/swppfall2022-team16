@@ -8,6 +8,7 @@ import json
 
 from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment
 
+@ensure_csrf_cookie
 def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -34,6 +35,7 @@ def token(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+@ensure_csrf_cookie
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -79,6 +81,7 @@ def usershop(request, user_id):
     response_dict = { 'id' : usershop.id, 'favorite_clothes' : usershop.favorite_clothes, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
     return JsonResponse(response_dict, safe=False, status=200)
 
+@ensure_csrf_cookie
 def shopitemlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -108,6 +111,7 @@ def shopitemlist(request):
         return JsonResponse(response_dict, status=201)
     
 
+@ensure_csrf_cookie
 def shopitem(request, item_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -148,6 +152,7 @@ def shopitem(request, item_id):
         shopitem.delete()
         return HttpResponse(status=200)
 
+@ensure_csrf_cookie
 def shopitemdetail_list(request, item_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -184,6 +189,7 @@ def shopitemdetail_list(request, item_id):
         return JsonResponse(response_dict, status=201)
     
 
+@ensure_csrf_cookie
 def shopitemdetail(request, detail_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -221,6 +227,7 @@ def shopitemdetail(request, detail_id):
         detail.delete()
         return HttpResponse(status=200)
 
+@ensure_csrf_cookie
 def reviewlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -247,6 +254,7 @@ def reviewlist(request):
         response_dict = {'id': review.id, 'title': review.title, 'content': review.content, 'author': review.author.id }
         return JsonResponse(response_dict, status=201)
 
+@ensure_csrf_cookie
 def review(request, review_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -282,6 +290,7 @@ def review(request, review_id):
         review.delete()
         return HttpResponse(status=200)
 
+@ensure_csrf_cookie
 def reviewcomment(request, review_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -314,6 +323,7 @@ def reviewcomment(request, review_id):
         response_dict = {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment_author.id }
         return JsonResponse(response_dict, status=201)
 
+@ensure_csrf_cookie
 def comment(request, comment_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])

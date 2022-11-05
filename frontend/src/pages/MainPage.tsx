@@ -11,11 +11,13 @@ export default function MainPage (): JSX.Element {
     <Row>
       <Col>
         <TopBar />
+        <br/>
       </Col>
     </Row>
     <Row>
       <Col>
         <Banner />
+        <br/>
       </Col>
     </Row>
     <Row>
