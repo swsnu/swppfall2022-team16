@@ -8,7 +8,7 @@ export default function SideBar (): JSX.Element {
     <>
     <Navbar sticky = "top" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="./">{' '}BridgeUs</Navbar.Brand>
+        <Navbar.Brand href="/">{' '}BridgeUs</Navbar.Brand>
       </Container>
     </Navbar>
   </>
