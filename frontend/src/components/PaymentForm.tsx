@@ -5,8 +5,10 @@ import { Stack } from 'react-bootstrap'
 
 export default function PaymentForm (): JSX.Element {
   return <div>
+    {/* Overall structure of the layout. Need to integrate and get data from the redux store */}
     <Stack direction = 'vertical' gap = {3}>
       <Stack direction ='horizontal' gap = {5}>
+      
         <input placeholder = 'Your Credits : $300'></input>
         <button >Apply</button>
       </Stack>
@@ -17,6 +19,7 @@ export default function PaymentForm (): JSX.Element {
       <Stack direction = 'horizontal' gap = {5}>
         <div className = "total">Total</div>
         <div className = "totalfee">$199.00</div>
+        
       </Stack>
     </Stack>
   </div>
