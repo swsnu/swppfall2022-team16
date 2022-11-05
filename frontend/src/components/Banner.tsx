@@ -23,7 +23,7 @@ export default function Banner (): JSX.Element {
     <Carousel.Item>
       <img
         className="d-block w-100"
-        src="./bannerCarousel.png"
+        src="./carousel2.png"
         alt="Second slide"
       />
       <Carousel.Caption>
@@ -33,7 +33,7 @@ export default function Banner (): JSX.Element {
     <Carousel.Item>
       <img
         className="d-block w-100"
-        src="./carousel2.png"
+        src="./bannerCarousel.png"
         alt="Third slide"
       />
       <Carousel.Caption>
