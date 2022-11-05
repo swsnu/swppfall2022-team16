@@ -1,10 +1,11 @@
 import React from 'react'
+import { Stack } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
+import SideBar from '../components/SideBar'
 
 export default function LoginPage (): JSX.Element {
-  return (<div>
-    <h1>LoginPage</h1>
-    <p>Hello!</p>
+  return (<Stack direction='horizontal'>
+    <SideBar />
     <LoginForm />
-  </div>)
+  </Stack>)
 }
