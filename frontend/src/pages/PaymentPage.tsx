@@ -22,7 +22,13 @@ export default function PaymentPage (): JSX.Element {
       <Row>
         <Col>
           <Stack>
-            <OrderForm />
+            <OrderForm 
+              itemName='Melange twill shirt'
+              sellerName='StyleNanda'
+              color='White'
+              size='M'
+              quantity = {10}
+            />
             <ShippingForm />
           </Stack>
         </Col>
