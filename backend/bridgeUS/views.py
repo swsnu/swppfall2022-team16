@@ -39,9 +39,9 @@ def token(request):
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
-        email = req_data['email']
+        username = req_data['username']
         password = req_data['password']
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)            

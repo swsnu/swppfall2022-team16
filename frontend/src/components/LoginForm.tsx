@@ -10,7 +10,7 @@ export default function LoginForm (): JSX.Element {
   const [password, setPassword] = useState<string>('')
 
   const loginbuttonHandler = async () => {
-    const result = await dispatch(login({ email: email, password: password }))
+    const result = await dispatch(login({ username : email, password: password }))
     console.log(result)
   }
 
