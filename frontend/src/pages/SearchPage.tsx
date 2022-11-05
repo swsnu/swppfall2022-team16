@@ -1,11 +1,14 @@
 import React from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 import Filter from '../components/Filter'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
+import { AppDispatch } from '../store'
 /*eslint-disable */
 
 export default function SearchPage (): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>()
   return (<div>
     <TopBar/>
     <Container>
