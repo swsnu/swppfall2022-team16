@@ -7,6 +7,7 @@ export default function SignupForm (): JSX.Element {
   const [password, setPassword] = useState('Password');
   const [height, setHeight] = useState('Height');
   const [weight, setWeight] = useState('Weight');
+  const [gender, setGender] = useState('Male');
 
     return(
       <div className='Signup'>
@@ -27,6 +28,9 @@ export default function SignupForm (): JSX.Element {
               </div>
               <div className = "weight">
                  <input id = "weight" type = "weight" onChange = {(e) => setWeight(e.target.value)}></input>
+              </div>
+              <div className = "gender">
+                 <input id = "gender" type = "radio" onChange = {(e) => setGender(e.target.value)}></input>
               </div>
           </div>
       )}
