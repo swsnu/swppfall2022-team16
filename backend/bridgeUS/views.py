@@ -11,11 +11,11 @@ from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Revi
 def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
-        username = req_data['username']
-        email = req_data['email']    
+        username = req_data['username']    
+        nickname = req_data['nickname']
         password = req_data['password']
 
-        created_user = CustomUser.objects.create_user(username=username, email=email, password=password)
+        created_user = CustomUser.objects.create_user(username=username, nickname=nickname, password=password)
 
         # create default usershopmodel
         usershop = UserShop(user=created_user)
@@ -36,9 +36,9 @@ def token(request):
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
-        email = req_data['email']
+        username = req_data['username']
         password = req_data['password']
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)            

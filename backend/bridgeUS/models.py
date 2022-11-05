@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
+    nickname = models.TextField(null=True)
     height = models.IntegerField(null=True)
     weight = models.IntegerField(null=True)
     gender = models.TextField(null=True)
