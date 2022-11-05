@@ -4,6 +4,7 @@ import { RootState } from '..'
 
 export interface UserInfo {
   id: number
+  
 }
 
 export interface ProductInfo {
