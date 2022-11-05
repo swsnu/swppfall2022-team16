@@ -1,9 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
 import bridgeusReducer from './slices/bridgeus'
+import userReducer from './slices/user'
+import userShopReducer from './slices/usershop'
+import shopitemReducer from './slices/shopitem'
+import shopitemDetailReducer from './slices/shopitemdetail'
+import reviewReducer from './slices/review'
+import commentReducer from './slices/comment'
 
 export const store = configureStore({
   reducer: {
-    bridgeus: bridgeusReducer
+    bridgeus: bridgeusReducer,
+    user: userReducer,
+    usershop: userShopReducer,
+    shopitem: shopitemReducer,
+    shopitemdetail: shopitemDetailReducer,
+    review: reviewReducer,
+    comment: commentReducer
   }
 })
 

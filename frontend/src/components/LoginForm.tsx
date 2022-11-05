@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
-import { login } from '../store/slices/bridgeus'
+import { login } from '../store/slices/user'
 /*eslint-disable */
 
 export default function LoginForm (): JSX.Element {
