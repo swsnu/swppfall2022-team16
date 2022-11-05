@@ -7,22 +7,20 @@ import TopBar from '../components/TopBar'
 /*eslint-disable */
 
 export default function CommunityPage (): JSX.Element {
-  return (<Container>
-    <Row>
-      <Col>
-        <TopBar />
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <ShopItem />
-      </Col>
-      <Col>
-        <Post />
-      </Col>
-      <Col>
-        <PostComments />
-      </Col>
-    </Row>
-  </Container>)
+  return (<div>
+    <TopBar />
+    <Container>
+      <Row>
+        <Col>
+          <ShopItem />
+        </Col>
+        <Col>
+          <Post />
+        </Col>
+        <Col>
+          <PostComments />
+        </Col>
+      </Row>
+    </Container>
+  </div>)
 }

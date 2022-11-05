@@ -7,35 +7,32 @@ import TopBar from '../components/TopBar'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
-  return (<Container>
-    <Row>
-      <Col>
-        <TopBar />
-        <br/>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <Banner />
-        <br/>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <h1>Trending</h1>
-      </Col>
-      {
-        [0, 1, 2, 3].map((i) => <Col>
-          <Filter key={i} />
-        </Col>)
-      }
-    </Row>
-    <Row>
-      {
-        [0, 1, 2, 3].map((i) => <Col>
-          <ShopItem key={i} />
-        </Col>)
-      }
-    </Row>
-  </Container>)
+  return (<div>
+    <TopBar />
+    <br/>
+    <Container>
+      <Row>
+        <Col>
+          <Banner />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h1>Trending</h1>
+        </Col>
+        {
+          [0, 1, 2, 3].map((i) => <Col>
+            <Filter key={i} />
+          </Col>)
+        }
+      </Row>
+      <Row>
+        {
+          [0, 1, 2, 3].map((i) => <Col>
+            <ShopItem key={i} />
+          </Col>)
+        }
+      </Row>
+    </Container>
+  </div>)
 }
