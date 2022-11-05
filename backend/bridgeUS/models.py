@@ -58,7 +58,12 @@ class Review(models.Model):
         CustomUser,   
         on_delete = models.CASCADE,
     )
-    
+
+    review_item = models.ForeignKey(
+        ShopItem,   
+        on_delete = models.CASCADE,
+        null=True
+    )       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
