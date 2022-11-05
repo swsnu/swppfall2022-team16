@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import { login } from '../store/slices/bridgeus'
@@ -16,16 +17,16 @@ export default function LoginForm (): JSX.Element {
 
   return (
     <div className='Login'>
-      <div className='Login-page'>
-        <div className = "pageTitle"> Log in </div>
-        <div className = "email-input">
-          <input id = "email-input" type = "email" onChange = {(e) => setUsername(e.target.value)}></input>
-        </div>
-        <div className = "pw-input">
-          <input id = "pw-input" type = "pw" onChange = {(e) => setPassword(e.target.value)}></input>
-        </div>
-      </div>
-    <button id = "login-button" onClick = {() => loginbuttonHandler()}>login</button>
+      <h1>Login</h1>
+      <Form>
+        <Form.Group className='emailForm'>
+          <Form.Control type='text' placeholder='Email Address' onChange = {(e) => setUsername(e.target.value)} />
+        </Form.Group>
+        <Form.Group className='passwordForm'>
+          <Form.Control type='password' placeholder='Password' onChange = {(e) => setPassword(e.target.value)} />
+        </Form.Group>
+        <Button onClick = {() => loginbuttonHandler()}>Login</Button>
+      </Form>
     </div>
   )
 }
