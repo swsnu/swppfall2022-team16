@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import bridgeusReducer from './slices/bridgeus'
 import userReducer from './slices/user'
 import userShopReducer from './slices/usershop'
 import shopitemReducer from './slices/shopitem'
@@ -9,7 +8,6 @@ import commentReducer from './slices/comment'
 
 export const store = configureStore({
   reducer: {
-    bridgeus: bridgeusReducer,
     user: userReducer,
     usershop: userShopReducer,
     shopitem: shopitemReducer,

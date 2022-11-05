@@ -1,16 +1,11 @@
 import React from 'react'
-<<<<<<< HEAD
 import TopBar from '../components/TopBar'
 import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button';
-import Purchased from '../components/Purchased';
-import CommunityAlert from '../components/CommunityAlert';
-=======
-import { Col, Container, Row } from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
+import Purchased from '../components/Purchased'
+import CommunityAlert from '../components/CommunityAlert'
 import { useDispatch } from 'react-redux'
-import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
->>>>>>> 0f6ff9dfa9d03fd93c5593cfcfcbb154b970acab
 /*eslint-disable */
 
 export default function MyPage (): JSX.Element {

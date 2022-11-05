@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { OrderInfo } from './bridgeus'
 
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
@@ -12,7 +11,7 @@ export interface User {
     id: number
     name: string
     sex: string
-    orders: OrderInfo[]
+    // orders: OrderInfo[]
 }
 
 export interface UserState {
