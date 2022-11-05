@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { login } from '../store/slices/user'
 /*eslint-disable */
 
 export default function LoginForm (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const loginbuttonHandler = async () => {
     const result = await dispatch(login({ username : username, password: password }))
     console.log(result)
+    if (result.type === `${login.typePrefix}/fulfilled`) {
+      navigate('/')
+    }
   }
 
   return (

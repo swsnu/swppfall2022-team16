@@ -21,7 +21,7 @@ export default function ReviewPage (): JSX.Element {
       </Row>
       <Row>
         <Col>
-          <ShopItem />
+          <ShopItem key={1} shopItem={null} />
         </Col>
         <Col>
           <ReviewForm />
