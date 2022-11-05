@@ -289,7 +289,7 @@ def review(request, review_id):
         return HttpResponse(status=403)
 
     if request.method == 'GET':
-        response_dict = { 'title': review.title, 'content': review.content, 'author': review.author.id }
+        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item, 'title': review.title, 'content': review.content, 'author': review.author.id }
         return JsonResponse(response_dict, status=200)
     elif request.method == 'PUT':
         body = request.body.decode()
@@ -302,7 +302,7 @@ def review(request, review_id):
 
         review.save()
 
-        response_dict = {"id": review_id, "title": review.title, "content": review.content, "author" : review.author.id }
+        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item, 'title': review.title, 'content': review.content, 'author': review.author.id }
         return JsonResponse(response_dict, status=200)
     else:
         review.delete()
