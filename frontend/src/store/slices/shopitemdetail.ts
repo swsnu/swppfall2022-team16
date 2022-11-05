@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 /*eslint-disable */
@@ -19,11 +19,23 @@ const initialState : ShopItemDetailState = {
     shopitem_details: []
 }
 
+export const fetchDetails = createAsyncThunk(
+    "shopitemdetail/fetchDetails",
+    async () => {
+        const response = await axios.get<ShopItemDetailInfo[]>('/api/shopitem/')
+        return response.data
+    }
+)
+
 export const shopitemDetailSlice = createSlice({
     name: "shopitemDetail",
     initialState,
     reducers:{},
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+        builder.addCase(fetchDetails.fulfilled, (state, action) => {
+            state.shopitem_details = action.payload
+        })
+    },
 });
 
 export const shopitemDetailActions = shopitemDetailSlice.actions;
