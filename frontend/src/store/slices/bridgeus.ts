@@ -67,6 +67,6 @@ export const bridgeusSlice = createSlice({
 })
 
 export const bridgeusActions = bridgeusSlice.actions
-export const selectbridgeus = (state: RootState) => state.bridgeus
+export const selectbridgeus = (state: RootState): BridgeusState => state.bridgeus
 
 export default bridgeusSlice.reducer
