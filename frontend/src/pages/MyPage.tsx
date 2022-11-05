@@ -6,6 +6,7 @@ import Purchased from '../components/Purchased'
 import CommunityAlert from '../components/CommunityAlert'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
+import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function MyPage (): JSX.Element {
@@ -30,5 +31,6 @@ export default function MyPage (): JSX.Element {
       <CommunityAlert></CommunityAlert>
       <CommunityAlert></CommunityAlert>
     </>
+    <Footer/>
   </div>)
 }
