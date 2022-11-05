@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 /*eslint-disable */
@@ -30,24 +30,29 @@ export default function ShippingForm (): JSX.Element {
           </Card.Body>
         </Card>
       </div>
-      <div className='ShippingForm'>
-        <div className = "pageTitle"> Shipping Address</div>
-        <div className = "Road Address">
-          <input id = "Road Address" type = "Road Address" onChange = {(e) => setAddr(e.target.value)}></input>
-        </div>
-        <div className = "Building No.">
-          <input id = "Building No." type = "Building No." onChange = {(e) => setBuildingNum(e.target.value)}></input>
-        </div>
-        <div className = "stateZip">
-          <input id = "stateZip" type = "stateZip" onChange = {(e) => setStateZip(e.target.value)}></input>
-        </div>
-        <div className = "country">
-          <input id = "country" type = "country" onChange = {(e) => setCountry(e.target.value)}></input>
-        </div>
-        <div className = "city">
-          <input id = "city" type = "city" onChange = {(e) => setCity(e.target.value)}></input>
-        </div>
-      </div>
+      <div className = "pageTitle"> Shipping Address</div>
+      <Form>
+      <Form.Group className='RoadAddress' controlId = "formShippingForm">
+      <Form.Label>Road Address</Form.Label>
+      <Form.Control type = "address" placeholder='enter your road address'/>
+      </Form.Group>
+      <Form.Group className='BuildingNo' controlId = "formShippingForm">
+      <Form.Label>Building No.</Form.Label>
+      <Form.Control type = "BuildingNo" placeholder='enter the number of your building'/>
+      </Form.Group>
+      <Form.Group className='stateZip' controlId = "formShippingForm">
+      <Form.Label>State/zip</Form.Label>
+      <Form.Control type = "stateZip" placeholder='enter your state or zip code'/>
+      </Form.Group>
+      <Form.Group className='Country' controlId = "formShippingForm">
+      <Form.Label>Country</Form.Label>
+      <Form.Control type = "country" placeholder='enter your country'/>
+      </Form.Group>
+      <Form.Group className='City' controlId = "formShippingForm">
+      <Form.Label>City</Form.Label>
+      <Form.Control type = "city" placeholder='enter your city'/>
+      </Form.Group>
+      </Form>
     </div>
   )
 }
