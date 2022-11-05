@@ -30,6 +30,8 @@ class ShopItem(models.Model):
         on_delete = models.CASCADE,
     )   
     
+    name = models.TextField(null=True)
+    image_url = models.TextField(null=True)
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
     star = models.IntegerField(null=True)
@@ -46,6 +48,22 @@ class ShopItemDetail(models.Model):
     color = models.TextField(null=True)
     size = models.TextField(null=True)
     left_amount = models.IntegerField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class UserOrder(models.Model):
+    user = models.ForeignKey(
+        CustomUser,   
+        on_delete = models.CASCADE,
+    )
+
+    orderd_item = models.ForeignKey(
+        ShopItem,   
+        on_delete = models.CASCADE,
+    )    
+
+    order_status = models.TextField(null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
