@@ -5,7 +5,7 @@ import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 
 export default function MainPage (): JSX.Element {
-  return <div>
+  return (<div>
     <TopBar />
     <Banner />
     {
@@ -14,5 +14,5 @@ export default function MainPage (): JSX.Element {
     {
       [0, 1, 2, 3].map((i) => <ShopItem key={i} />)
     }
-  </div>
+  </div>)
 }
