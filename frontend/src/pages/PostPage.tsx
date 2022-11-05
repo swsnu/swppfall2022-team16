@@ -5,6 +5,7 @@ import Post from '../components/Post'
 import PostComments from '../components/PostComments'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
+import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function PostPage (): JSX.Element {
@@ -21,5 +22,6 @@ export default function PostPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    <Footer/>
   </div>)
 }

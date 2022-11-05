@@ -6,6 +6,7 @@ import PaymentForm from '../components/PaymentForm'
 import ShippingForm from '../components/ShippingForm'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
+import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function PaymentPage (): JSX.Element {
@@ -33,5 +34,6 @@ export default function PaymentPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    <Footer/>
   </div>)
 }

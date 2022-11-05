@@ -4,12 +4,18 @@ import { useDispatch } from 'react-redux'
 import SideBar from '../components/SideBar'
 import SignupForm from '../components/SignupForm'
 import { AppDispatch } from '../store'
+import Footer from '../components/Footer'
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
 export default function SignupPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
-  return (<Stack direction='vertical' gap ={5}>
+  return (
+    <>
+  <Stack direction='vertical' gap ={5}>
     <SideBar />
     <SignupForm />
-  </Stack>)
+  </Stack>
+  <Footer/>
+  </>
+  )
 }

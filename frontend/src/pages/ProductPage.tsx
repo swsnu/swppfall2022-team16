@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import OrderForm from '../components/OrderForm'
 import Review from '../components/Review'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
+import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function ProductPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
+  const shopItemState = useSelector(selectShopItem)
+
+  useEffect(() => {
+    dispatch(fetchMainItems())
+  }, [dispatch])
+
   return (<div>
     <TopBar />
     <Container>
       <Row>
         <Col>
-          <ShopItem shopItem={null} />
+          <ShopItem shopItem={shopItemState.shopitems[0]} />
         </Col>
         <Col>
           <OrderForm />
@@ -41,5 +49,6 @@ export default function ProductPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    <Footer/>
   </div>)
 }
