@@ -30,6 +30,7 @@ class ShopItem(models.Model):
         on_delete = models.CASCADE,
     )   
     
+    name = models.TextField(null=True)
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
     star = models.IntegerField(null=True)

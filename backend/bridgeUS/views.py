@@ -61,7 +61,7 @@ def signout(request):
 
     logout(request)
     return HttpResponse(status=204)
-    
+
 @ensure_csrf_cookie
 def usershop(request, user_id):
     if request.method != 'GET':
@@ -95,7 +95,7 @@ def shopitemlist(request):
         if ShopItem.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        shopitem_all_list = [{ 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star' : shopitem.star, 'type' : shopitem.type } 
+        shopitem_all_list = [{ 'id' : shopitem.id, 'name' : shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star' : shopitem.star, 'type' : shopitem.type } 
         for shopitem in ShopItem.objects.all()]
     
         return JsonResponse(shopitem_all_list, safe=False, status=200)
@@ -109,7 +109,7 @@ def shopitemlist(request):
 
         shopitem.save()
         
-        response_dict = {'id': shopitem.id, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star': shopitem.star, 'type': shopitem.type }
+        response_dict = {'id': shopitem.id, 'name' : shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'star': shopitem.star, 'type': shopitem.type }
         return JsonResponse(response_dict, status=201)
     
 
