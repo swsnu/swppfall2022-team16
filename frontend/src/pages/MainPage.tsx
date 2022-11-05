@@ -7,6 +7,7 @@ import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -44,5 +45,6 @@ export default function MainPage (): JSX.Element {
         }
       </Row>
     </Container>
+    <Footer/>
   </div>)
 }
