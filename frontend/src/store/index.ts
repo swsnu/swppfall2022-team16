@@ -5,6 +5,7 @@ import shopitemReducer from './slices/shopitem'
 import shopitemDetailReducer from './slices/shopitemdetail'
 import reviewReducer from './slices/review'
 import commentReducer from './slices/comment'
+import userorderReducer from './slices/userorder'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     shopitem: shopitemReducer,
     shopitemdetail: shopitemDetailReducer,
     review: reviewReducer,
-    comment: commentReducer
+    comment: commentReducer,
+    userorder: userorderReducer
   }
 })
 
