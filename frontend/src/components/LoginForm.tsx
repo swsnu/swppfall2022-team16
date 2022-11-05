@@ -6,11 +6,11 @@ import { login } from '../store/slices/bridgeus'
 
 export default function LoginForm (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
-  const [email, setEmail] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const loginbuttonHandler = async () => {
-    const result = await dispatch(login({ username : email, password: password }))
+    const result = await dispatch(login({ username : username, password: password }))
     console.log(result)
   }
 
@@ -19,7 +19,7 @@ export default function LoginForm (): JSX.Element {
       <div className='Login-page'>
         <div className = "pageTitle"> Log in </div>
         <div className = "email-input">
-          <input id = "email-input" type = "email" onChange = {(e) => setEmail(e.target.value)}></input>
+          <input id = "email-input" type = "email" onChange = {(e) => setUsername(e.target.value)}></input>
         </div>
         <div className = "pw-input">
           <input id = "pw-input" type = "pw" onChange = {(e) => setPassword(e.target.value)}></input>

@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
 
+/*eslint-disable */
+/*eslint no-multiple-empty-lines: "error"*/
+
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
@@ -50,7 +53,7 @@ const initialState: BridgeusState = {
 
 export const login = createAsyncThunk(
   'bridgeus/login',
-  async (form: { username : string, password: string }, { dispatch }) => {
+  async (form: { username: string, password: string }, { dispatch }) => {
     const response = await axios.post('/api/signin/', form)
     return response.data
   }
