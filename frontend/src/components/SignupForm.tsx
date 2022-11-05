@@ -9,7 +9,7 @@ export default function SignupForm (): JSX.Element {
   const [weight, setWeight] = useState('Weight');
   const [gender, setGender] = useState('Male');
 
-  const loginbuttonHandler = () => {
+  const signupbuttonHandler = () => {
 
   }
 
@@ -41,7 +41,7 @@ export default function SignupForm (): JSX.Element {
           <input id = "female" type = "radio" name = "gender" onChange = {(e) => setGender("female")}></input>
         </div>
       </div>
-      <button id = "login-button" onClick = {() => loginbuttonHandler()}>login</button>
+      <button id = "login-button" onClick = {() => signupbuttonHandler()}>login</button>
     </div>
   )
 }
