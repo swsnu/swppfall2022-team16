@@ -25,7 +25,7 @@ export default function SearchPage (): JSX.Element {
       <Row>
         {
           [0, 1, 2, 3].map((i) => <Col>
-            <ShopItem key={i} />
+            <ShopItem key={i} shopItem={null} />
           </Col>)
         }
       </Row>
@@ -47,7 +47,7 @@ export default function SearchPage (): JSX.Element {
       <Row>
         {
           [0, 1, 2, 3].map((i) => <Col>
-            <ShopItem key={i} />
+            <ShopItem key={i} shopItem={null} />
           </Col>)
         }
       </Row>

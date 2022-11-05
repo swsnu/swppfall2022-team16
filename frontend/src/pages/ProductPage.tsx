@@ -15,7 +15,7 @@ export default function ProductPage (): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <ShopItem />
+          <ShopItem shopItem={null} />
         </Col>
         <Col>
           <OrderForm />
