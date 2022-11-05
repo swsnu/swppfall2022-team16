@@ -9,32 +9,39 @@ export default function SignupForm (): JSX.Element {
   const [weight, setWeight] = useState('Weight');
   const [gender, setGender] = useState('Male');
 
-    return(
+  const loginbuttonHandler = () => {
+
+  }
+
+  return (
+    <div className='Signup'>
       <div className='Signup'>
-      {(userState.user?.logged_in) ? (<Navigate to = '/main'></Navigate>) : (
-          <div className='Signup'>
-              <div className = "pageTitle"> Create Account </div>
-              <div className = "name">
-                  <input id = "name" type = "name" onChange = {(e) => setName(e.target.value)}></input>
-              </div>
-              <div className = "email">
-                 <input id = "email" type = "email" onChange = {(e) => setEmail(e.target.value)}></input>
-              </div>
-              <div className = "password">
-                 <input id = "password" type = "password" onChange = {(e) => setPassword(e.target.value)}></input>
-              </div>
-              <div className = "height">
-                 <input id = "height" type = "height" onChange = {(e) => setHeight(e.target.value)}></input>
-              </div>
-              <div className = "weight">
-                 <input id = "weight" type = "weight" onChange = {(e) => setWeight(e.target.value)}></input>
-              </div>
-              <div className = "gender">
-                 <input id = "gender" type = "radio" onChange = {(e) => setGender(e.target.value)}></input>
-              </div>
-          </div>
-      )}
-      <button id = "login-button" onClick = {() => loginbuttonHandler()}>login</button>
+        <div className = "pageTitle"> Create Account </div>
+        <div className = "name">
+          <input id = "name" type = "name" onChange = {(e) => setName(e.target.value)}></input>
+        </div>
+        <div className = "email">
+          <input id = "email" type = "email" onChange = {(e) => setEmail(e.target.value)}></input>
+        </div>
+        <div className = "password">
+          <input id = "password" type = "password" onChange = {(e) => setPassword(e.target.value)}></input>
+        </div>
+        <div className = "height">
+          <input id = "height" type = "height" onChange = {(e) => setHeight(e.target.value)}></input>
+        </div>
+        <div className = "weight">
+          <input id = "weight" type = "weight" onChange = {(e) => setWeight(e.target.value)}></input>
+        </div>
+        <div className = "gender">
+          Male
+          <input id = "male" type = "radio" name = "gender" onChange = {(e) => setGender("male")}></input>
+        </div>
+        <div className = "gender">
+          Female
+          <input id = "female" type = "radio" name = "gender" onChange = {(e) => setGender("female")}></input>
+        </div>
       </div>
-  );
+      <button id = "login-button" onClick = {() => loginbuttonHandler()}>login</button>
+    </div>
+  )
 }
