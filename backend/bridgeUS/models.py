@@ -57,7 +57,7 @@ class UserOrder(models.Model):
         on_delete = models.CASCADE,
     )
 
-    orderd_item = models.ForeignKey(
+    ordered_item = models.ForeignKey(
         ShopItem,   
         on_delete = models.CASCADE,
     )    
@@ -84,7 +84,7 @@ class Review(models.Model):
     )       
 
     rating = models.IntegerField(null=True)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

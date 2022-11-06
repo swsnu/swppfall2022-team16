@@ -12,6 +12,7 @@ export interface ShopItemInfo {
     id: number
     name: string
     seller: number
+    image_url: string
     price: number
     rating: number
     star: number

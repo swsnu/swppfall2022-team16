@@ -9,6 +9,9 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface CommentInfo {
     id: number
+    review: number
+    content: string
+    author: number
 }
 
 export interface CommentState {

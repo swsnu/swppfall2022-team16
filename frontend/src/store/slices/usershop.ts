@@ -9,6 +9,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface UserShopInfo {
     id: number
+    user_id: number
     credit: number
     cart: string
     favorite_clothes : string
