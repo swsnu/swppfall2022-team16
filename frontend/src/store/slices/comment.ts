@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { RootState } from '..';
 
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
@@ -36,11 +37,14 @@ export const commentSlice = createSlice({
     reducers:{},
     extraReducers: (builder) => {
         builder.addCase(fetchComments.fulfilled, (state, action) => {
-            state.comments = action.payload
+            const review_id = action.meta.arg
+            state.comments = state.comments.filter((comment) => comment.review !== review_id)
+            state.comments.concat(action.payload)
         })
     },
 });
 
-export const reviewActions = commentSlice.actions;
+export const commentActions = commentSlice.actions;
+export const selectComment = (state: RootState) => state.comment;
 
 export default commentSlice.reducer;

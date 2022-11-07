@@ -29,6 +29,7 @@ export const fetchReviews = createAsyncThunk(
     "review/fetchReviews",
     async () => {
         const response = await axios.get<ReviewInfo[]>('/api/review/')
+        console.log(response.data)
         return response.data
     }
 )

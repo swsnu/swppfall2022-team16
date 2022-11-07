@@ -33,7 +33,7 @@ export default function CommunityPage (): JSX.Element {
           <Post />
         </Col>
         <Col>
-          <PostComments />
+          <PostComments review_id={1} />
         </Col>
       </Row>
     </Container>

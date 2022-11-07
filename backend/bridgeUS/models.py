@@ -88,6 +88,9 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"[{self.rating}] {self.content} ({self.author})"
+
 class Comment(models.Model):
     review = models.ForeignKey(
         Review,   
@@ -103,3 +106,6 @@ class Comment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.review} -> {self.content} ({self.author})"

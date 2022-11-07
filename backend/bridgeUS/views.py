@@ -257,7 +257,7 @@ def reviewlist(request):
         if Review.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        review_all_list = [{ 'title' : review.title, 'content' : review.content, 'author': review.author.id } for review in Review.objects.all()]
+        review_all_list = [{ 'id' : review.id, 'title' : review.title, 'content' : review.content, 'author': review.author.id } for review in Review.objects.all()]
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
         body = request.body.decode()
@@ -327,7 +327,7 @@ def reviewcomment(request, review_id):
         if comment_list.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        comment_json_list = [{ 'review' : comment.review.id, 'content' : comment.content, 'author': comment.author.id } for comment in comment_list]
+        comment_json_list = [{ 'id' : comment.id, 'review' : comment.review.id, 'content' : comment.content, 'author': comment.author.id } for comment in comment_list]
         return JsonResponse(comment_json_list, safe=False, status=200)
     else:
         body = request.body.decode()
