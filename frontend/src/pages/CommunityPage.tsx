@@ -23,7 +23,11 @@ export default function CommunityPage (): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <ShopItem shopItem={shopItemState.shopitems[0]} />
+          {
+            shopItemState.shopitems &&
+              shopItemState.shopitems[0] &&
+            <ShopItem shopItem={shopItemState.shopitems[0]} />
+          }
         </Col>
         <Col>
           <Post />

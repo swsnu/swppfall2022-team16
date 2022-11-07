@@ -31,13 +31,7 @@ export default function ProductPage (): JSX.Element {
           <ShopItem shopItem={shopItemState.shopitems[0]} />
         </Col>
         <Col>
-        <OrderForm 
-              itemName='Melange twill shirt'
-              sellerName='StyleNanda'
-              color='White'
-              size='M'
-              quantity = {10}
-            />
+          <OrderForm />
         </Col>
       </Row>
       <Row>
