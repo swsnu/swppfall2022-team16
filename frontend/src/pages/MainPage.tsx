@@ -8,6 +8,7 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
+import { fetchUsers } from '../store/slices/user'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -16,6 +17,7 @@ export default function MainPage (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchUsers())
   }, [dispatch])
 
   return (<div>

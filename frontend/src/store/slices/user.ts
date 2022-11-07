@@ -19,12 +19,12 @@ export interface User {
 
 export interface UserState {
     users: User[],
-    currentLoggedIn : User | undefined;
+    currentLoggedIn : User | null;
 }
 
 const initialState : UserState = {
     users : [],
-    currentLoggedIn : undefined
+    currentLoggedIn : null
 }
 
 
@@ -54,7 +54,7 @@ export const userSlice = createSlice({
                 (value) => {
                     return value.id === action.payload.id
                 }
-            )
+            ) ?? null
         }),
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload;

@@ -88,7 +88,7 @@ def userlist(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
-    if User.objects.count() <= 0:
+    if CustomUser.objects.count() <= 0:
         return JsonResponse([{}], safe=False, status=204)
 
     user_all_list = [{ 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight } 

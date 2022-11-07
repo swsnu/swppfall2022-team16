@@ -13,7 +13,7 @@ export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
   const userState = useSelector(selectUser)
   useEffect(()=>{
-      if (userState.currentLoggedIn !== null){
+      if (userState.currentLoggedIn){
         setloggedIn(true)
       } else setloggedIn(false)
   }, [userState.currentLoggedIn])
