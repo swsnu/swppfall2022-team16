@@ -55,7 +55,7 @@ export const putShopItem = createAsyncThunk(
 
 export const deleteShopItem = createAsyncThunk(
     "shopitem/deleteShopItem", async (id : number, {dispatch}) => {
-    await axios.delete(`/shopitem/${id}/`);
+    await axios.delete(`/api/shopitem/${id}/`);
     dispatch(shopitemActions.deleteShopItem( { targetId : id }));
 });
 
