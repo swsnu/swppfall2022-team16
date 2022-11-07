@@ -84,6 +84,19 @@ def usershop(request, user_id):
     return JsonResponse(response_dict, safe=False, status=200)
 
 @ensure_csrf_cookie
+def userlist(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+
+    if User.objects.count() <= 0:
+        return JsonResponse([{}], safe=False, status=204)
+
+    user_all_list = [{ 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight } 
+    for user in CustomUser.objects.all()]
+    
+    return JsonResponse(user_all_list, safe=False, status=200)
+
+@ensure_csrf_cookie
 def shopitemlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
