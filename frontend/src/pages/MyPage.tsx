@@ -7,6 +7,7 @@ import CommunityAlert from '../components/CommunityAlert'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
+import { ListGroup } from 'react-bootstrap'
 /*eslint-disable */
 
 export default function MyPage (): JSX.Element {
@@ -27,29 +28,44 @@ export default function MyPage (): JSX.Element {
             <Button variant="primary">Edit</Button>
           </Card.Body>
       </Card>
-      <Purchased
-        itemName='Melange twill shirt'
-        itemPrice = {209}
-        shippingStatus = "Shipping"
-        purchaseDate = "2022/10/27"
-        />
-      <Purchased
-        itemName='BTS orange hoodle'
-        itemPrice = {59}
-        shippingStatus = "Complete"
-        purchaseDate = "2022/10/27"
-        />
+      <h1>Purchased</h1>
+      <ListGroup>
+        <ListGroup.Item>
+          <Purchased
+            itemName='Melange twill shirt'
+            itemPrice = {209}
+            shippingStatus = "Shipping"
+            purchaseDate = "2022/10/27"
+            />
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <Purchased
+            itemName='BTS orange hoodle'
+            itemPrice = {59}
+            shippingStatus = "Complete"
+            purchaseDate = "2022/10/27"
+            />
+        </ListGroup.Item>
+      </ListGroup>
+
       <br/>
-      <CommunityAlert
-        newCommentAuthor='Bethany'
-        newCommentPostedTime = {time}
-        newCommentedPostId={1}
-      />
-      <CommunityAlert
-        newCommentAuthor='Adam'
-        newCommentPostedTime = {time}
-        newCommentedPostId={1}
-      />
+      <h1>Community</h1>
+      <ListGroup>
+        <ListGroup.Item action>
+          <CommunityAlert
+            newCommentAuthor='Bethany'
+            newCommentPostedTime = {time}
+            newCommentedPostId={1}
+          />
+        </ListGroup.Item>
+        <ListGroup.Item action>
+          <CommunityAlert
+            newCommentAuthor='Adam'
+            newCommentPostedTime = {time}
+            newCommentedPostId={1}
+          />
+        </ListGroup.Item>
+      </ListGroup>
     </>
     <Footer/>
   </div>)
