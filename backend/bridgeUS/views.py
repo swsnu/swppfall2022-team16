@@ -88,7 +88,7 @@ def shopitemlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if request.method == 'GET':
@@ -118,7 +118,7 @@ def shopitem(request, item_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if not ShopItem.objects.filter(id=item_id).exists():
@@ -159,7 +159,7 @@ def shopitemdetail_list(request, item_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if not ShopItem.objects.filter(id=item_id).exists():
@@ -250,7 +250,7 @@ def reviewlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if request.method == 'GET':
@@ -277,7 +277,7 @@ def review(request, review_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if not Review.objects.filter(id=review_id).exists():
@@ -313,7 +313,7 @@ def reviewcomment(request, review_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if not Review.objects.filter(id=review_id).exists():
@@ -346,7 +346,7 @@ def comment(request, comment_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
 
-    if not request.user.is_authenticated:
+    if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
     if not Comment.objects.filter(id=comment_id).exists():
