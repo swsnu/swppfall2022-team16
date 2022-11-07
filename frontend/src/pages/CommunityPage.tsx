@@ -23,6 +23,16 @@ export default function CommunityPage (): JSX.Element {
     <Container>
       <Row>
         <Col>
+          <h1>Community</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h2>Karina</h2>
+        </Col>
+      </Row>
+      <Row md={4}>
+        <Col>
           {
             shopItemState.shopitems &&
               shopItemState.shopitems[0] &&
@@ -34,6 +44,26 @@ export default function CommunityPage (): JSX.Element {
         </Col>
         <Col>
           <PostComments review_id={1} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h2>Suga</h2>
+        </Col>
+      </Row>
+      <Row md={4}>
+        <Col>
+          {
+            shopItemState.shopitems &&
+              shopItemState.shopitems[1] &&
+            <ShopItem shopItem={shopItemState.shopitems[1]} />
+          }
+        </Col>
+        <Col>
+          <Post id={2} />
+        </Col>
+        <Col>
+          <PostComments review_id={2} />
         </Col>
       </Row>
     </Container>
