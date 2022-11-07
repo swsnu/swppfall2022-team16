@@ -22,13 +22,7 @@ jobs:
       
       install:
         - cd frontend
-        - npm install
-        - pip install coveralls
-        - npm global add coveralls
-        - gem install coveralls-lcov
+        - yarn install
       script:
         - ./node_modules/.bin/eslint src
-        - npm run test -- --coverage --watchAll=false
-        - coveralls-lcov -v -n coverage/lcov.info > coverage.json
-        - coveralls --merge=../frontend/coverage.json
-        - cd .. && sonar-scanner
+        - yarn test --coverage --watchAll=false

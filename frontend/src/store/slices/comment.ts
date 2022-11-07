@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 /*eslint-disable */
@@ -9,6 +9,9 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface CommentInfo {
     id: number
+    review: number
+    content: string
+    author: number
 }
 
 export interface CommentState {
@@ -19,11 +22,23 @@ const initialState : CommentState = {
     comments: []
 }
 
+export const fetchComments = createAsyncThunk(
+    "comment/fetchComments",
+    async (review_id : number) => {
+        const response = await axios.get<CommentInfo[]>(`/api/review/${review_id}/comment/`)
+        return response.data
+    }
+)
+
 export const commentSlice = createSlice({
     name: "comment",
     initialState,
     reducers:{},
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+        builder.addCase(fetchComments.fulfilled, (state, action) => {
+            state.comments = action.payload
+        })
+    },
 });
 
 export const reviewActions = commentSlice.actions;

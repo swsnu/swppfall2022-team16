@@ -13,6 +13,8 @@ export interface ReviewInfo {
     title: string
     content: string
     author: number
+    review_item: number
+    rating: number
 }
 
 export interface ReviewState {

@@ -9,6 +9,10 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface ShopItemDetailInfo {
     id: number
+    main_item: number
+    color: string
+    size: string
+    left_amount: number
 }
 
 export interface ShopItemDetailState {
@@ -21,8 +25,8 @@ const initialState : ShopItemDetailState = {
 
 export const fetchDetails = createAsyncThunk(
     "shopitemdetail/fetchDetails",
-    async () => {
-        const response = await axios.get<ShopItemDetailInfo[]>('/api/shopitem/')
+    async (item_id : number) => {
+        const response = await axios.get<ShopItemDetailInfo[]>(`/api/shopitem/${item_id}/shopitemdetail/`)
         return response.data
     }
 )

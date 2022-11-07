@@ -241,7 +241,7 @@ def userorderlist(request):
         if UserOrder.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.orderd_item.id, 'status': userorder.order_status } for userorder in UserOrder.objects.all()]
+        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status } for userorder in UserOrder.objects.all()]
         return JsonResponse(userorder_all_list, safe=False, status=200)
 
 
