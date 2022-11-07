@@ -16,6 +16,7 @@ export default function LoginPage (): JSX.Element {
   <Stack direction='vertical' gap ={3}>
     <SideBar />
     <LoginForm />
+    <div>If you don't have your id, you can <a href='/signup'>signup</a> here.</div>
   </Stack>
   <Footer/>
   </>)
