@@ -45,7 +45,7 @@ def signin(request):
 
         if user is not None:
             login(request, user)            
-            return HttpResponse(status=204)
+            return JsonResponse( {'id' : user.id } , status=200)
         else:
             return HttpResponse(status=401)
     else:
