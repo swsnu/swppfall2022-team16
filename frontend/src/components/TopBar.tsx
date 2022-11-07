@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { Nav } from 'react-bootstrap'
+import { Button, Form, Nav } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import {selectUser} from '../store/slices/user'
 import {useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 /*eslint-disable */
 
@@ -11,7 +12,10 @@ import {useSelector} from 'react-redux'
 
 export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
+  const [searchText, setSearchText] = useState("")
   const userState = useSelector(selectUser)
+  const navigate = useNavigate()
+
   useEffect(()=>{
       if (userState.currentLoggedIn){
         setloggedIn(true)
@@ -44,7 +48,17 @@ export default function TopBar (): JSX.Element {
         <Navbar.Brand href="/">{' '}BridgeUs</Navbar.Brand>
         <Nav className ="side">
           <Nav.Link href = '/community'>community</Nav.Link>
-          <input placeholder = 'search'></input>
+          <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+            />
+            <Button variant="outline-success" onClick={() => navigate(`/search/${searchText}`)} disabled={searchText === ""}>Search</Button>
+          </Form>
           <Nav.Link href = '/login'>login</Nav.Link>
         </Nav>
       </Container>

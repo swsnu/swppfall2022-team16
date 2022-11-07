@@ -7,9 +7,11 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
 /*eslint-disable */
 
 export default function SearchPage (): JSX.Element {
+  const { text } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
 
