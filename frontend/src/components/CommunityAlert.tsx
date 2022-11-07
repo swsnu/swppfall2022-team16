@@ -15,7 +15,6 @@ export default function CommunityALert (props : IProps): JSX.Element {
 
   return (
     <div className = "Purchases">
-      <h1>Community</h1>
       <Stack direction = "horizontal" gap = {3} onClick = {() => navigate(`/community/${props.newCommentedPostId}`)}>
         <p>{props.newCommentAuthor + " commented on your post"}</p>
         <p>{(time.getHours() - props.newCommentPostedTime.getHours()) + " hours ago"}</p>

@@ -32,7 +32,6 @@ export const login = createAsyncThunk(
     'bridgeus/login',
     async (form: { username: string, password: string }, { dispatch }) => {
       const response = await axios.post('/api/signin/', form)
-      dispatch(userActions.login(response.data))
       return response.data
     }
 )
@@ -41,6 +40,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers:{
+<<<<<<< HEAD
         login: (state, action: PayloadAction<User>) => {
             state.users =  state.users.map(
                 (value) => {
@@ -51,8 +51,18 @@ export const userSlice = createSlice({
             );            
             state.currentLoggedIn = action.payload;
         }
+=======
+>>>>>>> f80017e4656bf09e2bc319e2c6656797c7a7b768
     },
     extraReducers: (builder) => {
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.currentLoggedIn = {'id':1,
+            'username': 'swpp',
+            'nickname': 'swpp',
+            'height': 180,
+            'weight': 70,
+            'gender': 'male'}   
+        })
     },
 });
 

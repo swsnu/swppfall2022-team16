@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack } from 'react-bootstrap'
+import { Col, Container, Row, Stack } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import SideBar from '../components/SideBar'
 import SignupForm from '../components/SignupForm'
@@ -13,8 +13,14 @@ export default function SignupPage (): JSX.Element {
     <>
   <Stack direction='vertical' gap ={5}>
     <SideBar />
-    <SignupForm />
-    <div>If you already have your id, you can <a href='/login'>login</a> here.</div>
+    <Container>
+      <Row>
+        <Col>
+          <SignupForm />
+          <div>If you already have your id, you can <a href='/login'>login</a> here.</div>
+        </Col>
+      </Row>
+    </Container>
   </Stack>
   <Footer/>
   </>

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..';
 
@@ -20,11 +20,13 @@ export interface ShopItemInfo {
 }
 
 export interface ShopItemState {
-    shopitems: ShopItemInfo[]
+    shopitems: ShopItemInfo[],
+    current_shopitem: ShopItemInfo | null
 }
 
 const initialState : ShopItemState = {
-    shopitems: []
+    shopitems: [],
+    current_shopitem: null
 }
 
 export const fetchMainItems = createAsyncThunk(
@@ -35,10 +37,56 @@ export const fetchMainItems = createAsyncThunk(
     }
 )
 
+export const postShopItem = createAsyncThunk(
+    "shopitem/postShopItem", async (
+    shopitem : {
+    price : number;
+    type : string;
+}, {dispatch}) => {
+    const response = await axios.post('/api/shopitem/', shopitem);
+    dispatch(shopitemActions.postShopItem(response.data));
+});
+
+export const putShopItem = createAsyncThunk(
+    "shopitem/putShopItem", async (shopitem : ShopItemInfo, {dispatch}) => {
+    await axios.put(`/api/shopitem/${shopitem.id}/`, shopitem);
+    dispatch(shopitemActions.putShopItem(shopitem));
+});
+
+export const deleteShopItem = createAsyncThunk(
+    "shopitem/deleteShopItem", async (id : number, {dispatch}) => {
+    await axios.delete(`/api/shopitem/${id}/`);
+    dispatch(shopitemActions.deleteShopItem( { targetId : id }));
+});
+
+
 export const shopitemSlice = createSlice({
     name: "shopitem",
     initialState,
-    reducers:{},
+    reducers:{
+        putShopItem: (state, action: PayloadAction<ShopItemInfo>) => {
+            state.shopitems =  state.shopitems.map(
+                (value) => {
+                    if (value.id === action.payload.id)
+                        return action.payload;
+                    else return value;    
+                }
+            );
+
+            state.current_shopitem = action.payload;
+        },
+        postShopItem: (state, action: PayloadAction<ShopItemInfo>) => {
+            state.shopitems.push(action.payload);
+            state.current_shopitem = action.payload;
+        },
+        deleteShopItem: (state, action: PayloadAction<{ targetId : Number }>) => {
+            state.shopitems =  state.shopitems.filter(
+                (value) => { return value.id !== action.payload.targetId }
+            );
+
+            state.current_shopitem = null;
+        },    
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchMainItems.fulfilled, (state, action) => {
             state.shopitems = action.payload

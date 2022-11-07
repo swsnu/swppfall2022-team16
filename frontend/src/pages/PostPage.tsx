@@ -6,19 +6,21 @@ import PostComments from '../components/PostComments'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
 /*eslint-disable */
 
 export default function PostPage (): JSX.Element {
+  const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   return (<div>
     <TopBar />
     <Container>
       <Row>
         <Col>
-          <Post />
+          <Post id={Number(id)} />
         </Col>
         <Col>
-          <PostComments review_id={1} />
+          <PostComments review_id={Number(id)} />
         </Col>
       </Row>
     </Container>

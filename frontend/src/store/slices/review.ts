@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..';
 
@@ -18,11 +18,13 @@ export interface ReviewInfo {
 }
 
 export interface ReviewState {
-    reviews: ReviewInfo[]
+    reviews: ReviewInfo[],
+    current_review: ReviewInfo | null
 }
 
 const initialState : ReviewState = {
-    reviews: []
+    reviews: [],
+    current_review: null
 }
 
 export const fetchReviews = createAsyncThunk(
@@ -34,10 +36,57 @@ export const fetchReviews = createAsyncThunk(
     }
 )
 
+export const postReview = createAsyncThunk(
+    "review/postReview", async (
+    review : {
+    title: string;
+    content: string;
+    review_item: number;
+    rating: number;
+}, {dispatch}) => {
+    const response = await axios.post('/api/review/', review);
+    dispatch(reviewActions.postReview(response.data));
+});
+
+export const putReview = createAsyncThunk(
+    "review/putReview", async (review : ReviewInfo, {dispatch}) => {
+    await axios.put(`/api/review/${review.id}/`, review);
+    dispatch(reviewActions.putReview(review));
+});
+
+export const deleteReview = createAsyncThunk(
+    "review/deleteReview", async (id : number, {dispatch}) => {
+    await axios.delete(`/api/review/${id}/`);
+    dispatch(reviewActions.deleteReview( { targetId : id }));
+});
+
 export const reviewSlice = createSlice({
     name: "review",
     initialState,
-    reducers:{},
+    reducers:{
+        putReview: (state, action: PayloadAction<ReviewInfo>) => {
+            state.reviews =  state.reviews.map(
+                (value) => {
+                    if (value.id === action.payload.id)
+                        return action.payload;
+                    else return value;    
+                }
+            );
+
+            state.current_review = action.payload;
+        },
+        postReview: (state, action: PayloadAction<ReviewInfo>) => {
+            state.reviews.push(action.payload);
+            state.current_review = action.payload;
+        },
+        deleteReview: (state, action: PayloadAction<{ targetId : Number }>) => {
+            state.reviews =  state.reviews.filter(
+                (value) => { return value.id !== action.payload.targetId }
+            );
+
+            state.current_review = null;
+        },    
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchReviews.fulfilled, (state, action) => {
             state.reviews = action.payload
