@@ -31,7 +31,13 @@ export default function ProductPage (): JSX.Element {
           <ShopItem shopItem={shopItemState.shopitems[0]} />
         </Col>
         <Col>
-          <OrderForm />
+        <OrderForm 
+              itemName='Melange twill shirt'
+              sellerName='StyleNanda'
+              color='White'
+              size='M'
+              quantity = {10}
+            />
         </Col>
       </Row>
       <Row>
@@ -42,7 +48,7 @@ export default function ProductPage (): JSX.Element {
       <Row>
         {
           reviewState.reviews.map((review) => <Col>
-            <Review key={review.id} review={review}/>
+            <Review key={review.id} review={review}/>   
           </Col>)
         }
       </Row>

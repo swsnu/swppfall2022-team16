@@ -10,7 +10,9 @@ import Footer from '../components/Footer'
 /*eslint-disable */
 
 export default function MyPage (): JSX.Element {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
+  let time = new Date();
+
   return (<div>
     <TopBar />
     <br/>
@@ -25,11 +27,29 @@ export default function MyPage (): JSX.Element {
             <Button variant="primary">Edit</Button>
           </Card.Body>
       </Card>
-      <Purchased></Purchased>
-      <Purchased></Purchased>
+      <Purchased
+        itemName='Melange twill shirt'
+        itemPrice = {209}
+        shippingStatus = "Shipping"
+        purchaseDate = "2022/10/27"
+        />
+      <Purchased
+        itemName='BTS orange hoodle'
+        itemPrice = {59}
+        shippingStatus = "Complete"
+        purchaseDate = "2022/10/27"
+        />
       <br/>
-      <CommunityAlert></CommunityAlert>
-      <CommunityAlert></CommunityAlert>
+      <CommunityAlert
+        newCommentAuthor='Bethany'
+        newCommentPostedTime = {time}
+        newCommentedPostId={1}
+      />
+      <CommunityAlert
+        newCommentAuthor='Adam'
+        newCommentPostedTime = {time}
+        newCommentedPostId={1}
+      />
     </>
     <Footer/>
   </div>)

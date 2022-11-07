@@ -26,7 +26,7 @@ export default function ReviewForm (): JSX.Element {
           <option value = "4">Four</option>
           <option value = "5">Five</option>
         </Form.Select>
-        <Button variant = "secondary" type = "submit">
+        <Button variant = "secondary" type = "submit" onClick = {() => {}}>
          Post Your Review
         </Button>
       </Form>
