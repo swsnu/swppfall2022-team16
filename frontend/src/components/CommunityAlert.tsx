@@ -1,6 +1,6 @@
 import React from 'react'
-import { Stack, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Stack, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 /*eslint-disable */
 
 export interface IProps {

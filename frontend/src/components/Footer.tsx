@@ -8,7 +8,7 @@ export default function Footer (): JSX.Element {
   return (<>
     <Navbar fixed = "bottom" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href = '/'>BridgeUS inc.</Navbar.Brand>
+        <Navbar.Brand href = '/'>BridgeUS</Navbar.Brand>
         <Nav className ="side">
           <Nav.Link href = '/'>About</Nav.Link>
           <Nav.Link href = '/'>FAQ</Nav.Link>
