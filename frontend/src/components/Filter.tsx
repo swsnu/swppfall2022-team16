@@ -24,7 +24,15 @@ export default function Filter (props: { category: string, options: string[] }):
 
   return (
     <div>
-      <DropdownButton variant = 'dark' id="dropdown-basic-button" title = {selected}>
+      <style type="text/css">
+        {`
+    .btn-flat {
+      background-color: purple;
+      color: white;
+    }
+    `}
+      </style>
+      <DropdownButton variant = 'flat' id="dropdown-basic-button" title = {selected}>
         <Dropdown.Item>{props.category}</Dropdown.Item>
         <Dropdown.Divider />
         {
