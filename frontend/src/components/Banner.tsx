@@ -19,7 +19,7 @@ export default function Banner (): JSX.Element {
         alt="First slide"
       />
       <Carousel.Caption>
-        <Button variant="dark" size = 'sm'>SHOP NOW</Button>
+        <Button variant="dark" size = 'sm' href = '/search/karina'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -29,7 +29,7 @@ export default function Banner (): JSX.Element {
         alt="Second slide"
       />
       <Carousel.Caption>
-       <Button variant="dark" size = 'sm'>SHOP NOW</Button>
+       <Button variant="dark" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -39,7 +39,7 @@ export default function Banner (): JSX.Element {
         alt="Third slide"
       />
       <Carousel.Caption>
-        <Button variant="dark" size = 'sm'>SHOP NOW</Button>
+        <Button variant="dark" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>

@@ -43,9 +43,16 @@ export default function MainPage (): JSX.Element {
         {
           shopItemState.shopitems.map((shopItem) => <Col>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
+            <br/>
           </Col>)
         }
       </Row>
+      <div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
     </Container>
     <Footer/>
   </div>)

@@ -5,8 +5,15 @@ import Navbar from 'react-bootstrap/Navbar'
 /*eslint-disable */
 
 export default function Footer (): JSX.Element {
-  return (<>
-    <Navbar fixed = "bottom" bg="dark" variant="dark">
+  return (
+  <div className = 'fixed-bottom'>
+    <div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    <Navbar fixed = 'bottom' bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href = '/'>BridgeUS</Navbar.Brand>
         <Nav className ="side">
@@ -16,6 +23,6 @@ export default function Footer (): JSX.Element {
         </Nav>
       </Container>
     </Navbar>
-  </>
+  </div>
   )
 }
