@@ -84,6 +84,7 @@ class Review(models.Model):
     )       
 
     rating = models.IntegerField(null=True)
+    likes = models.IntegerField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
