@@ -24,7 +24,11 @@ def signup(request):
 
         usershop.save()
         
-        return HttpResponse(status=201)
+        user = authenticate(request, username=username, password=password)
+
+        login(request, user)  
+
+        return JsonResponse({'id' : user.id }, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 

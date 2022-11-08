@@ -43,6 +43,22 @@ export const login = createAsyncThunk(
     }
 )
 
+export const signup = createAsyncThunk(
+    'user/signup',
+    async (form: { username: string, password: string, nickname: string, height: number, weight: number, gender: string }, { dispatch }) => {
+      const response = await axios.post('/api/signup/', form)
+      return response.data
+    }
+)
+
+export const signout = createAsyncThunk(
+    'user/signout',
+    async () => {
+      const response = await axios.get('/api/signout/')
+      return response.data
+    }
+)
+
 export const userSlice = createSlice({
     name: "user",
     initialState,
@@ -56,8 +72,18 @@ export const userSlice = createSlice({
                 }
             ) ?? null
         }),
+        builder.addCase(signup.fulfilled, (state, action) => {
+            state.currentLoggedIn = state.users.find(
+                (value) => {
+                    return value.id === action.payload.id
+                }
+            ) ?? null
+        }),
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload;
+        }),
+        builder.addCase(signout.fulfilled, (state, action) => {
+            state.currentLoggedIn = null;
         })
     },
 });
