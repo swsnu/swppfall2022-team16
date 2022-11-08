@@ -12,7 +12,7 @@ export interface IProps {
 export default function Purchased (props : IProps): JSX.Element {
   return (
     <div className = "Purchases">
-      <Stack direction = "horizontal">
+      <Stack direction = "horizontal" gap ={3}>
         <h5>{props.itemName}</h5>
         <h3>{"$" + props.itemPrice}</h3>
         <p>{props.shippingStatus}</p>
