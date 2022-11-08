@@ -3,6 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import SplitButton from 'react-bootstrap/SplitButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button';
 
 
 /*eslint-disable */
@@ -23,7 +24,7 @@ export default function Filter (props: { category: string, options: string[] }):
 
   return (
     <div>
-      <DropdownButton id="dropdown-basic-button" title = {selected}>
+      <DropdownButton variant = 'dark' id="dropdown-basic-button" title = {selected}>
         <Dropdown.Item>{props.category}</Dropdown.Item>
         <Dropdown.Divider />
         {

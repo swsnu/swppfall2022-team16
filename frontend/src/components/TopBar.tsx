@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import {selectUser} from '../store/slices/user'
 import {useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 /*eslint-disable */
 
@@ -19,7 +20,7 @@ export default function TopBar (): JSX.Element {
         setloggedIn(true)
       } else setloggedIn(false)
   }, [userState.currentLoggedIn])
-
+  console.log('user' ,userState.currentLoggedIn?.username)
   if (loggedIn){
     const userId = userState.currentLoggedIn?.id
     const path = '/user/' + userId
