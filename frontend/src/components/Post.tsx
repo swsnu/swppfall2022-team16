@@ -1,5 +1,5 @@
 import { appendFileSync } from 'fs';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Stack } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,21 +18,24 @@ export default function Post(props: IProps): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate();
   const reviewState = useSelector(selectReview)
-  let numberOfLike = 1000; // have to get info from DB
+  const [numLike, setNumLike] = useState(1000); // have to get info from DB
 
   useEffect(() => {
     dispatch(fetchReviews())
   }, [dispatch])
   
-  const likeButtonHandler = () => {numberOfLike++}; // axios command necessary
+  const likeButtonHandler = () => {setNumLike(numLike + 1)}; // axios command necessary
 
   return <div>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }}>
       <Card.Img variant="top" src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg" style={{ width: '18rem' }} />
       <Card.ImgOverlay>
         <Stack direction = "horizontal">
-        <Button variant = "default" onClick={() => likeButtonHandler()}><AiFillLike/></Button>
-        <p>{numberOfLike}</p>
+        <Button variant = "default" onClick={(e) => {
+          e.stopPropagation()
+          likeButtonHandler()
+          }}><AiFillLike/></Button>
+        <p>{numLike}</p>
         </Stack>
       </Card.ImgOverlay>
       <Card.Body>
