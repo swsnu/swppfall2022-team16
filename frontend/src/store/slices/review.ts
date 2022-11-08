@@ -15,6 +15,7 @@ export interface ReviewInfo {
     author: number
     review_item: number
     rating: number
+    likes: number
 }
 
 export interface ReviewState {
