@@ -28,8 +28,15 @@ const initialState : UserState = {
 }
 
 
+export const fetchUsers = createAsyncThunk(
+    "user/fetchUsers", 
+    async () => {
+    const response = await axios.get<User[]>("api/user/");
+    return response.data ?? null;
+});
+
 export const login = createAsyncThunk(
-    'bridgeus/login',
+    'user/login',
     async (form: { username: string, password: string }, { dispatch }) => {
       const response = await axios.post('/api/signin/', form)
       return response.data
@@ -43,12 +50,14 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
-            state.currentLoggedIn = {'id':1,
-            'username': 'swpp',
-            'nickname': 'swpp',
-            'height': 180,
-            'weight': 70,
-            'gender': 'male'}   
+            state.currentLoggedIn = state.users.find(
+                (value) => {
+                    return value.id === action.payload.id
+                }
+            ) ?? null
+        }),
+        builder.addCase(fetchUsers.fulfilled, (state, action) => {
+            state.users = action.payload;
         })
     },
 });

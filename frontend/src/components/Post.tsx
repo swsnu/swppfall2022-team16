@@ -28,9 +28,9 @@ export default function Post(props: IProps): JSX.Element {
         <button>Like</button>
       </Card.ImgOverlay>
       <Card.Body>
-        <Card.Text as= "h5">{
-          reviewState.reviews.find((review) => review.id === props.id)?.author
-        }</Card.Text>
+        <Card.Text as= "h5">
+          {reviewState.reviews.find((review) => review.id === props.id)?.author}
+        </Card.Text>
       </Card.Body> 
     </Card>
   </div>

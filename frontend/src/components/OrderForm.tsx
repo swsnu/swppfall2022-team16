@@ -15,7 +15,7 @@ export interface IProps {
 export default function OrderForm (props : IProps): JSX.Element {
   return (
     <Stack direction="horizontal" gap={3}>
-      <img src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg"/>
+      <img style={{width: 200, height: 300}}src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg"/>
       <Stack direction="vertical" gap ={3}>
         <h1>{props.itemName}</h1>
         <p>{props.sellerName}</p>

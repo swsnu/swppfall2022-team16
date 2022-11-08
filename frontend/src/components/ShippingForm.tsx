@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Form } from 'react-bootstrap';
+import { Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 /*eslint-disable */
@@ -14,7 +14,11 @@ export default function ShippingForm (): JSX.Element {
   
   return (
     <div className='ShippingForm'>
-      <div>
+      <Container fluid>
+        <Row>
+        <Col sm = {4}>
+          <label>
+            <input type = "radio" name = "delivery"/>
         <Card style={{ width: '18rem' }}>
           <Card.Body>
             <Card.Title as= "h3">Fast Shipping</Card.Title>
@@ -22,15 +26,25 @@ export default function ShippingForm (): JSX.Element {
             <Card.Text as= "h5">$10.00</Card.Text>
           </Card.Body>
         </Card>
+        </label>
+        </Col>
+        <Col sm = {8}>
+        <label>
+            <input type = "radio" name = "delivery"/>
         <Card style={{ width: '18rem' }}>
           <Card.Body>
-            <Card.Title as= "h3">Fast Shipping</Card.Title>
+            <Card.Title as= "h3">Standard</Card.Title>
             <Card.Text as= "h5">3 ~ 5 business days</Card.Text>
             <Card.Text as= "h5">$5.00</Card.Text>
           </Card.Body>
         </Card>
+        </label>
+        </Col>
+        </Row>
+      </Container>
+      <div className = "pageTitle"> 
+        <h3>Shipping Address</h3>
       </div>
-      <div className = "pageTitle"> Shipping Address</div>
       <Form>
       <Form.Group className='RoadAddress' controlId = "formShippingForm">
       <Form.Label>Road Address</Form.Label>

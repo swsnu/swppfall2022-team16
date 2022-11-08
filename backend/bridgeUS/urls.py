@@ -6,6 +6,7 @@ urlpatterns = [
     path('token/', views.token, name='token'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
+    path('user/', views.userlist, name='userlist'),
     path('usershop/', views.usershop, name='usershop'),
     path('shopitem/', views.shopitemlist, name='shopitemlist'),
     path('shopitem/<int:item_id>/', views.shopitem, name='shopitem'),
