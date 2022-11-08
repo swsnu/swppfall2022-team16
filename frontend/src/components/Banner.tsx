@@ -2,6 +2,8 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import { Nav } from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
+import Button from 'react-bootstrap/Button';
+
 /*eslint-disable */
 
 
@@ -17,7 +19,7 @@ export default function Banner (): JSX.Element {
         alt="First slide"
       />
       <Carousel.Caption>
-        <button onClick = {()=> navigate('./search/:id')} >SHOP NOW</button>
+        <Button variant="dark" size = 'sm'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -27,7 +29,7 @@ export default function Banner (): JSX.Element {
         alt="Second slide"
       />
       <Carousel.Caption>
-        <button onClick = {()=> navigate('./search/:id')} >SHOP NOW</button>
+       <Button variant="dark" size = 'sm'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -37,7 +39,7 @@ export default function Banner (): JSX.Element {
         alt="Third slide"
       />
       <Carousel.Caption>
-        <button onClick = {()=> navigate('./search/:id')} >SHOP NOW</button>
+        <Button variant="dark" size = 'sm'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>
