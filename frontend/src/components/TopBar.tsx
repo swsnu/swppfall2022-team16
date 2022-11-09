@@ -59,7 +59,6 @@ export default function TopBar (): JSX.Element {
                   navigate(`/search/${searchText}`)
                 }}}
             />
-            <Button variant="outline-success" onClick={() => navigate(`/search/${searchText}`)} disabled={searchText === ""}>Search</Button>
           </Form>
           {
             loggedIn ? <Stack direction = 'horizontal'>
