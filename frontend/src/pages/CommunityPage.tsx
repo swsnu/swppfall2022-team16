@@ -40,6 +40,7 @@ export default function CommunityPage (): JSX.Element {
           }
         </Col>
         <Col>
+          <h4>Trending Post</h4>
           <Post id={1} />
         </Col>
         <Col>
@@ -60,6 +61,7 @@ export default function CommunityPage (): JSX.Element {
           }
         </Col>
         <Col>
+          <h4>Trending Post</h4>
           <Post id={2} />
         </Col>
         <Col>
