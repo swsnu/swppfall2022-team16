@@ -16,7 +16,7 @@ export default function ShippingForm (): JSX.Element {
     <div className='ShippingForm'>
       <Container fluid>
         <Row>
-        <Col sm = {4}>
+        <Col>
           <label>
             <input type = "radio" name = "delivery"/>
         <Card style={{ width: '18rem' }}>
@@ -28,7 +28,7 @@ export default function ShippingForm (): JSX.Element {
         </Card>
         </label>
         </Col>
-        <Col sm = {8}>
+        <Col>
         <label>
             <input type = "radio" name = "delivery"/>
         <Card style={{ width: '18rem' }}>
