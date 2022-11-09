@@ -25,16 +25,17 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
   
   return <div>
     <Card onClick = {() => navigate(`/community/${review.id}`)} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg" style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
+      <Card.Img variant="top" src={review.image_url} style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
         <Card.Title as= "h3">{review.content}</Card.Title>
         <Card.Text as= "p">{findAuthorName(review.author)}</Card.Text>
         <Stack direction = 'horizontal'>
-          <Icon.StarFill/>
-          <Icon.StarFill/>
-          <Icon.StarFill/>
-          <Icon.StarFill/>
-          <Icon.StarFill/>
+          {
+            [...Array(review.rating)].map((key) => <Icon.StarFill />)
+          }
+          {
+            [...Array(5 - review.rating)].map((key) => <Icon.Star />)
+          }
         </Stack>
       </Card.Body>
     </Card>

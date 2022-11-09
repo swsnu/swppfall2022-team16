@@ -38,7 +38,7 @@ export default function Post(props: IProps): JSX.Element {
 
   return <div>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg" style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
+      <Card.Img variant="top" src={review?.image_url} style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
       <Card.ImgOverlay>
         <Stack direction = "horizontal">
           <div className="me-auto"></div>

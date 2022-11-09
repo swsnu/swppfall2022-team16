@@ -16,6 +16,7 @@ export interface ReviewInfo {
     review_item: number
     rating: number
     likes: number
+    image_url: string
 }
 
 export interface ReviewState {

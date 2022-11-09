@@ -35,16 +35,16 @@ export default function CommunityPage (): JSX.Element {
         <Col>
           {
             shopItemState.shopitems &&
-              shopItemState.shopitems[0] &&
-            <ShopItem shopItem={shopItemState.shopitems[0]} />
+              shopItemState.shopitems[2] &&
+            <ShopItem shopItem={shopItemState.shopitems[2]} />
           }
         </Col>
         <Col>
           <h4>Trending Post</h4>
-          <Post id={1} />
+          <Post id={2} />
         </Col>
         <Col>
-          <PostComments review_id={1} />
+          <PostComments review_id={2} />
         </Col>
       </Row>
       <Row className="Header-row">
@@ -56,16 +56,16 @@ export default function CommunityPage (): JSX.Element {
         <Col>
           {
             shopItemState.shopitems &&
-              shopItemState.shopitems[1] &&
-            <ShopItem shopItem={shopItemState.shopitems[1]} />
+              shopItemState.shopitems[0] &&
+            <ShopItem shopItem={shopItemState.shopitems[0]} />
           }
         </Col>
         <Col>
           <h4>Trending Post</h4>
-          <Post id={2} />
+          <Post id={1} />
         </Col>
         <Col>
-          <PostComments review_id={2} />
+          <PostComments review_id={1} />
         </Col>
       </Row>
     </Container>
