@@ -24,7 +24,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
   
   return <div>
     <Card onClick = {() => navigate(`/product/${shopItem.id}`)} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '18rem' }} />
+      <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
         <Card.Title as= "h3">{shopItem.name}</Card.Title>
         <Card.Text as= "h5">{findAuthorName(shopItem.seller)}</Card.Text>
