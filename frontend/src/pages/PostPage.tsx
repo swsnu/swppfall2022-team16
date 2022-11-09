@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import Post from '../components/Post'
 import PostComments from '../components/PostComments'
@@ -21,6 +21,10 @@ export default function PostPage (): JSX.Element {
         </Col>
         <Col>
           <PostComments review_id={Number(id)} />
+          <InputGroup>
+            <Form.Control />
+            <Button>Comment</Button>
+          </InputGroup>
         </Col>
       </Row>
     </Container>

@@ -49,10 +49,10 @@ export default function PostComments (props: IProps): JSX.Element {
       return(
           <div className="Comment">
           <Stack direction = "horizontal" gap={3}>
-          <p className = "author">[{findAuthorName(comment.author)}]</p>
+          <p className = "author" style={{fontWeight: 'bold'}}>[{findAuthorName(comment.author)}]</p>
           <p className = 'content'>{comment.content}</p>
           </Stack>
-          {
+          {/* {
             (comment.author == userState.currentLoggedIn?.id) ? 
             (<div className = "button">
               <button className = "edit-comment-button" id="edit-comment-button" onClick={() => commentEditButtonHandler(comment)}>
@@ -63,7 +63,7 @@ export default function PostComments (props: IProps): JSX.Element {
               </button>
             </div>) 
             : (<div></div>)
-          }
+          } */}
         </div>
       );
   });
