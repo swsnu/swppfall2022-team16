@@ -20,7 +20,7 @@ export default function TopBar (): JSX.Element {
         setloggedIn(true)
       } else setloggedIn(false)
   }, [userState.currentLoggedIn])
-  console.log('user' ,userState.currentLoggedIn?.username)
+  
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
   const userName = userState.currentLoggedIn?.username
