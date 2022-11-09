@@ -23,7 +23,9 @@ export default function Post(props: IProps): JSX.Element {
   const [numLike, setNumLike] = useState(1000); // have to get info from DB
 
   useEffect(() => {
-    dispatch(fetchReviews())
+    dispatch(fetchReviews()).then(() => {
+      setNumLike(reviewState.reviews.find((review) => review.id === props.id)?.likes ?? 0)
+    })
     dispatch(fetchUsers())
   }, [dispatch])
   
@@ -37,14 +39,14 @@ export default function Post(props: IProps): JSX.Element {
   return <div>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }}>
       <Card.Img variant="top" src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg" style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
-      <Card.Title>Trending Post</Card.Title>
       <Card.ImgOverlay>
         <Stack direction = "horizontal">
-        <Button variant = "default" onClick={(e) => {
-          e.stopPropagation()
-          likeButtonHandler()
-          }}><AiFillLike/></Button>
-        <p>{numLike}</p>
+          <div className="me-auto"></div>
+          <Button style={{verticalAlign: 'middle'}} variant = "default" onClick={(e) => {
+            e.stopPropagation()
+            likeButtonHandler()
+            }}><AiFillLike/></Button>
+          {numLike}
         </Stack>
       </Card.ImgOverlay>
       <Card.Body>
