@@ -23,12 +23,14 @@ export default function ProductPage (): JSX.Element {
     dispatch(fetchReviews())
   }, [dispatch])
 
+  const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
+
   return (<div>
     <TopBar />
     <Container>
       <Row>
         <Col>
-          <ShopItem shopItem={shopItemState.shopitems[0]} />
+          <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))!} />
         </Col>
         <Col>
           <OrderForm 
@@ -45,11 +47,10 @@ export default function ProductPage (): JSX.Element {
           <h1>What others are saying</h1>
         </Col>
       </Row>
-      <Row>
+      <Row md={4}>
         {
-          reviewState.reviews.map((review) => <Col>
-            <Review key={review.id} review={review}/>   
-          </Col>)
+          reviews.length > 0 ? reviews.map((review) => <Col><Review key={review.id} review={review}/></Col>)
+            : <Col>No reviews yet.</Col>
         }
       </Row>
     </Container>

@@ -274,7 +274,7 @@ def reviewlist(request):
         if Review.objects.count() <= 0:
             return JsonResponse([{}], safe=False, status=204)
 
-        review_all_list = [{ 'id' : review.id, 'title' : review.title, 'content' : review.content, 'author': review.author.id } for review in Review.objects.all()]
+        review_all_list = [{ 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item.id, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes } for review in Review.objects.all()]
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
         body = request.body.decode()
@@ -306,7 +306,7 @@ def review(request, review_id):
         return HttpResponse(status=403)
 
     if request.method == 'GET':
-        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes }
+        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item.id, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes }
         return JsonResponse(response_dict, status=200)
     elif request.method == 'PUT':
         body = request.body.decode()
@@ -319,7 +319,7 @@ def review(request, review_id):
 
         review.save()
 
-        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes }
+        response_dict = { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item.id, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes }
         return JsonResponse(response_dict, status=200)
     else:
         review.delete()
