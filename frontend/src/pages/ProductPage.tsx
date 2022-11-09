@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import OrderForm from '../components/OrderForm'
+import OrderDetailForm from '../components/OrderDetailForm'
 import Review from '../components/Review'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
@@ -33,13 +33,13 @@ export default function ProductPage (): JSX.Element {
           <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))!} />
         </Col>
         <Col>
-          <OrderForm 
-            itemName='Melange twill shirt'
-            sellerName='StyleNanda'
-            color='White'
-            size='M'
-            quantity = {10}
-          />
+        <OrderDetailForm 
+              itemName='Melange twill shirt'
+              sellerName='StyleNanda'
+              quantity = {10}
+              price = {199}
+              recommendedSize = 'M'
+            />
         </Col>
       </Row>
       <Row>
