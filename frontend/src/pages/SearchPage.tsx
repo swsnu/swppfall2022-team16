@@ -23,6 +23,11 @@ export default function SearchPage (): JSX.Element {
     <TopBar/>
     <Container>
       <Row className="Header-row">
+        <Col>
+          <h1 className="Header" style={{color: 'deeppink'}}>Search result for '{text}'</h1>
+        </Col>
+      </Row>
+      <Row className="Header-row">
         <Col md={3}>
           <h1 className="Header">Top Results</h1>
         </Col>
