@@ -16,6 +16,7 @@ export interface IProps {
 }
 
 export default function Post(props: IProps): JSX.Element {
+  const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate();
   const reviewState = useSelector(selectReview)
@@ -37,8 +38,8 @@ export default function Post(props: IProps): JSX.Element {
 };
 
   return <div>
-    <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={review?.image_url} style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
+    <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <Card.Img variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.ImgOverlay>
         <Stack direction = "horizontal">
           <div className="me-auto"></div>

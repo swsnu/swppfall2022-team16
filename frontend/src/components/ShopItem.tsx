@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,7 @@ import { fetchUsers, selectUser, User } from '../store/slices/user';
 /*eslint-disable */
 
 export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Element {
+  const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const shopItem = props.shopItem
   const userState = useSelector(selectUser)
@@ -23,8 +24,8 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
 
   
   return <div>
-    <Card onClick = {() => navigate(`/product/${shopItem.id}`)} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '18rem', height: '24rem', objectFit: 'cover'}} />
+    <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
         <Card.Title as= "h3">{shopItem.name}</Card.Title>
         <Card.Text as= "h5">{findAuthorName(shopItem.seller)}</Card.Text>
