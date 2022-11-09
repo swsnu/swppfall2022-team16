@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Stack, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../store';
+import { fetchMainItems, selectShopItem } from '../store/slices/shopitem';
+import { UserOrderInfo } from '../store/slices/userorder';
 /*eslint-disable */
 
 export interface IProps {
@@ -10,17 +14,27 @@ export interface IProps {
   purchaseDate: string | undefined;
 }
 
-export default function Purchased (props : IProps): JSX.Element {
+export default function Purchased (props : {order: UserOrderInfo}): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+
+  const shopItemState = useSelector(selectShopItem)
+
+  useEffect(() => {
+    dispatch(fetchMainItems)
+  }, [dispatch])
+
+  const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.order.item_id)
+
   return (
     <div className = "Purchases">
       <Stack direction = "horizontal" gap ={3}>
-        <h5>{props.itemName}</h5>
-        <h3>{"$" + props.itemPrice}</h3>
-        <p>{props.shippingStatus}</p>
-        <h3>{props.purchaseDate}</h3>
+        <h5>{item?.name}</h5>
+        <h3>{"$" + item?.price}</h3>
+        <p>{props.order.status}</p>
+        {/* <h3>{props.purchaseDate}</h3> */}
       </Stack>
-      <Button variant = "secondary" type = "submit" onClick = {() => {navigate('/review/1')}}>
+      <Button variant = "secondary" type = "submit" onClick = {() => {navigate(`/review/${props.order.item_id}`)}}>
         Write your Review
       </Button>
     </div>

@@ -7,10 +7,12 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
 /*eslint-disable */
 
 
 export default function ReviewPage (): JSX.Element {
+  const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
 
@@ -28,7 +30,7 @@ export default function ReviewPage (): JSX.Element {
       </Row>
       <Row>
         <Col>
-          <ShopItem key={1} shopItem={shopItemState.shopitems[0]} />
+          <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))!} />
         </Col>
         <Col>
           <ReviewForm />

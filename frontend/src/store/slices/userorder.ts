@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { RootState } from '..';
 
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
@@ -10,8 +11,8 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 export interface UserOrderInfo {
     id: number
     user_id: number
-    ordered_item: number
-    order_status: string
+    item_id: number
+    status: string
 }
 
 export interface UserOrderState {
@@ -42,5 +43,6 @@ export const userOrderSlice = createSlice({
 });
 
 export const userOrderActions = userOrderSlice.actions;
+export const selectUserOrder = (state: RootState) => state.userorder
 
 export default userOrderSlice.reducer;
