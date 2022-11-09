@@ -21,26 +21,10 @@ export default function TopBar (): JSX.Element {
       } else setloggedIn(false)
   }, [userState.currentLoggedIn])
   console.log('user' ,userState.currentLoggedIn?.username)
-  if (loggedIn){
-    const userId = userState.currentLoggedIn?.id
-    const path = '/user/' + userId
-    const userName = userState.currentLoggedIn?.username
-    return (
-      <>
-      <Navbar sticky = "top" bg="light" variant="light">
-        <Container>
-          <Navbar.Brand href="/">{' '}BridgeUs</Navbar.Brand>
-          <Nav className ="side">
-            <Nav.Link href = '/community'>community</Nav.Link>
-            <input placeholder = 'search'></input>
-            <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-    </>
-    )
-  }
-  else return (
+  const userId = userState.currentLoggedIn?.id
+  const path = '/user/' + userId
+  const userName = userState.currentLoggedIn?.username
+  return (
     <>
     <Navbar sticky = "top" bg="light" variant="light">
       <Container>
@@ -58,7 +42,10 @@ export default function TopBar (): JSX.Element {
             />
             <Button variant="outline-success" onClick={() => navigate(`/search/${searchText}`)} disabled={searchText === ""}>Search</Button>
           </Form>
-          <Nav.Link href = '/login'>login</Nav.Link>
+          {
+            loggedIn ? <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
+             :  <Nav.Link href = '/login'>login</Nav.Link>
+          }
         </Nav>
       </Container>
     </Navbar>
