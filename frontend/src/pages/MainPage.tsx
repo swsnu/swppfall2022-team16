@@ -30,18 +30,19 @@ export default function MainPage (): JSX.Element {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col md={3}>
           <h1>Trending</h1>
         </Col>
+        <Col md={6}></Col>
         {
-          filters.map(({category, options}) => <Col>
+          filters.map(({category, options}) => <Col key={category} md={1}>
             <Filter key={category} category={category} options={options}/>
           </Col>)
         }
       </Row>
       <Row>
         {
-          shopItemState.shopitems.map((shopItem) => <Col>
+          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
           </Col>)

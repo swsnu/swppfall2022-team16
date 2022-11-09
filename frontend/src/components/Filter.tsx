@@ -36,13 +36,10 @@ export default function Filter (props: { category: string, options: string[] }):
         <Dropdown.Item>{props.category}</Dropdown.Item>
         <Dropdown.Divider />
         {
-          props.options.map((option) => <Dropdown.Item onClick={() => {setSelected(option)}} >
+          props.options.map((option) => <Dropdown.Item key={option} onClick={() => {setSelected(option)}} >
             {option}
           </Dropdown.Item>)
         }
-        {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
       </DropdownButton>
     </div>
   )
