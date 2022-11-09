@@ -7,14 +7,7 @@ import '../css/Footer.css'
 
 export default function Footer (): JSX.Element {
   return (
-  <div className = 'fixed-bottom'>
-    <div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-    </div>
-    <Navbar fixed = 'bottom' bg="dark" variant="dark" >
+    <Navbar bg="dark" variant="dark" >
       <Container>
         <Navbar.Brand href = '/'>BridgeUS</Navbar.Brand>
         <Nav className ="side">
@@ -24,6 +17,5 @@ export default function Footer (): JSX.Element {
         </Nav>
       </Container>
     </Navbar>
-  </div>
   )
 }
