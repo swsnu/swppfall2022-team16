@@ -16,7 +16,7 @@ const reducers = combineReducers({
   shopitemdetail: shopitemDetailReducer,
   review: reviewReducer,
   comment: commentReducer,
-  userorder: userorderReducer
+  userorder: userorderReducer,
 });
 
 const persistConfig = {
