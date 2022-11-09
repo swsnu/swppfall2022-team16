@@ -82,6 +82,8 @@ class Review(models.Model):
         on_delete = models.CASCADE,
         null=True
     )       
+    
+    image_url = models.TextField(null=True)
 
     rating = models.IntegerField(null=True)
     likes = models.IntegerField(null=True)
