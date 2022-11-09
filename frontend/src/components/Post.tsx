@@ -24,7 +24,7 @@ export default function Post(props: IProps): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchReviews())
-    dispatch(fetchUsers)
+    dispatch(fetchUsers())
   }, [dispatch])
   
   const likeButtonHandler = () => {setNumLike(numLike + 1)}; // axios command necessary

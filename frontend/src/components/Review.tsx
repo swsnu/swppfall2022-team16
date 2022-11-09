@@ -14,7 +14,7 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
   const review = props.review
 
   useEffect(() => {
-    dispatch(fetchUsers)
+    dispatch(fetchUsers())
   }, [dispatch])
 
   const findAuthorName = (ID : number | undefined) => {
