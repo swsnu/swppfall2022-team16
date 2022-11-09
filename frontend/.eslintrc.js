@@ -21,7 +21,9 @@ module.exports = {
     'react'
   ],
   ignorePatterns: [
-    'reportWebVitals.ts'
+    'reportWebVitals.ts',
+    '*.ts',
+    '*.tsx'
   ],
   rules: {
   }
