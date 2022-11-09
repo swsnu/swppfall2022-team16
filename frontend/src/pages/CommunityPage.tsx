@@ -26,7 +26,7 @@ export default function CommunityPage (): JSX.Element {
           <h1>Community</h1>
         </Col>
       </Row>
-      <Row>
+      <Row className="Header-row">
         <Col>
           <h2>Karina</h2>
         </Col>
@@ -46,7 +46,7 @@ export default function CommunityPage (): JSX.Element {
           <PostComments review_id={1} />
         </Col>
       </Row>
-      <Row>
+      <Row className="Header-row">
         <Col>
           <h2>Suga</h2>
         </Col>

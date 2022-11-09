@@ -29,7 +29,7 @@ export default function MainPage (): JSX.Element {
           <Banner />
         </Col>
       </Row>
-      <Row>
+      <Row className="Header-row">
         <Col md={3}>
           <h1>Trending</h1>
         </Col>

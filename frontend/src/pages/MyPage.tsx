@@ -40,7 +40,7 @@ export default function MyPage (): JSX.Element {
                   <Button variant="primary">Edit</Button>
                 </Card.Body>
             </Card>
-            <h1>Purchased</h1>
+            <h1 className="Header-row">Purchased</h1>
             <ListGroup>
               {
                 userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id))
@@ -48,7 +48,7 @@ export default function MyPage (): JSX.Element {
                     <ListGroup.Item key={userOrder.id}>
                       <Purchased order={userOrder} />
                     </ListGroup.Item>)
-              }
+              } 
               {/* <ListGroup.Item>
                 <Purchased
                   itemName='Melange twill shirt'
@@ -68,7 +68,7 @@ export default function MyPage (): JSX.Element {
             </ListGroup>
 
             <br/>
-            <h1>Community</h1>
+            <h1 className="Header-row">Community</h1>
             <ListGroup>
               <ListGroup.Item action>
                 <CommunityAlert

@@ -22,12 +22,13 @@ export default function SearchPage (): JSX.Element {
   return (<div>
     <TopBar/>
     <Container>
-      <Row>
-        <Col>
+      <Row className="Header-row">
+        <Col md={3}>
           <h1>Top Results</h1>
         </Col>
+        <Col md={6}></Col>
         {
-          filters.map(({category, options}) => <Col>
+          filters.map(({category, options}) => <Col key={category} md={1}>
             <Filter key={category} category={category} options={options}/>
           </Col>)
         }
@@ -40,19 +41,14 @@ export default function SearchPage (): JSX.Element {
         }
       </Row>
       <Row>
-        <Col>
-          <Button>Show More</Button>
+        <Col style={{textAlign: 'center'}}>
+          <Button style={{marginTop: '16px'}}>Show More</Button>
         </Col>
       </Row>
-      <Row>
+      <Row className="Header-row">
         <Col>
           <h1>Recommendations</h1>
         </Col>
-        {
-          filters.map(({category, options}) => <Col>
-            <Filter key={category} category={category} options={options}/>
-          </Col>)
-        }
       </Row>
       <Row>
         {
