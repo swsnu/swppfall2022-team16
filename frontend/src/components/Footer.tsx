@@ -7,7 +7,7 @@ import '../css/Footer.css'
 
 export default function Footer (): JSX.Element {
   return (
-    <Navbar bg="dark" variant="dark" >
+    <Navbar fixed = 'bottom' bg="dark" variant="dark" >
       <Container>
         <Navbar.Brand href = '/'>BridgeUS</Navbar.Brand>
         <Nav className ="side">

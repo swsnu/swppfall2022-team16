@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import { Button, Form, Nav } from 'react-bootstrap'
+import { Button, Form, Nav, Stack } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import {selectUser} from '../store/slices/user'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import {signout} from '../store/slices/user'
+import { AppDispatch } from '../store'
 /*eslint-disable */
 
 
@@ -19,13 +20,27 @@ export default function TopBar (): JSX.Element {
       if (userState.currentLoggedIn){
         setloggedIn(true)
       } else setloggedIn(false)
-  }, [userState.currentLoggedIn])
+  })
   
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
   const userName = userState.currentLoggedIn?.username
+  const dispatch = useDispatch<AppDispatch>()
+  const loggingout = async () => {
+    setloggedIn(false)
+    dispatch(signout())
+    navigate('/')
+  }
   return (
     <>
+     <style type="text/css">
+        {`
+    .btn-signout {
+      background-color: purple;
+      color: white;
+    }
+    `}
+      </style>
     <Navbar sticky = "top" bg="light" variant="light">
       <Container>
         <Navbar.Brand href="/">{' '}BridgeUs</Navbar.Brand>
@@ -47,7 +62,10 @@ export default function TopBar (): JSX.Element {
             <Button variant="outline-success" onClick={() => navigate(`/search/${searchText}`)} disabled={searchText === ""}>Search</Button>
           </Form>
           {
-            loggedIn ? <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
+            loggedIn ? <Stack direction = 'horizontal'>
+              <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
+              <Button variant = 'signout' onClick = {() => loggingout()} >log out</Button>
+            </Stack>
              :  <Nav.Link href = '/login'>login</Nav.Link>
           }
         </Nav>
