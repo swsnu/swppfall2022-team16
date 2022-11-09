@@ -14,35 +14,7 @@ export default function ShippingForm (): JSX.Element {
   
   return (
     <div className='ShippingForm'>
-      <Container fluid>
-        <Row>
-        <Col>
-          <label>
-            <input type = "radio" name = "delivery"/>
-        <Card style={{ width: '18rem' }}>
-          <Card.Body>
-            <Card.Title as= "h3">Fast Shipping</Card.Title>
-            <Card.Text as= "h5">1 ~ 3 business days</Card.Text>
-            <Card.Text as= "h5">$10.00</Card.Text>
-          </Card.Body>
-        </Card>
-        </label>
-        </Col>
-        <Col>
-        <label>
-            <input type = "radio" name = "delivery"/>
-        <Card style={{ width: '18rem' }}>
-          <Card.Body>
-            <Card.Title as= "h3">Standard</Card.Title>
-            <Card.Text as= "h5">3 ~ 5 business days</Card.Text>
-            <Card.Text as= "h5">$5.00</Card.Text>
-          </Card.Body>
-        </Card>
-        </label>
-        </Col>
-        </Row>
-      </Container>
-      <div className = "pageTitle"> 
+      <div className = "pageTitle Header-row"> 
         <h3>Shipping Address</h3>
       </div>
       <Form>

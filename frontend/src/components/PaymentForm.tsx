@@ -5,7 +5,7 @@ import { AppDispatch } from '../store';
 
 /*eslint-disable */
 
-export default function PaymentForm (): JSX.Element {
+export default function PaymentForm (props: {shippingFee: number}): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   return <div>
     {/* Overall structure of the layout. Need to integrate and get data from the redux store */}
@@ -30,7 +30,7 @@ export default function PaymentForm (): JSX.Element {
         <div className = 'subtotal'>
           <Stack direction = 'horizontal'>
             <div className = "subtotal">Shipping Fee</div>
-            <div className = "subtotal ms-auto">$10.00</div>
+            <div className = "subtotal ms-auto">${props.shippingFee}.00</div>
           </Stack>
         </div>
       </Stack>
@@ -42,7 +42,7 @@ export default function PaymentForm (): JSX.Element {
         }}></hr>
       <Stack direction = 'horizontal' gap = {5}>
         <div className = "total">Total</div>
-        <div className = "totalfee ms-auto">$200.00</div>
+        <div className = "totalfee ms-auto">${190 + props.shippingFee}.00</div>
       </Stack>
       <hr style={{
           background: 'grey',
@@ -52,7 +52,7 @@ export default function PaymentForm (): JSX.Element {
         }}></hr>
       <Stack direction = 'horizontal'>
         <div className = 'remainingfee'>Remaining Credits</div>
-        <div className = 'remainingfee ms-auto'>$100.00</div>
+        <div className = 'remainingfee ms-auto'>${110 - props.shippingFee}.00</div>
       </Stack>
       <hr style={{
           background: 'grey',

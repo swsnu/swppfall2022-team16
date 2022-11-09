@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { Col, Container, Row, Stack } from 'react-bootstrap'
+import { Col, Container, Image, Row, Stack, Table } from 'react-bootstrap'
 /*eslint-disable */
 
 export interface IProps {
@@ -15,22 +15,26 @@ export interface IProps {
 export default function OrderForm (props : IProps): JSX.Element {
   return (
     <Stack direction="horizontal" gap={3}>
-      <img style={{width: 200, height: 300}}src="https://img.sbs.co.kr/newsnet/etv/upload/2020/10/28/30000654805_1280.jpg"/>
+      <Image rounded style={{width: 210, height: 280, objectFit: 'cover'}} src="https://i0.wp.com/www.fashionchingu.com/wp-content/uploads/2022/10/Jimin-BTS-Beige-Stripe-Patterned-Sweater-2-270x370.jpg"/>
       <Stack direction="vertical" gap ={3}>
-        <h1>{props.itemName}</h1>
-        <p>{props.sellerName}</p>
-        <Container>
-          <Row>
-            <Col>Color</Col>
-            <Col>Size</Col>
-            <Col>Quantity</Col>
-          </Row>
-          <Row>
-            <Col>{props.color}</Col>
-            <Col>{props.size}</Col>
-            <Col>{props.quantity}</Col>
-          </Row>
-        </Container>
+        <h2>{props.itemName}</h2>
+        <h4>{props.sellerName}</h4>
+        <Table>
+          <thead>
+            <tr>
+              <th>Color</th>
+              <th>Size</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{props.color}</td>
+              <td>{props.size}</td>
+              <td>{props.quantity}</td>
+            </tr>
+          </tbody>
+        </Table>
       </Stack>
     </Stack>
   );
