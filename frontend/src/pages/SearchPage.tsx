@@ -24,7 +24,7 @@ export default function SearchPage (): JSX.Element {
     <Container>
       <Row className="Header-row">
         <Col md={3}>
-          <h1>Top Results</h1>
+          <h1 className="Header">Top Results</h1>
         </Col>
         <Col md={6}></Col>
         {
@@ -47,7 +47,7 @@ export default function SearchPage (): JSX.Element {
       </Row>
       <Row className="Header-row">
         <Col>
-          <h1>Recommendations</h1>
+          <h1 className="Header">Recommendations</h1>
         </Col>
       </Row>
       <Row>

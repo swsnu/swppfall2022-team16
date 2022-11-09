@@ -31,7 +31,7 @@ export default function MainPage (): JSX.Element {
       </Row>
       <Row className="Header-row">
         <Col md={3}>
-          <h1>Trending</h1>
+          <h1 className="Header">Trending</h1>
         </Col>
         <Col md={6}></Col>
         {

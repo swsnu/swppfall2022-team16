@@ -40,3 +40,7 @@
 .Header-row {
   padding-top: 24px;
 }
+
+.Header {
+  font-weight: bold;
+}

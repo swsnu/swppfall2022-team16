@@ -21,9 +21,9 @@ export default function CommunityPage (): JSX.Element {
   return (<div>
     <TopBar />
     <Container>
-      <Row>
+      <Row className="Header-row">
         <Col>
-          <h1>Community</h1>
+          <h1 className="Header">Community</h1>
         </Col>
       </Row>
       <Row className="Header-row">
