@@ -46,10 +46,10 @@ export default function ProductPage (): JSX.Element {
         </Col>
         <Col style={{paddingTop: '144px'}}>
           <OrderDetailForm 
-                itemName='Melange twill shirt'
-                sellerName='StyleNanda'
+                itemName={item?.name}
+                sellerName={findAuthorName(item?.seller)}
                 quantity = {10}
-                price = {199}
+                price = {item?.price}
                 recommendedSize = 'M'
               />
         </Col>
