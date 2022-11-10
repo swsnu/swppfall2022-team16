@@ -28,7 +28,7 @@ export default function SearchPage (): JSX.Element {
           <h1 className="Header" style={{color: 'deeppink'}}>Search result for '{text}'</h1>
         </Col>
       </Row>
-      <Row className="Header-row">
+      <Row className="Header-row" style={{backgroundColor: 'gainsboro', paddingTop: '16px'}}>
         <Col md={3}>
           <h1 className="Header">Top Results</h1>
         </Col>
@@ -44,14 +44,14 @@ export default function SearchPage (): JSX.Element {
           </Button>
         </Col>
       </Row>
-      <Row>
+      <Row style={{backgroundColor: 'gainsboro'}}>
         {
           shopItemState.shopitems.map((shopItem) => <Col>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
           </Col>)
         }
       </Row>
-      <Row>
+      <Row style={{backgroundColor: 'gainsboro', paddingBottom: '16px'}}>
         <Col style={{textAlign: 'center'}}>
           <Button style={{marginTop: '16px'}}>Show More</Button>
         </Col>

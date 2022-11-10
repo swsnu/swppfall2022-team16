@@ -1,19 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Row, Stack } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import OrderForm from '../components/OrderForm'
 import PaymentForm from '../components/PaymentForm'
 import ShippingForm from '../components/ShippingForm'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export default function PaymentPage (): JSX.Element {
+  const { id } = useParams()
   const navigate = useNavigate()
   const [shippingOption, setShippingOption] = useState<string>("Fast")
   const dispatch = useDispatch<AppDispatch>()
+  const shopItemState = useSelector(selectShopItem)
+  const userState = useSelector(selectUser)
+
+  useEffect(() => {
+    dispatch(fetchMainItems())
+    dispatch(fetchUsers())
+  }, [dispatch])
+
+  const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
+
+  const findAuthorName = (ID : number | undefined) => {
+    return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
+  };
+
   return (<div>
     <TopBar />
     <Container>
@@ -26,11 +43,12 @@ export default function PaymentPage (): JSX.Element {
         <Col>
           <Stack>
             <OrderForm 
-              itemName='Melange twill shirt'
-              sellerName='StyleNanda'
+              imageURL={item?.image_url}
+              itemName={item?.name}
+              sellerName={findAuthorName(item?.seller)}
               color='White'
               size='M'
-              quantity = {10}
+              quantity = {1}
             />
             
             <Container fluid>

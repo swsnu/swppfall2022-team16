@@ -46,6 +46,7 @@ export default function ProductPage (): JSX.Element {
         </Col>
         <Col style={{paddingTop: '144px'}}>
           <OrderDetailForm 
+                itemID={item?.id}
                 itemName={item?.name}
                 sellerName={findAuthorName(item?.seller)}
                 quantity = {10}

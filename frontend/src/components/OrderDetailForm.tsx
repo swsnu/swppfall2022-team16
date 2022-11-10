@@ -5,6 +5,7 @@ import { Badge, Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 
 export interface IProps {
+  itemID: number | undefined;
   itemName: string | undefined;
   sellerName: string | undefined;
   quantity: number;
@@ -49,7 +50,7 @@ export default function OrderDetailForm (props : IProps): JSX.Element {
         </Form>
         </Card.Text>
         <Button variant="primary">Add to Cart</Button>
-        <Button variant="secondary" onClick = {() => {navigate("/payment")}}>Buy Now</Button>
+        <Button variant="secondary" onClick = {() => {navigate(`/payment/${props.itemID}`)}}>Buy Now</Button>
       </Card.Body>
     </Card>
   );

@@ -31,7 +31,7 @@ export default function CommunityPage (): JSX.Element {
           <h2>Karina</h2>
         </Col>
       </Row>
-      <Row md={4}>
+      <Row md={4} style={{backgroundColor: 'gainsboro', padding: '16px 0'}}>
         <Col>
           {
             shopItemState.shopitems &&
@@ -52,7 +52,7 @@ export default function CommunityPage (): JSX.Element {
           <h2>Suga</h2>
         </Col>
       </Row>
-      <Row md={4}>
+      <Row md={4} style={{backgroundColor: 'gainsboro', padding: '16px 0'}}>
         <Col>
           {
             shopItemState.shopitems &&
