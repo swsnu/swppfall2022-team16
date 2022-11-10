@@ -24,7 +24,7 @@ export default function TopBar (): JSX.Element {
   
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
-  const userName = userState.currentLoggedIn?.username
+  const userName = userState.currentLoggedIn?.nickname
   const dispatch = useDispatch<AppDispatch>()
   const loggingout = async () => {
     setloggedIn(false)
