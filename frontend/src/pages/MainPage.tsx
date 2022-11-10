@@ -10,6 +10,7 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
+import '../css/mainpage.css'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -30,6 +31,9 @@ export default function MainPage (): JSX.Element {
           <Banner />
         </Col>
       </Row>
+      <br/>
+      <br/>
+      <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
           <h1 className="Header">Trending</h1>
@@ -54,6 +58,7 @@ export default function MainPage (): JSX.Element {
           </Col>)
         }
       </Row>
+      </div>
     </Container>
     <Footer/>
   </div>)
