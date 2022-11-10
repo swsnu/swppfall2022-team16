@@ -22,8 +22,6 @@ module.exports = {
   ],
   ignorePatterns: [
     'reportWebVitals.ts',
-    '*.ts',
-    '*.tsx'
   ],
   rules: {
   }
