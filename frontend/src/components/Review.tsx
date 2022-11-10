@@ -28,8 +28,8 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
     <Card onClick = {() => navigate(`/community/${review.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Card.Img variant="top" src={review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
-        <Card.Title as= "h3">{review.content}</Card.Title>
-        <Card.Text as= "p">{findAuthorName(review.author)}</Card.Text>
+        <Card.Title >{review.content}</Card.Title>
+        <Card.Text >{findAuthorName(review.author)}</Card.Text>
         <Stack direction = 'horizontal'>
           {
             [...Array(review.rating)].map((key) => <Icon.StarFill />)

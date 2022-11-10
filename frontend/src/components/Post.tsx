@@ -52,7 +52,7 @@ export default function Post(props: IProps): JSX.Element {
       </Card.ImgOverlay>
       <Card.Body>
         <Card.Text as= "h5">
-          {findAuthorName(review?.author)}
+          @{findAuthorName(review?.author)}
         </Card.Text>
       </Card.Body> 
     </Card>

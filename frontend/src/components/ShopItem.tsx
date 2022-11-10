@@ -27,8 +27,8 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
     <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
-        <Card.Title as= "h3">{shopItem.name}</Card.Title>
-        <Card.Text as= "h5">{findAuthorName(shopItem.seller)}</Card.Text>
+        <Card.Title >{shopItem.name}</Card.Title>
+        <Card.Text >{findAuthorName(shopItem.seller)}</Card.Text>
       </Card.Body>
     </Card>
   </div>
