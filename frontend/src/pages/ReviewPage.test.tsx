@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen } from "@testing-library/react"
 import { renderWithProviders, stubShopItemState } from '../test-utils/mock'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import SignupPage from './SignupPage'
 import ReviewPage from './ReviewPage'
 import { ShopItemState } from '../store/slices/shopitem'
 
@@ -38,7 +37,7 @@ const renderReviewPage = (shopItemState: ShopItemState) => {
   )
 }
 
-describe('<SignupPage />', () => {
+describe('<ReviewPage />', () => {
   it('should render without errors', () => {
     renderReviewPage(stubShopItemState)
     expect(mockDispatch).toHaveBeenCalled()
