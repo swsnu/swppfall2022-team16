@@ -1,6 +1,8 @@
 import React from 'react'
 import { render, screen } from "@testing-library/react"
 import LoginPage from "./LoginPage"
+import { renderWithProviders } from '../test-utils/mock'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 jest.mock('../components/SideBar', () => () => (
   <div data-testid='spySideBar'></div>
@@ -20,9 +22,19 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch
 }))
 
+const renderLoginPage = () => {
+  renderWithProviders(
+    <MemoryRouter initialEntries={['/login']}>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </MemoryRouter>
+  )
+}
+
 describe('<LoginPage />', () => {
   it('should render without errors', () => {
-    render(<LoginPage />)
+    renderLoginPage()
     expect(screen.getAllByTestId('spySideBar')).toHaveLength(1)
     expect(screen.getAllByTestId('spyLoginForm')).toHaveLength(1)
     expect(screen.getAllByTestId('spyFooter')).toHaveLength(1)
