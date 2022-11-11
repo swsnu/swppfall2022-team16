@@ -48,7 +48,7 @@ export default function OrderDetailForm (props: IProps): JSX.Element {
               <option value = "3">L</option>
             </Form.Select>
             <Form.Text style={{ width: '20rem' }}>
-              { 'recommendddded size: ' + props.recommendedSize }
+              { 'recommended size: ' + props.recommendedSize }
             </Form.Text>
           </Stack>
         </Form>
