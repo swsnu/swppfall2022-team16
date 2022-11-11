@@ -3,6 +3,7 @@ dist: bionic
 jobs:
   include:
     - language: node_js
+      python: "3.9.6"
       node_js: 14
       addons:
         sonarcloud:
@@ -15,20 +16,15 @@ jobs:
         - gem install coveralls-lcov
         - yarn install
         - yarn global add coveralls
+        - cd ../backend
+        - pip install -r requirements.txt
+        - pip install coveralls
+        - cd frontend
       script:
         # - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
-
-
-    - language: python
-      python: "3.9.6"
-      install:
-        - cd backend
-        - pip install -r requirements.txt
-        - pip install coveralls
-
-      script:
+        - cd ../backend
         # - pylint **/*.py --load-plugins pylint_django
         - coverage run --source='.' manage.py test
         - coverage xml
