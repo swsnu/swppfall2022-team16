@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { AppStore, RootState } from "../store";
 import userReducer from '../store/slices/user'
 import userShopReducer from '../store/slices/usershop'
-import shopitemReducer from '../store/slices/shopitem'
+import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer from '../store/slices/shopitemdetail'
 import reviewReducer from '../store/slices/review'
 import commentReducer from '../store/slices/comment'
@@ -33,6 +33,13 @@ export const getMockStore = (preloadedState?: PreloadedState<RootState>) => {
     preloadedState,
   });
 };
+
+export const stubShopItemState: ShopItemState = {
+  shopitems: [
+    { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
+  ],
+  current_shopitem: null
+}
 
 const persistConfig = {
     key: 'root',
