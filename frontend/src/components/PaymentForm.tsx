@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../store';
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store'
 
 /*eslint-disable */
 

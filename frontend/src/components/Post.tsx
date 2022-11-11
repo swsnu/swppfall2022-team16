@@ -1,14 +1,11 @@
-import { appendFileSync } from 'fs';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Stack } from 'react-bootstrap'
-import CardHeader from 'react-bootstrap/esm/CardHeader';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom'
-import { AppDispatch } from '../store';
-import { fetchReviews, selectReview } from '../store/slices/review';
-import * as Icon from 'react-bootstrap-icons';
-import {AiFillLike} from "react-icons/ai"
-import { fetchUsers, selectUser, User } from '../store/slices/user';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AppDispatch } from '../store'
+import { fetchReviews, selectReview } from '../store/slices/review'
+import { AiFillLike } from 'react-icons/ai'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export interface IProps {

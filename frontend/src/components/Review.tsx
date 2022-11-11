@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import * as Icon from 'react-bootstrap-icons';
-import { ReviewInfo } from '../store/slices/review';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store';
-import { fetchUsers, selectUser, User } from '../store/slices/user';
+import * as Icon from 'react-bootstrap-icons'
+import { ReviewInfo } from '../store/slices/review'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../store'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export default function Review (props: { review: ReviewInfo }): JSX.Element {

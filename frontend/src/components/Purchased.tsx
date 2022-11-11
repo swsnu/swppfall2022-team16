@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { Stack, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { AppDispatch } from '../store';
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem';
-import { UserOrderInfo } from '../store/slices/userorder';
+import { Stack, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AppDispatch } from '../store'
+import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { UserOrderInfo } from '../store/slices/userorder'
 /*eslint-disable */
 
 export interface IProps {

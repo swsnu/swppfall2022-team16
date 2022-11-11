@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Stack } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom'
+import { Button, Form, Stack } from 'react-bootstrap'
 
 /*eslint-disable */
 

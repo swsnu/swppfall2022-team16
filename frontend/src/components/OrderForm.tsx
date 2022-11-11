@@ -1,7 +1,5 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
-import { Col, Container, Image, Row, Stack, Table } from 'react-bootstrap'
+import { Image, Stack, Table } from 'react-bootstrap'
 /*eslint-disable */
 
 export interface IProps {

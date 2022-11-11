@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Col, Container, Image, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
 import Filter, { filters } from '../components/Filter'

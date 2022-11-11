@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Nav, Stack } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
-import {selectUser} from '../store/slices/user'
-import {useSelector, useDispatch} from 'react-redux'
+import { selectUser, signout } from '../store/slices/user'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {signout} from '../store/slices/user'
 import { AppDispatch } from '../store'
 /*eslint-disable */
 

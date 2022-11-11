@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Stack } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store';
-import { CommentInfo, fetchComments, selectComment } from '../store/slices/comment';
-import { fetchUsers, selectUser, User } from '../store/slices/user';
+import { Stack } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../store'
+import { CommentInfo, fetchComments, selectComment } from '../store/slices/comment'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export interface IProps {

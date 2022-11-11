@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { RootState } from '..';
+import { RootState } from '..'
 
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
