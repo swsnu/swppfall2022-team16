@@ -8,11 +8,11 @@ import json
 class BlogTestCase(TestCase):
     def test_csrf(self):
         # data init
-        new_user = CustomUser(username='swpp', password='iluvswpp')
+        new_user = CustomUser(username='swpp', password='iluvswpp', nickname='user1')
 
         new_user.save()
 
-        new_user2 = CustomUser(username='swpp2', password='iluvswpp2')
+        new_user2 = CustomUser(username='swpp2', password='iluvswpp2', nickname='user2')
 
         new_user2.save()
         
@@ -119,15 +119,15 @@ class BlogTestCase(TestCase):
         new_review = Review(title='I Love SWPP!',review_item=new_shopitem1 ,content='Believe it or not', author=new_user)
         new_review.save()
         
-        response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
-
-        self.assertEqual(response.status_code, 204)
-
         new_review2 = Review(title='I Love SWPP!2',review_item=new_shopitem2, content='Believe it or not2', author=new_user2)
         new_review2.save()
         
         new_review3 = Review(title='I Love SWPP!3',review_item=new_shopitem3, content='Believe it or not3', author=new_user)
         new_review3.save()
+
+        response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 204)
 
         new_comment = Comment(review=new_review, content='Comment!', author=new_user)
         new_comment.save()
@@ -177,6 +177,11 @@ class BlogTestCase(TestCase):
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 201)
+
+        new_review4 = Review.objects.get(id=4)
+        new_review4.review_item = new_shopitem3
+        new_review4.save()
+
     # test review_detail
         response = client.get('/api/token/')
         csrftoken = response.cookies['csrftoken'].value     
@@ -195,8 +200,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-
-        response = client.put('/api/review/1/', json.dumps({'title' : "test", 'content' : "test"}),
+        response = client.put('/api/review/4/', json.dumps({'title' : "test4", 'content' : "test4"}),
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)
@@ -205,7 +209,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        response = client.delete('/api/review/3/', HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.delete('/api/review/4/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)
     # test review_comments
@@ -251,7 +255,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-        response = client.put('/api/comment/1/', json.dumps({'title' : "test", 'content' : "test"}),
+        response = client.put('/api/comment/3/', json.dumps({'title' : "test", 'content' : "test"}),
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)
@@ -260,7 +264,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        response = client.delete('/api/comment/1/', HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.delete('/api/comment/3/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)    
         pass
