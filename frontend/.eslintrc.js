@@ -21,7 +21,11 @@ module.exports = {
     'react'
   ],
   ignorePatterns: [
+    'react-app-env.d.ts',
+    'setupTests.ts',
+    'mock.tsx',
     'reportWebVitals.ts',
+    '*.test.tsx'
   ],
   rules: {
   }
