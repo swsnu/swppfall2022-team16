@@ -84,7 +84,7 @@ def usershop(request, user_id):
 
     usershop = UserShop.objects.filter(user=user).first()    
 
-    response_dict = { 'id' : usershop.id, 'favorite_clothes' : usershop.favorite_clothes, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
+    response_dict = { 'id' : usershop.id, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
     return JsonResponse(response_dict, safe=False, status=200)
 
 @ensure_csrf_cookie
