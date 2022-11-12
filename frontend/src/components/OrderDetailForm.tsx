@@ -1,27 +1,30 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { Badge, Form, Stack } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { Form, Stack } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 export interface IProps {
-  itemID: number | undefined;
-  itemName: string | undefined;
-  sellerName: string | undefined;
-  quantity: number;
-  price: number | undefined;
-  recommendedSize: string | undefined;
+  itemID?: number | undefined
+  itemName: string | undefined
+  sellerName: string | undefined
+  quantity: number
+  price: number | undefined
+  recommendedSize: string
 }
 
-export default function OrderDetailForm (props : IProps): JSX.Element {
+export default function OrderDetailForm (props: IProps): JSX.Element {
   const navigate = useNavigate()
-
+  
   return (
     <Card style={{ width: '36rem' }}>
       <Card.Body>
         <Card.Title>★★★★☆</Card.Title>
         <Card.Text>
-          <span style={{fontSize: '24px', fontWeight: 'bold'}}>{"$" + props.price}</span>
+          <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
+            { '$' + (props.price !== undefined ? props.price.toString() : '0') }
+          </span>
+        </Card.Text>
         <Form>
           <Form.Select aria-label = "Color">
             <option>White</option>
@@ -43,15 +46,14 @@ export default function OrderDetailForm (props : IProps): JSX.Element {
               <option value = "2">M</option>
               <option value = "3">L</option>
             </Form.Select>
-            <Form.Text style={{width: '20rem'}}>
-              {"recommended size: " + props.recommendedSize}
-            </Form.Text> 
+            <Form.Text style={{ width: '20rem' }}>
+              { 'recommended size: ' + props.recommendedSize }
+            </Form.Text>
           </Stack>
         </Form>
-        </Card.Text>
-        <Button variant="primary">Add to Cart</Button>
-        <Button variant="secondary" onClick = {() => {navigate(`/payment/${props.itemID}`)}}>Buy Now</Button>
+        <Button variant='primary'>Add to Cart</Button>
+        <Button variant='secondary' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
       </Card.Body>
     </Card>
-  );
+  )
 }

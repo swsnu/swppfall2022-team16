@@ -1,14 +1,11 @@
-import { appendFileSync } from 'fs';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Stack } from 'react-bootstrap'
-import CardHeader from 'react-bootstrap/esm/CardHeader';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom'
-import { AppDispatch } from '../store';
-import { fetchReviews, selectReview } from '../store/slices/review';
-import * as Icon from 'react-bootstrap-icons';
-import {AiFillLike} from "react-icons/ai"
-import { fetchUsers, selectUser, User } from '../store/slices/user';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AppDispatch } from '../store'
+import { fetchReviews, selectReview } from '../store/slices/review'
+import { AiFillLike } from 'react-icons/ai'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export interface IProps {
@@ -39,7 +36,7 @@ export default function Post(props: IProps): JSX.Element {
 
   return <div>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-      <Card.Img variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
+      <Card.Img alt = "postimage" variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.ImgOverlay>
         <Stack direction = "horizontal">
           <div className="me-auto"></div>
@@ -51,7 +48,7 @@ export default function Post(props: IProps): JSX.Element {
         </Stack>
       </Card.ImgOverlay>
       <Card.Body>
-        <Card.Text as= "h5">
+        <Card.Text as= "h5" data-testid = "test">
           @{findAuthorName(review?.author)}
         </Card.Text>
       </Card.Body> 

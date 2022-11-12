@@ -1,7 +1,5 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
-import { Col, Container, Image, Row, Stack, Table } from 'react-bootstrap'
+import { Image, Stack, Table } from 'react-bootstrap'
 /*eslint-disable */
 
 export interface IProps {
@@ -16,7 +14,7 @@ export interface IProps {
 export default function OrderForm (props : IProps): JSX.Element {
   return (
     <Stack direction="horizontal" gap={3}>
-      <Image rounded style={{width: 210, height: 280, objectFit: 'cover'}} src={props.imageURL}/>
+      <Image alt='itemimage' rounded style={{width: 210, height: 280, objectFit: 'cover'}} src={props.imageURL}/>
       <Stack direction="vertical" gap ={3}>
         <h2>{props.itemName}</h2>
         <h4>{props.sellerName}</h4>

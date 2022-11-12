@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { AppDispatch } from '../store';
-import { ShopItemInfo } from '../store/slices/shopitem';
-import { fetchUsers, selectUser, User } from '../store/slices/user';
+import { AppDispatch } from '../store'
+import { ShopItemInfo } from '../store/slices/shopitem'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
 export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Element {

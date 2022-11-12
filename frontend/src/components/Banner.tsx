@@ -1,14 +1,10 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { Nav } from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 
 /*eslint-disable */
 
-
 export default function Banner (): JSX.Element {
-  const navigate = useNavigate();
   return (
     <div>
     <Carousel>
@@ -46,3 +42,4 @@ export default function Banner (): JSX.Element {
   </div>
   )
 }
+

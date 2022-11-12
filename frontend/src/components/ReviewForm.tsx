@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap'
 /*eslint-disable */
 
 export default function ReviewForm (): JSX.Element {

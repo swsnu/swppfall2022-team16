@@ -3,7 +3,6 @@ import { Col, Container, Image, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import OrderDetailForm from '../components/OrderDetailForm'
 import Review from '../components/Review'
-import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
@@ -62,7 +61,7 @@ export default function ProductPage (): JSX.Element {
       </Row>
       <Row md={4}>
         {
-          reviews.length > 0 ? reviews.map((review) => <Col><Review key={review.id} review={review}/></Col>)
+          reviews.length > 0 ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
             : <Col>No reviews yet.</Col>
         }
       </Row>

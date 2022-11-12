@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Col, Container, Form, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Form } from 'react-bootstrap'
 /*eslint-disable */
 
 export default function ShippingForm (): JSX.Element {

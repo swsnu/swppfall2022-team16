@@ -8,7 +8,6 @@ import Footer from '../components/Footer'
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
 export default function SignupPage (): JSX.Element {
-  const dispatch = useDispatch<AppDispatch>()
   return (
     <>
   <Stack direction='vertical' gap ={5}>
