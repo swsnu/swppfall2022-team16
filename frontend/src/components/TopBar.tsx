@@ -53,7 +53,7 @@ export default function TopBar (): JSX.Element {
               aria-label="Search"
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
-              onKeyPress={e => {
+              onKeyDown={e => {
                 if (e.key === "Enter"){
                   navigate(`/search/${searchText}`)
                 }}}
