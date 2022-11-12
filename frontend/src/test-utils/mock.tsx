@@ -36,7 +36,10 @@ export const getMockStore = (preloadedState?: PreloadedState<RootState>) => {
 
 export const stubShopItemState: ShopItemState = {
   shopitems: [
-    { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
+    { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
+    { id: 2, name: 'name2', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
+    { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
+    { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
   ],
   current_shopitem: null
 }
