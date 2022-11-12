@@ -3,7 +3,7 @@ import axios from "axios"
 import { getMockStore, stubCommentState, stubNoReviewState, stubReviewState, stubShopItemDetailState, stubShopItemState, stubUserState } from "../../test-utils/mock"
 import reducer, { fetchUsers, login, signout, signup, UserState } from "./user"
 
-describe('shopitemdetail reducer', () => {
+describe('user reducer', () => {
   let store: EnhancedStore<
     { shopItem: UserState },
     AnyAction,
