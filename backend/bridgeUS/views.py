@@ -181,9 +181,9 @@ def shopitemdetail_list(request, item_id):
     if not ShopItem.objects.filter(id=item_id).exists():
         return HttpResponse(status=404)
 
-    shopitem = ShopItem.objects.filter(id=item_id)
+    shopitem = ShopItem.objects.filter(id=item_id).first()
     
-    detail_list= ShopItemDetail.objects.filter(shopitem=shopitem)
+    detail_list= ShopItemDetail.objects.filter(main_item=shopitem)
 
     if request.method == 'GET':
         if detail_list.count() <= 0:
