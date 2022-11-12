@@ -77,7 +77,7 @@ def usershop(request, user_id):
     if not CustomUser.objects.filter(id=user_id).exists():
         return HttpResponse(status=404)
 
-    user = CustomUser.objects.first(id=user_id)    
+    user = CustomUser.objects.filter(id=user_id).first()    
 
     if not UserShop.objects.filter(user=user).exists():
         return HttpResponse(status=404)
