@@ -3,11 +3,11 @@ import { render, RenderOptions } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { AppStore, RootState } from "../store";
-import userReducer from '../store/slices/user'
+import userReducer, { UserState } from '../store/slices/user'
 import userShopReducer from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer from '../store/slices/shopitemdetail'
-import reviewReducer from '../store/slices/review'
+import reviewReducer, { ReviewState } from '../store/slices/review'
 import commentReducer from '../store/slices/comment'
 import userorderReducer, { UserOrderState } from '../store/slices/userorder'
 import storage from 'redux-persist/lib/storage'
@@ -48,6 +48,25 @@ export const stubUserOrderState: UserOrderState = {
   userOrders: [
     { id: 1, user_id: 1, item_id: 1, status: 'shipping' }
   ]
+}
+
+export const stubReviewState: ReviewState = {
+  reviews: [
+    { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' }
+  ],
+  current_review: null
+}
+
+export const stubNoReviewState: ReviewState = {
+  reviews: [],
+  current_review: null
+}
+
+export const stubUserState: UserState = {
+  users: [
+    { id: 1, username: 'username', nickname: 'nickname', height: 1, weight: 1, gender: 'male' }
+  ],
+  currentLoggedIn: null
 }
 
 const persistConfig = {

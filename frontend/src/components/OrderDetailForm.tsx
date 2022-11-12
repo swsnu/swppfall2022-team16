@@ -15,17 +15,16 @@ export interface IProps {
 
 export default function OrderDetailForm (props: IProps): JSX.Element {
   const navigate = useNavigate()
-
-  if (props.itemID === undefined) {
-    props.itemID = 1
-  }
-
+  
   return (
     <Card style={{ width: '36rem' }}>
       <Card.Body>
         <Card.Title>★★★★☆</Card.Title>
         <Card.Text>
-          <span style={{ fontSize: '24px', fontWeight: 'bold' }}>{ '$' + (props.price !== undefined ? props.price.toString() : '0') }</span>
+          <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
+            { '$' + (props.price !== undefined ? props.price.toString() : '0') }
+          </span>
+        </Card.Text>
         <Form>
           <Form.Select aria-label = "Color">
             <option>White</option>
@@ -52,7 +51,6 @@ export default function OrderDetailForm (props: IProps): JSX.Element {
             </Form.Text>
           </Stack>
         </Form>
-        </Card.Text>
         <Button variant='primary'>Add to Cart</Button>
         <Button variant='secondary' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
       </Card.Body>
