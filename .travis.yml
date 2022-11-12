@@ -21,11 +21,11 @@ jobs:
         - yarn global add coveralls
         - gem install coveralls-lcov
       script:
-        # - ./node_modules/.bin/eslint src
+        - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../backend
-        # - pylint **/*.py --load-plugins pylint_django
+        - pylint **/*.py --load-plugins pylint_django
         - coverage run --source='./bridgeUS' manage.py test
         - coverage xml
         - coveralls --merge=../frontend/coverage.json      
