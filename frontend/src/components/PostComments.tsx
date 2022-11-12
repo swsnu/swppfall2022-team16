@@ -47,7 +47,7 @@ export default function PostComments (props: IProps): JSX.Element {
 
   let listedComments = CommentsforThisArticle.map((comment : CommentInfo) =>{
       return(
-          <div className="Comment">
+          <div className="Comment" key={comment.id}>
           <Stack direction = "horizontal" gap={3}>
           <p className = "author" style={{fontWeight: 'bold'}}>[{findAuthorName(comment.author)}]</p>
           <p className = 'content'>{comment.content}</p>
