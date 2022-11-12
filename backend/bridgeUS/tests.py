@@ -88,8 +88,11 @@ class BlogTestCase(TestCase):
         response = client.get('/api/token/')
         csrftoken = response.cookies['csrftoken'].value 
 
-
         response = client.get('/api/usershop/3/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post('/api/shopitem/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         
         self.assertEqual(response.status_code, 401)
 
@@ -117,6 +120,9 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 204)
 
+        response = client.get('/api/shopitem/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 204)
     # add data
         new_shopitem1 = ShopItem(seller=new_user, name='item1')
         new_shopitem1.save()
@@ -186,7 +192,21 @@ class BlogTestCase(TestCase):
 
         response = client.get('/api/user/', HTTP_X_CSRFTOKEN=csrftoken)
 
-        self.assertEqual(response.status_code, 200)       
+        self.assertEqual(response.status_code, 200)     
+    # test shopitemlist
+        response = client.delete('/api/shopitem/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/shopitem/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post('/api/shopitem/', json.dumps({'price' : "4000", 'type' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 201)
+      
     # test review
         response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
