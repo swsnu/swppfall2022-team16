@@ -44,12 +44,9 @@ ratings[ratings['movieId']==highest_rated]
 # show number of people who rated movies rated movie lowest
 ratings[ratings['movieId']==lowest_rated]
   
-## the above movies has very low dataset. We will use bayesian average
 movie_stats = ratings.groupby('movieId')[['rating']].agg(['count', 'mean'])
 movie_stats.columns = movie_stats.columns.droplevel()
-  
-# Now, we create user-item matrix using scipy csr matrix
-  
+    
 def create_matrix(df):
     N = len(df['userId'].unique())
     M = len(df['movieId'].unique())
@@ -79,14 +76,19 @@ def find_similar_clothes(cloth_id, X, k, metric='cosine', show_distance=False):
       
     movie_ind = movie_mapper[cloth_id]
     movie_vec = X[movie_ind]
+    
     k+=1
+
     kNN = NearestNeighbors(n_neighbors=k, algorithm="brute", metric=metric)
     kNN.fit(X)
+    
     movie_vec = movie_vec.reshape(1,-1)
     neighbour = kNN.kneighbors(movie_vec, return_distance=show_distance)
+    
     for i in range(0,k):
         n = neighbour.item(i)
         neighbour_ids.append(movie_inv_mapper[n])
+
     neighbour_ids.pop(0)
     return neighbour_ids
   

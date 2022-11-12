@@ -391,3 +391,17 @@ def comment(request, comment_id):
         comment.delete()
         return HttpResponse(status=200)
 
+@ensure_csrf_cookie
+def recommend_clothes(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+
+@ensure_csrf_cookie
+def search(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])          
+
+@ensure_csrf_cookie
+def purchase(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])    

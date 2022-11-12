@@ -16,9 +16,8 @@ class UserShop(models.Model):
         on_delete = models.CASCADE,
     )
 
-    favorite_clothes = models.TextField(null=True)
     credit = models.FloatField(null=True)
-    cart = models.TextField(null=True)
+    cart = models.JSONField(null=True)
     purchased_item = models.TextField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,6 +47,7 @@ class ShopItemDetail(models.Model):
     color = models.TextField(null=True)
     size = models.TextField(null=True)
     left_amount = models.IntegerField(null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
