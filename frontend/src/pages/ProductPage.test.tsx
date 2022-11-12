@@ -8,6 +8,22 @@ import { ShopItemState } from '../store/slices/shopitem'
 import { ReviewState } from '../store/slices/review'
 import { UserState } from '../store/slices/user'
 
+jest.mock('../components/TopBar', () => () => (
+  <div data-testid='spyTopBar'></div>
+))
+
+jest.mock('../components/OrderDetailForm', () => (props) => (
+  <div data-testid='spyOrderDetailForm'></div>
+))
+
+jest.mock('../components/Review', () => () => (
+  <div data-testid='spyReview'></div>
+))
+
+jest.mock('../components/Footer', () => () => (
+  <div data-testid='spyFooter'></div>
+))
+
 const renderProductPage = (shopItemState: ShopItemState, reviewState: ReviewState, userState: UserState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/product/1']}>
