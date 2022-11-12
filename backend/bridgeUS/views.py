@@ -5,6 +5,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 
 import json
+import pandas as pd
+
+from ml.cloth_recommendation import find_similar_shopItems
 
 from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment, UserOrder
 
@@ -391,6 +394,21 @@ def comment(request, comment_id):
 def recommend_clothes(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
+
+    data = []
+
+    for review in Review.objects.all():
+        data.append([review.author.id, review.review_item.id, review.rating])
+
+    rating_dataframe = pd.DataFrame(data=data, columns=['user_id', 'shopitem_id', 'rating'])
+
+    # TODO@연태영 : shopitem_id input rule
+    recommended_clothes = find_similar_shopItems(1, 3, rating_dataframe)
+
+    response_dict = [{ 'shopitem_id' : int(recommended) } for recommended in recommended_clothes]
+
+    return JsonResponse(response_dict, status=200, safe=False)
+
 
 @ensure_csrf_cookie
 def search(request):
