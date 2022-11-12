@@ -10,11 +10,9 @@ def create_matrix(df):
     N = len(df['user_id'].unique())
     M = len(df['shopitem_id'].unique())
       
-    # Map Ids to indices
     user_mapper = dict(zip(np.unique(df['user_id']), list(range(N))))
     shopItem_mapper = dict(zip(np.unique(df["shopitem_id"]), list(range(M))))
       
-    # Map indices to IDs
     shopItem_inv_mapper = dict(zip(list(range(M)), np.unique(df["shopitem_id"])))
       
     user_index = [user_mapper[i] for i in df['user_id']]
