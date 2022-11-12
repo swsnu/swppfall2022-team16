@@ -28,7 +28,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
       <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.Body>
         <Card.Title >{shopItem.name}</Card.Title>
-        <Card.Text >{findAuthorName(shopItem.seller)}</Card.Text>
+        <Card.Text data-testid = "test">{findAuthorName(shopItem.seller)}</Card.Text>
       </Card.Body>
     </Card>
   </div>
