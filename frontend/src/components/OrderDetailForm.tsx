@@ -15,7 +15,7 @@ export interface IProps {
 
 export default function OrderDetailForm (props: IProps): JSX.Element {
   const navigate = useNavigate()
-  
+
   return (
     <Card style={{ width: '36rem' }}>
       <Card.Body>
