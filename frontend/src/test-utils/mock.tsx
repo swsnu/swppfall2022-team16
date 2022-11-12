@@ -1,8 +1,8 @@
-import { configureStore, PreloadedState } from "@reduxjs/toolkit";
-import { render, RenderOptions } from "@testing-library/react";
-import { PropsWithChildren } from "react";
-import { Provider } from "react-redux";
-import { AppStore, RootState } from "../store";
+import React, { PropsWithChildren } from 'react'
+import { configureStore, PreloadedState } from '@reduxjs/toolkit'
+import { render, RenderOptions } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import { AppStore, RootState } from '../store'
 import userReducer, { UserState } from '../store/slices/user'
 import userShopReducer from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
@@ -10,29 +10,27 @@ import shopitemDetailReducer, { ShopItemDetailState } from '../store/slices/shop
 import reviewReducer, { ReviewState } from '../store/slices/review'
 import commentReducer, { CommentState } from '../store/slices/comment'
 import userorderReducer, { UserOrderState } from '../store/slices/userorder'
-import storage from 'redux-persist/lib/storage'
-import { persistReducer } from "redux-persist";
-import { get } from "https";
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore'
 
-interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
-  preloadedState?: PreloadedState<RootState>;
-  store?: AppStore;
+interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
+  preloadedState?: PreloadedState<RootState>
+  store?: AppStore
 }
 
-export const getMockStore = (preloadedState?: PreloadedState<RootState>) => {
+export const getMockStore = (preloadedState?: PreloadedState<RootState>): ToolkitStore => {
   return configureStore({
     reducer: {
-        user: userReducer,
-        usershop: userShopReducer,
-        shopitem: shopitemReducer,
-        shopitemdetail: shopitemDetailReducer,
-        review: reviewReducer,
-        comment: commentReducer,
-        userorder: userorderReducer
+      user: userReducer,
+      usershop: userShopReducer,
+      shopitem: shopitemReducer,
+      shopitemdetail: shopitemDetailReducer,
+      review: reviewReducer,
+      comment: commentReducer,
+      userorder: userorderReducer
     },
-    preloadedState,
-  });
-};
+    preloadedState
+  })
+}
 
 export const stubShopItemState: ShopItemState = {
   shopitems: [
@@ -88,11 +86,6 @@ export const stubShopItemDetailState: ShopItemDetailState = {
   ]
 }
 
-const persistConfig = {
-    key: 'root',
-    storage
-}
-  
 // const persistedReducer = persistReducer(persistConfig, getMockStore)
 
 export function renderWithProviders(
@@ -103,10 +96,10 @@ export function renderWithProviders(
     store = getMockStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
-) {
-  function Wrapper({ children }: PropsWithChildren): JSX.Element {
-    return <Provider store={store}>{children}</Provider>;
-  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+): any {
+  function Wrapper ({ children }: PropsWithChildren): JSX.Element {
+    return <Provider store={store}>{children}</Provider>
+  }
   // Return an object with the store and all of RTL's query functions
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
 }
