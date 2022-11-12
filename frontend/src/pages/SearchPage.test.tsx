@@ -6,6 +6,18 @@ import { renderWithProviders, stubShopItemState } from "../test-utils/mock"
 import SearchPage from './SearchPage'
 import { ShopItemState } from '../store/slices/shopitem'
 
+jest.mock('../components/TopBar', () => () => (
+  <div data-testid='spyTopBar'></div>
+))
+
+jest.mock('../components/ShopItem', () => (props: { shopItem: ShopItemInfo }) => (
+  <div data-testid='spyShopItem'></div>
+))
+
+jest.mock('../components/Footer', () => () => (
+  <div data-testid='spyFooter'></div>
+))
+
 const renderSearchPage = (shopItemState: ShopItemState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/search/text']}>
