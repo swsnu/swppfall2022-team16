@@ -13,7 +13,7 @@ describe("<Filter />", () => {
             );
             screen.getByAltText("itemimage");
             screen.getByText("BridgeUs");
-            screen.getByText("Team16");
+            screen.getByText("team16");
             screen.getByText("Color");
             screen.getByText("Size");
             screen.getByText("Quantity");
