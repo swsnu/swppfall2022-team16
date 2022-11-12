@@ -7,13 +7,6 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { UserOrderInfo } from '../store/slices/userorder'
 /*eslint-disable */
 
-export interface IProps {
-  itemName: string | undefined;
-  itemPrice: number
-  shippingStatus: string | undefined;
-  purchaseDate: string | undefined;
-}
-
 export default function Purchased (props : {order: UserOrderInfo}): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()

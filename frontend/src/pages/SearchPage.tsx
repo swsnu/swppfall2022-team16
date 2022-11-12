@@ -46,8 +46,8 @@ export default function SearchPage (): JSX.Element {
       </Row>
       <Row style={{backgroundColor: 'gainsboro'}}>
         {
-          shopItemState.shopitems.map((shopItem) => <Col>
-            <ShopItem key={shopItem.id} shopItem={shopItem} />
+          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+            <ShopItem shopItem={shopItem} />
           </Col>)
         }
       </Row>
@@ -63,8 +63,8 @@ export default function SearchPage (): JSX.Element {
       </Row>
       <Row>
         {
-          shopItemState.shopitems.map((shopItem) => <Col>
-            <ShopItem key={shopItem.id} shopItem={shopItem} />
+          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+            <ShopItem shopItem={shopItem} />
           </Col>)
         }
       </Row>

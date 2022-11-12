@@ -74,17 +74,17 @@ def usershop(request, user_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     
-    if not User.objects.filter(id=user_id).exists():
+    if not CustomUser.objects.filter(id=user_id).exists():
         return HttpResponse(status=404)
 
-    user = User.objects.first(id=user_id)    
+    user = CustomUser.objects.filter(id=user_id).first()    
 
     if not UserShop.objects.filter(user=user).exists():
         return HttpResponse(status=404)
 
     usershop = UserShop.objects.filter(user=user).first()    
 
-    response_dict = { 'id' : usershop.id, 'favorite_clothes' : usershop.favorite_clothes, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
+    response_dict = { 'id' : usershop.id, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }
     return JsonResponse(response_dict, safe=False, status=200)
 
 @ensure_csrf_cookie
@@ -157,7 +157,6 @@ def shopitem(request, item_id):
         shopitem_price = json.loads(body)['price']
         shopitem_type = json.loads(body)['type']
 
-
         shopitem.star = shopitem_star
         shopitem.rating = shopitem_rating
         shopitem.price = shopitem_price
@@ -182,9 +181,9 @@ def shopitemdetail_list(request, item_id):
     if not ShopItem.objects.filter(id=item_id).exists():
         return HttpResponse(status=404)
 
-    shopitem = ShopItem.objects.filter(id=item_id)
+    shopitem = ShopItem.objects.filter(id=item_id).first()
     
-    detail_list= ShopItemDetail.objects.filter(shopitem=shopitem)
+    detail_list= ShopItemDetail.objects.filter(main_item=shopitem)
 
     if request.method == 'GET':
         if detail_list.count() <= 0:
@@ -255,9 +254,6 @@ def userorderlist(request):
         return HttpResponse(status=401)
 
     if request.method == 'GET':
-        if UserOrder.objects.count() <= 0:
-            return JsonResponse([{}], safe=False, status=204)
-
         userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status } for userorder in UserOrder.objects.all()]
         return JsonResponse(userorder_all_list, safe=False, status=200)
 

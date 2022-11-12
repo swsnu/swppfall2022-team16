@@ -16,11 +16,11 @@ export interface UserShopInfo {
     purchased_item : string
 }
 
-export interface UserState {
+export interface UserShopState {
     usershop: UserShopInfo | null
 }
 
-const initialState : UserState = {
+const initialState : UserShopState = {
     usershop: null
 }
 

@@ -61,7 +61,7 @@ export default function ProductPage (): JSX.Element {
       </Row>
       <Row md={4}>
         {
-          reviews.length > 0 ? reviews.map((review) => <Col><Review key={review.id} review={review}/></Col>)
+          reviews.length > 0 ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
             : <Col>No reviews yet.</Col>
         }
       </Row>
