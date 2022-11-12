@@ -45,7 +45,7 @@ describe('<TopBar/>', () => {
     renderTopBar(stubLoginUserState)
     const search = screen.getByPlaceholderText('Search')
     screen.debug()
-    fireEvent.keyPress(search, { key: 'a' })
-    fireEvent.keyPress(search, { key: 'Enter', code: 13 })
+    fireEvent.keyDown(search, {key: 'a'});
+    fireEvent.keyDown(search, {key: 'Enter', code: 'Enter', charCode: 13})
   })
 })
