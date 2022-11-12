@@ -174,3 +174,13 @@ yarn-error.log*
 .bash_history
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+backend/.idea/backend.iml
+backend/.idea/dataSources.xml
+backend/.idea/inspectionProfiles/profiles_settings.xml
+backend/.idea/inspectionProfiles/Project_Default.xml
+backend/.idea/misc.xml
+backend/.idea/modules.xml
+backend/.idea/sqldialects.xml
+backend/.idea/vcs.xml
+backend/.idea/workspace.xml
+backend/.idea/dataSources.local.xml
