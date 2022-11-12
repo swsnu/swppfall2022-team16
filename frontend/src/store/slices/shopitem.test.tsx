@@ -1,14 +1,10 @@
-import { AnyAction, configureStore, EnhancedStore, ThunkMiddleware } from "@reduxjs/toolkit"
-import axios from "axios"
-import { getMockStore, stubCommentState, stubNoReviewState, stubReviewState, stubShopItemState } from "../../test-utils/mock"
-import reducer, { deleteShopItem, fetchMainItems, postShopItem, putShopItem, ShopItemState } from "./shopitem"
+import { AnyAction, configureStore, EnhancedStore, ThunkMiddleware } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { getMockStore, stubShopItemState } from '../../test-utils/mock'
+import reducer, { deleteShopItem, fetchMainItems, postShopItem, putShopItem, ShopItemState } from './shopitem'
 
 describe('shopitem reducer', () => {
-  let store: EnhancedStore<
-    { shopItem: ShopItemState },
-    AnyAction,
-    [ThunkMiddleware<{ shopItem: ShopItemState }, AnyAction, undefined>]
-  >
+  let store: EnhancedStore<{ shopitem: ShopItemState }, AnyAction, [ThunkMiddleware<{ shopitem: ShopItemState }, AnyAction, undefined>]>
   beforeEach(() => {
     store = configureStore({ reducer: { shopitem: reducer } })
   })
