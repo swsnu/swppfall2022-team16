@@ -68,7 +68,9 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.tsx",
-      "!src/test-utils/*"
+      "!src/test-utils/*",
+      "!src/reportWebVitals.ts",
+      "!src/react-app-env.d.ts"
     ]
   }
 }
