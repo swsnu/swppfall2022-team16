@@ -74,10 +74,10 @@ def usershop(request, user_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     
-    if not User.objects.filter(id=user_id).exists():
+    if not CustomUser.objects.filter(id=user_id).exists():
         return HttpResponse(status=404)
 
-    user = User.objects.first(id=user_id)    
+    user = CustomUser.objects.first(id=user_id)    
 
     if not UserShop.objects.filter(user=user).exists():
         return HttpResponse(status=404)
