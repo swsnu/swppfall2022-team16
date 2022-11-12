@@ -8,7 +8,7 @@ import userShopReducer from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer from '../store/slices/shopitemdetail'
 import reviewReducer, { ReviewState } from '../store/slices/review'
-import commentReducer from '../store/slices/comment'
+import commentReducer, { CommentState } from '../store/slices/comment'
 import userorderReducer, { UserOrderState } from '../store/slices/userorder'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from "redux-persist";
@@ -52,7 +52,8 @@ export const stubUserOrderState: UserOrderState = {
 
 export const stubReviewState: ReviewState = {
   reviews: [
-    { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' }
+    { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' },
+    { id: 2, title: 'title2', content: 'content2', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' }
   ],
   current_review: null
 }
@@ -67,6 +68,14 @@ export const stubUserState: UserState = {
     { id: 1, username: 'username', nickname: 'nickname', height: 1, weight: 1, gender: 'male' }
   ],
   currentLoggedIn: null
+}
+
+export const stubCommentState: CommentState = {
+  comments: [
+    { id: 1, review: 1, content: 'content1', author: 1 },
+    { id: 2, review: 1, content: 'content2', author: 2 },
+    { id: 3, review: 2, content: 'content3', author: 2 },
+  ]
 }
 
 const persistConfig = {
