@@ -6,7 +6,7 @@ import { AppStore, RootState } from "../store";
 import userReducer, { UserState } from '../store/slices/user'
 import userShopReducer from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
-import shopitemDetailReducer from '../store/slices/shopitemdetail'
+import shopitemDetailReducer, { ShopItemDetailState } from '../store/slices/shopitemdetail'
 import reviewReducer, { ReviewState } from '../store/slices/review'
 import commentReducer, { CommentState } from '../store/slices/comment'
 import userorderReducer, { UserOrderState } from '../store/slices/userorder'
@@ -65,7 +65,9 @@ export const stubNoReviewState: ReviewState = {
 
 export const stubUserState: UserState = {
   users: [
-    { id: 1, username: 'username', nickname: 'nickname', height: 1, weight: 1, gender: 'male' }
+    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
+    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
+    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' },
   ],
   currentLoggedIn: null
 }
@@ -78,12 +80,20 @@ export const stubCommentState: CommentState = {
   ]
 }
 
+export const stubShopItemDetailState: ShopItemDetailState = {
+  shopitem_details: [
+    { id: 1, main_item: 1, color: 'red', size: 'S', left_amount: 1 },
+    { id: 2, main_item: 2, color: 'red', size: 'S', left_amount: 1 },
+    { id: 3, main_item: 3, color: 'red', size: 'S', left_amount: 1 }
+  ]
+}
+
 const persistConfig = {
     key: 'root',
     storage
 }
   
-const persistedReducer = persistReducer(persistConfig, getMockStore)
+// const persistedReducer = persistReducer(persistConfig, getMockStore)
 
 export function renderWithProviders(
   ui: React.ReactElement,

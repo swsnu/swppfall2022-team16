@@ -35,7 +35,7 @@ describe('shopitem reducer', () => {
       type: 'clothes'
     }))
   })
-  it('should handle putReview', async () => {
+  it('should handle putShopItem', async () => {
     store = getMockStore({ shopitem: stubShopItemState })
     const shopitem = stubShopItemState.shopitems[0]
     axios.put = jest.fn().mockResolvedValueOnce({
@@ -43,7 +43,7 @@ describe('shopitem reducer', () => {
     })
     await store.dispatch(putShopItem(shopitem))
   })
-  it('should handle deleteReview', async () => {
+  it('should handle deleteShopItem', async () => {
     store = getMockStore({ shopitem: stubShopItemState })
     axios.delete = jest.fn().mockResolvedValueOnce({})
     await store.dispatch(deleteShopItem(1))

@@ -32,7 +32,7 @@ export const fetchUsers = createAsyncThunk(
     "user/fetchUsers", 
     async () => {
     const response = await axios.get<User[]>("api/user/");
-    return response.data ?? null;
+    return response.data;
 });
 
 export const login = createAsyncThunk(
@@ -70,14 +70,14 @@ export const userSlice = createSlice({
                 (value) => {
                     return value.id === action.payload.id
                 }
-            ) ?? null
+            )!
         }),
         builder.addCase(signup.fulfilled, (state, action) => {
             state.currentLoggedIn = state.users.find(
                 (value) => {
                     return value.id === action.payload.id
                 }
-            ) ?? null
+            )!
         }),
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload;
