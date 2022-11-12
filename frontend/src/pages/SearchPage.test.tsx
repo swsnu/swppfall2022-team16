@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { UserOrderState } from "../store/slices/userorder"
 import { renderWithProviders, stubShopItemState } from "../test-utils/mock"
 import SearchPage from './SearchPage'
-import { ShopItemState } from '../store/slices/shopitem'
+import { ShopItemInfo, ShopItemState } from '../store/slices/shopitem'
 
 jest.mock('../components/TopBar', () => () => (
   <div data-testid='spyTopBar'></div>

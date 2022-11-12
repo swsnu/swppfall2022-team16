@@ -7,12 +7,13 @@ import ProductPage from './ProductPage'
 import { ShopItemState } from '../store/slices/shopitem'
 import { ReviewState } from '../store/slices/review'
 import { UserState } from '../store/slices/user'
+import { OrderDetailProps } from '../components/OrderDetailForm';
 
 jest.mock('../components/TopBar', () => () => (
   <div data-testid='spyTopBar'></div>
 ))
 
-jest.mock('../components/OrderDetailForm', () => (props) => (
+jest.mock('../components/OrderDetailForm', () => (props : OrderDetailProps) => (
   <div data-testid='spyOrderDetailForm'></div>
 ))
 

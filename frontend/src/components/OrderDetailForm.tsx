@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
-export interface IProps {
+export interface OrderDetailProps {
   itemID?: number | undefined
   itemName: string | undefined
   sellerName: string | undefined
@@ -13,7 +13,7 @@ export interface IProps {
   recommendedSize: string
 }
 
-export default function OrderDetailForm (props: IProps): JSX.Element {
+export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const navigate = useNavigate()
 
   return (
