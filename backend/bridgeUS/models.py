@@ -81,8 +81,8 @@ class Review(models.Model):
         ShopItem,   
         on_delete = models.CASCADE,
         null=True
-    )       
-    
+    )
+
     image_url = models.TextField(null=True)
 
     rating = models.IntegerField(null=True)
@@ -106,3 +106,4 @@ class Comment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
