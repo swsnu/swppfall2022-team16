@@ -53,12 +53,12 @@ class ShopItemDetail(models.Model):
 
 class UserOrder(models.Model):
     user = models.ForeignKey(
-        CustomUser,   
+        CustomUser,
         on_delete = models.CASCADE,
     )
 
     ordered_item = models.ForeignKey(
-        ShopItem,   
+        ShopItem,
         on_delete = models.CASCADE,
     )    
 
@@ -69,7 +69,7 @@ class UserOrder(models.Model):
 
 class Review(models.Model):
     title = models.CharField(null=True, max_length=64)
-    
+
     content = models.TextField(null=True)
 
     author = models.ForeignKey(
@@ -78,7 +78,7 @@ class Review(models.Model):
     )
 
     review_item = models.ForeignKey(
-        ShopItem,   
+        ShopItem,
         on_delete = models.CASCADE,
         null=True
     )
@@ -92,18 +92,18 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
+    """Comment class"""
+
     review = models.ForeignKey(
-        Review,   
+        Review,
         on_delete = models.CASCADE,
     )
 
     content = models.TextField(null=True)
 
     author = models.ForeignKey(
-        CustomUser,   
-        on_delete = models.CASCADE,
+        CustomUser, on_delete = models.CASCADE,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
