@@ -9,7 +9,7 @@ import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer from '../store/slices/shopitemdetail'
 import reviewReducer from '../store/slices/review'
 import commentReducer from '../store/slices/comment'
-import userorderReducer from '../store/slices/userorder'
+import userorderReducer, { UserOrderState } from '../store/slices/userorder'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from "redux-persist";
 import { get } from "https";
@@ -42,6 +42,12 @@ export const stubShopItemState: ShopItemState = {
     { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
   ],
   current_shopitem: null
+}
+
+export const stubUserOrderState: UserOrderState = {
+  userOrders: [
+    { id: 1, user_id: 1, item_id: 1, status: 'shipping' }
+  ]
 }
 
 const persistConfig = {
