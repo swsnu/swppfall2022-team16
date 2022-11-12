@@ -14,9 +14,6 @@ export default function LoginForm (): JSX.Element {
 
   const loginbuttonHandler = async () => {
     const result = await dispatch(login({ username : username, password: password }))
-    if (result === undefined){
-      return
-    }
     if (result.type === `${login.typePrefix}/fulfilled`) {
       navigate('/')
     }
