@@ -7,19 +7,10 @@ import json
 
 class BlogTestCase(TestCase):
     def test_csrf(self):
-        # data init
-        new_user = CustomUser(username='swpp', password='iluvswpp', nickname='user1')
-
-        new_user.save()
-
-        new_user2 = CustomUser(username='swpp2', password='iluvswpp2', nickname='user2')
-
-        new_user2.save()
-        
         # By default, csrf checks are disabled in test client
         # To test csrf protection we enforce csrf checks here
         client = Client(enforce_csrf_checks=True)
-
+        
         response = client.post('/api/signup/', json.dumps({'username': 'chris', 'password': 'chris', 'nickname': 'test'}),
                                content_type='application/json')
 
@@ -28,6 +19,21 @@ class BlogTestCase(TestCase):
         response = client.get('/api/token/')
 
         csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+
+        # test empty user list
+
+        response = client.get('/api/user/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 204)       
+
+        # data init
+        new_user = CustomUser(username='swpp', password='iluvswpp', nickname='user1')
+
+        new_user.save()
+
+        new_user2 = CustomUser(username='swpp2', password='iluvswpp2', nickname='user2')
+
+        new_user2.save()
 
         response = client.post('/api/signup/', json.dumps({'username': 'chris', 'password': 'chris', 'nickname': 'test'}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
@@ -173,6 +179,14 @@ class BlogTestCase(TestCase):
         response = client.get('/api/usershop/1/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         
         self.assertEqual(response.status_code, 404)
+    # test userlist
+        response = client.delete('/api/user/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)        
+
+        response = client.get('/api/user/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)       
     # test review
         response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
