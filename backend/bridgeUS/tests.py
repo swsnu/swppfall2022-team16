@@ -1,11 +1,267 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from .models import Review, Comment
+from .models import  CustomUser, UserShop, ShopItem, ShopItemDetail, UserOrder, Review, Comment
 
 import json
 
 
 class BlogTestCase(TestCase):
     def test_csrf(self):
+        # data init
+        new_user = CustomUser(username='swpp', password='iluvswpp')
+
+        new_user.save()
+
+        new_user2 = CustomUser(username='swpp2', password='iluvswpp2')
+
+        new_user2.save()
+        
+        # By default, csrf checks are disabled in test client
+        # To test csrf protection we enforce csrf checks here
+        client = Client(enforce_csrf_checks=True)
+
+        response = client.post('/api/signup/', json.dumps({'username': 'chris', 'password': 'chris', 'nickname': 'test'}),
+                               content_type='application/json')
+
+        self.assertEqual(response.status_code, 403)  # Request without csrf token returns 403 response
+
+        response = client.get('/api/token/')
+
+        csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+
+        response = client.post('/api/signup/', json.dumps({'username': 'chris', 'password': 'chris', 'nickname': 'test'}),
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 201)  # Pass csrf protection
+
+        response = client.post('/api/signup/', json.dumps({'username': 'chris2', 'password': 'chris2', 'nickname' : 'test2'}),
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+    # test token, signup
+        response = client.get('/api/token/')
+
+        csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+
+        response = client.post('/api/token/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+        
+        response = client.get('/api/signup/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+    # test signin
+        response = client.get('/api/signin/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        response = client.post('/api/signin/', json.dumps({'username': 'not_chris', 'password': 'not_chris'}),
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 200)
+
+    # test signout
+        response = client.get('/api/token/')
+
+        csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+
+        response = client.delete('/api/signout/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 204)
+
+        response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 401)
+
+    # test when signed out    
+        response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        # response = client.get('/api/review/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        # self.assertEqual(response.status_code, 401)
+
+        # response = client.get('/api/review/1/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        # self.assertEqual(response.status_code, 401)
+
+        # response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        # self.assertEqual(response.status_code, 401)
+                
+        # response = client.get('/api/comment/1/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        # self.assertEqual(response.status_code, 401)
+
+    # test empty data
+        response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/review/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 204)
+
+    # add data
+        new_shopitem1 = ShopItem(seller=new_user, name='item1')
+        new_shopitem1.save()
+
+        new_shopitem2 = ShopItem(seller=new_user, name='item2')
+        new_shopitem2.save()
+        
+        new_shopitem3 = ShopItem(seller=new_user2, name='itme3')
+        new_shopitem3.save()
+
+        new_review = Review(title='I Love SWPP!',review_item=new_shopitem1 ,content='Believe it or not', author=new_user)
+        new_review.save()
+        
+        response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 204)
+
+        new_review2 = Review(title='I Love SWPP!2',review_item=new_shopitem2, content='Believe it or not2', author=new_user2)
+        new_review2.save()
+        
+        new_review3 = Review(title='I Love SWPP!3',review_item=new_shopitem3, content='Believe it or not3', author=new_user)
+        new_review3.save()
+
+        new_comment = Comment(review=new_review, content='Comment!', author=new_user)
+        new_comment.save()
+        
+        new_comment2 = Comment(review=new_review2, content='Comment!2', author=new_user2)
+        new_comment2.save()
+
+    # test not author
+        response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        response = client.put('/api/review/1/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 403)
+
+        response = client.put('/api/comment/1/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 403)
+                
+    # test review
+        response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
+                               content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value     
+
+        response = client.delete('/api/review/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+                              
+        response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        response = client.get('/api/review/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post('/api/review/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 201)
+    # test review_detail
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value     
+
+        response = client.post('/api/review/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.post('/api/signin/', json.dumps({'username': 'swpp', 'password': 'iluvswpp'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        response = client.get('/api/review/99/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 404)
+
+
+        response = client.put('/api/review/1/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/review/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/review/3/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+    # test review_comments
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value     
+
+        response = client.put('/api/review/1/comment/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.post('/api/signin/', json.dumps({'username': 'swpp', 'password': 'iluvswpp'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        response = client.get('/api/review/99/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 404)
+
+        response = client.get('/api/review/1/comment/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.post('/api/review/1/comment/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 201)
+    # test comments
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value     
+        response = client.post('/api/comment/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.post('/api/signin/', json.dumps({'username': 'swpp', 'password': 'iluvswpp'}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        response = client.get('/api/token/')
+        csrftoken = response.cookies['csrftoken'].value 
+
+        response = client.get('/api/comment/99/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 404)
+
+        response = client.put('/api/comment/1/', json.dumps({'title' : "test", 'content' : "test"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/comment/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/comment/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)    
         pass
 
