@@ -65,9 +65,18 @@ export const stubUserState: UserState = {
   users: [
     { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
     { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
-    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' },
+    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' }
   ],
   currentLoggedIn: null
+}
+
+export const stubLoginUserState: UserState = {
+  users: [
+    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
+    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
+    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' }
+  ],
+  currentLoggedIn: { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' }
 }
 
 export const stubCommentState: CommentState = {
