@@ -44,13 +44,13 @@ export default function SignupForm (): JSX.Element {
       <Stack direction = "horizontal" gap = {5}>
       <Form.Group className='male'>
         <Stack direction = "horizontal" gap = {1}>
-        <Form.Check type='radio' name = "gender" id = "gender1" onClick={(e) => setGender("Male")} checked />
+        <Form.Check placeholder = 'gender1' type='radio' name = "gender" id = "gender1" onClick={(e) => setGender("Male")} checked />
         <Form.Label for = "gender1"> Male </Form.Label>
         </Stack>
       </Form.Group>
       <Form.Group className='female'>
         <Stack direction = "horizontal" gap = {1}>
-        <Form.Check type='radio' name = "gender" id = "gender2" onClick={(e) => setGender("Female")}/> 
+        <Form.Check placeholder = 'gender2' type='radio' name = "gender" id = "gender2" onClick={(e) => setGender("Female")}/> 
         <Form.Label for = "gender2"> Female </Form.Label>
         </Stack>
       </Form.Group>
