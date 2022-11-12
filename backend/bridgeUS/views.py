@@ -157,7 +157,6 @@ def shopitem(request, item_id):
         shopitem_price = json.loads(body)['price']
         shopitem_type = json.loads(body)['type']
 
-
         shopitem.star = shopitem_star
         shopitem.rating = shopitem_rating
         shopitem.price = shopitem_price

@@ -96,6 +96,10 @@ class BlogTestCase(TestCase):
         
         self.assertEqual(response.status_code, 401)
 
+        response = client.put('/api/shopitem/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 401)
+
         # response = client.get('/api/review/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         # self.assertEqual(response.status_code, 401)
@@ -193,6 +197,7 @@ class BlogTestCase(TestCase):
         response = client.get('/api/user/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)     
+
     # test shopitemlist
         response = client.delete('/api/shopitem/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
@@ -206,7 +211,32 @@ class BlogTestCase(TestCase):
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 201)
-      
+
+    # test shopitem
+        response = client.post('/api/shopitem/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/shopitem/99/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 404)
+
+        response = client.put('/api/shopitem/4/', json.dumps({'star' : "1", 'rating' : "1", 'type': "test4", 'price': "1"}),
+            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/shopitem/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/shopitem/4/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)  
+
+        response = client.delete('/api/shopitem/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 403)  
     # test review
         response = client.get('/api/signout/', {'username': 'chris2', 'password': 'chris2'},
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
