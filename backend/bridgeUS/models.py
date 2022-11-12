@@ -61,6 +61,10 @@ class UserOrder(models.Model):
         on_delete = models.CASCADE,
     )    
 
+    color = models.TextField(null=True)
+    size = models.TextField(null=True)
+    ordered_amount = models.IntegerField(null=True)
+
     order_status = models.TextField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
