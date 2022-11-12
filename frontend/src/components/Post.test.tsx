@@ -21,6 +21,7 @@ describe("<Post />", () => {
         const likeButton = screen.getByRole("button");
         screen.getByTestId("test");
         await waitFor (() => fireEvent.click(likeButton));
+        expect(mockNavigate).not.toHaveBeenCalled();
         screen.getByText("1001")
         fireEvent.mouseOver(postImage);
         fireEvent.mouseOut(postImage);
