@@ -33,7 +33,6 @@ class ShopItem(models.Model):
     image_url = models.TextField(null=True)
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
-    star = models.IntegerField(null=True)
     type = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
