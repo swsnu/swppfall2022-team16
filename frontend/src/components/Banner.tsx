@@ -10,6 +10,7 @@ export default function Banner (): JSX.Element {
     <Carousel>
     <Carousel.Item>
       <img
+        id = "first image"
         className="d-block w-100"
         src="./firstbanner.png"
         alt="First slide"
