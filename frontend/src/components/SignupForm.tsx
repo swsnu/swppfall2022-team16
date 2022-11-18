@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AppDispatch } from '../store'
+import { signup } from '../store/slices/user'
 
 /*eslint-disable */
 
@@ -11,8 +15,14 @@ export default function SignupForm (): JSX.Element {
   const [weight, setWeight] = useState('Weight');
   const [gender, setGender] = useState('Male');
 
-  const signupbuttonHandler = () => {
-
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  
+  const signupbuttonHandler = async () => {
+    const result = await dispatch(signup({ username : email, password: password, nickname: name, height: Number(height), weight: Number(weight), gender: gender}))
+    if (result.type === `${signup.typePrefix}/fulfilled`) {
+      navigate('/')
+    }
   }
 
   return (
