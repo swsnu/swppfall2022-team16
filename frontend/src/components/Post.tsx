@@ -6,6 +6,7 @@ import { AppDispatch } from '../store'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { AiFillLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import { fetchMainItem, selectShopItem } from '../store/slices/shopitem'
 /*eslint-disable */
 
 export interface IProps {
@@ -18,12 +19,14 @@ export default function Post(props: IProps): JSX.Element {
   const navigate = useNavigate();
   const reviewState = useSelector(selectReview)
   const userState = useSelector(selectUser)
+  const itemState = useSelector(selectShopItem)
   const [numLike, setNumLike] = useState(1000); // have to get info from DB
 
   useEffect(() => {
     dispatch(fetchReviews()).then(() => {
       setNumLike(reviewState.reviews.find((review) => review.id === props.id)?.likes ?? 0)
     })
+    dispatch(fetchMainItem(props.id))
     dispatch(fetchUsers())
   }, [dispatch])
   
@@ -33,8 +36,12 @@ export default function Post(props: IProps): JSX.Element {
   const findAuthorName = (ID : number | undefined) => {
     return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
 };
+  console.debug(props.id)
+  console.debug(itemState.current_shopitem)
 
   return <div>
+    <h1>name</h1>
+    <p>seller</p>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Card.Img alt = "postimage" variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
       <Card.ImgOverlay>
@@ -48,10 +55,18 @@ export default function Post(props: IProps): JSX.Element {
         </Stack>
       </Card.ImgOverlay>
       <Card.Body>
-        <Card.Text as= "h5" data-testid = "test">
-          @{findAuthorName(review?.author)}
-        </Card.Text>
+        <Stack direction = 'horizontal'>
+          <Card.Text as= "h5" data-testid = "test">
+            star
+          </Card.Text>
+          <div className = "ms-auto">
+          <Card.Text as= "h5" data-testid = "test">
+            @{findAuthorName(review?.author)}
+          </Card.Text>
+          </div>
+        </Stack>
       </Card.Body> 
     </Card>
+    <Button onClick={() => navigate(`/product/${props.id}`)}>Purchase the Look</Button>
   </div>
 }

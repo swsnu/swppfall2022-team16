@@ -37,6 +37,14 @@ export const fetchMainItems = createAsyncThunk(
     }
 )
 
+export const fetchMainItem = createAsyncThunk(
+    "shopitem/fetchMainItem",
+    async (id : number) => {
+        const response = await axios.get<ShopItemInfo>(`/api/shopitem/${id}/`)
+        return response.data
+    }
+)
+
 export const postShopItem = createAsyncThunk(
     "shopitem/postShopItem", async (
     shopitem : {
@@ -90,6 +98,9 @@ export const shopitemSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchMainItems.fulfilled, (state, action) => {
             state.shopitems = action.payload
+        })
+        builder.addCase(fetchMainItem.fulfilled, (state, action) => {
+            state.current_shopitem = action.payload
         })
     },
 });
