@@ -20,7 +20,15 @@
     height : 20px;
 }
 
+.spacing3 {
+    width : 10px;
+}
+
 .community {
     position : relative;
     width : 100vw;
+}
+
+.communitylogo {
+    margin-top : 2px
 }
