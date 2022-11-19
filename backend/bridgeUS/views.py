@@ -427,8 +427,6 @@ def search(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET']) 
 
-
-
 @ensure_csrf_cookie
 def purchase(request):
     if request.method != 'GET':
@@ -461,8 +459,6 @@ def purchase(request):
     
     return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
 
-
-    
 @ensure_csrf_cookie
 def usercomments(request):
     if request.method != 'GET':
@@ -515,6 +511,3 @@ def get_shopitem_json(shopitem):
 
 def get_user_json(user):
     return { 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight }     
-
-def get_usershop_json(usershop):
-    return { 'id' : usershop.id, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }    
