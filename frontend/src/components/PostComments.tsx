@@ -55,10 +55,10 @@ export default function PostComments (props: IProps): JSX.Element {
           {
             (comment.author == userState.currentLoggedIn?.id) ? 
             (<div className = "button">
-              <Button className = "edit-comment-button" id="edit-comment-button" onClick={() => editButtonHandler(comment)}>
+              <Button className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
                 <AiFillEdit/>
               </Button>
-              <Button className = "delete-comment-button" id="delete-comment-button" onClick={() => deleteButtonHandler(comment)}>
+              <Button className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
                 <AiFillDelete/>
               </Button>
             </div>) 
