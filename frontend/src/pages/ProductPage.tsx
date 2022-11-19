@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function ProductPage (): JSX.Element {
@@ -32,7 +33,8 @@ export default function ProductPage (): JSX.Element {
     return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
 };
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <Container>
       <Row className="Header-row">
@@ -66,6 +68,7 @@ export default function ProductPage (): JSX.Element {
         }
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

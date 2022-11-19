@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
 import Filter, { filters } from '../components/Filter'
@@ -12,6 +12,7 @@ import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/mainpage.css'
 import '../css/Footer.css'
+import '../css/Banner.css'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -26,19 +27,19 @@ export default function MainPage (): JSX.Element {
   return (<div className = 'page-container'>
     <div className = 'contents'>
     <TopBar />
-    <br/>
-    <Container>
-      <Row>
-        <Col>
+    <div className = 'banner'>
           <Banner />
-        </Col>
-      </Row>
-      <br/>
-      <br/>
+    </div>
+    <div className = 'recommend'>
+    <Container>
+      <div className = 'spacing'></div>
       <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
-          <h1 className="Header">Trending</h1>
+          <Stack direction = 'horizontal' gap = {1}>
+            <h3 id = 'Trending'>Trending</h3>
+            <img src = '/trending-1.png' width = '25' height = '30'></img>
+          </Stack>
         </Col>
         <Col md={5}></Col>
         {
@@ -47,12 +48,13 @@ export default function MainPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}}>
+          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
       <Row>
+        <div className = 'spacing2'></div>
         {
           shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
@@ -62,6 +64,13 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    <div className = 'spacing'></div>
+    <div className = 'community'>
+      <a href = '/community'>
+        <img src = '/communitybanner.png' width = '100%'></img>
+      </a>
+    </div>
+    </div>
     </div>
     <Footer/>
   </div>)
