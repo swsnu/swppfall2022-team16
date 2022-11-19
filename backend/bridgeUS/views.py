@@ -420,11 +420,6 @@ def purchase(request):
         return HttpResponseNotAllowed(['GET'])    
 
 @ensure_csrf_cookie
-def purchase(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])    
-
-@ensure_csrf_cookie
 def usercomments(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])                    
