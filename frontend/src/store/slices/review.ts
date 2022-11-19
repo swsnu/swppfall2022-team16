@@ -46,7 +46,7 @@ export const postReview = createAsyncThunk(
     rating: number;
 }, {dispatch}) => {
     const response = await axios.post('/api/review/', review);
-    dispatch(reviewActions.postReview(response.data));
+    return response.data
 });
 
 export const putReview = createAsyncThunk(
@@ -76,10 +76,6 @@ export const reviewSlice = createSlice({
 
             state.current_review = action.payload;
         },
-        postReview: (state, action: PayloadAction<ReviewInfo>) => {
-            state.reviews.push(action.payload);
-            state.current_review = action.payload;
-        },
         deleteReview: (state, action: PayloadAction<{ targetId : Number }>) => {
             state.reviews =  state.reviews.filter(
                 (value) => { return value.id !== action.payload.targetId }
@@ -91,6 +87,10 @@ export const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchReviews.fulfilled, (state, action) => {
             state.reviews = action.payload
+        })
+        builder.addCase(postReview.fulfilled, (state, action) => {
+            state.reviews.push(action.payload);
+            state.current_review = action.payload;
         })
     },
 });

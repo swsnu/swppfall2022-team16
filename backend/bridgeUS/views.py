@@ -283,12 +283,15 @@ def reviewlist(request):
         review_title = json.loads(body)['title']
         review_content = json.loads(body)['content']
         review_item = json.loads(body)['review_item']
+        print(review_title, review_content, review_item)
         
-        review_shopItem = ShopItem.objects.first(id=review_item)
+        review_shopItem = ShopItem.objects.get(id=review_item)
+
+        print(review_shopItem)
 
         review_author = request.user
 
-        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem )
+        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem)
 
         review.save()
         
@@ -428,8 +431,8 @@ def recommend_clothes(request, recommend_count):
 
 @ensure_csrf_cookie
 def search(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET']) 
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST']) 
 
 @ensure_csrf_cookie
 def purchase(request):
