@@ -3,11 +3,12 @@ import { Col, Container, Row, Stack } from 'react-bootstrap'
 import SideBar from '../components/SideBar'
 import SignupForm from '../components/SignupForm'
 import Footer from '../components/Footer'
+
 /*eslint-disable */
 /*eslint no-multiple-empty-lines: "error"*/
 export default function SignupPage (): JSX.Element {
   return (
-    <>
+  <div className = 'page-container'>
   <Stack direction='vertical' gap ={5}>
     <SideBar />
     <Container>
@@ -20,6 +21,6 @@ export default function SignupPage (): JSX.Element {
     </Container>
   </Stack>
   <Footer/>
-  </>
+  </div>
   )
 }

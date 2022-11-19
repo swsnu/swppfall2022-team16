@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 import { Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { fetchOrders, selectUserOrder } from '../store/slices/userorder'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function MyPage (): JSX.Element {
@@ -23,10 +24,10 @@ export default function MyPage (): JSX.Element {
     dispatch(fetchOrders())
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <br/>
-    <>
       <Container>
         <Row>
           <Col>
@@ -88,7 +89,7 @@ export default function MyPage (): JSX.Element {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
     <Footer/>
   </div>)
 }

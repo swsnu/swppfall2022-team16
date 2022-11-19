@@ -8,6 +8,7 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function CommunityPage (): JSX.Element {
@@ -18,7 +19,8 @@ export default function CommunityPage (): JSX.Element {
     dispatch(fetchMainItems())
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <Container>
       <Row className="Header-row">
@@ -69,6 +71,7 @@ export default function CommunityPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

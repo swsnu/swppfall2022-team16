@@ -11,6 +11,7 @@ import Footer from '../components/Footer'
 import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/mainpage.css'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -22,7 +23,8 @@ export default function MainPage (): JSX.Element {
     dispatch(fetchUsers())
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <br/>
     <Container>
@@ -60,6 +62,7 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

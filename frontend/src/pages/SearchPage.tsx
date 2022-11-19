@@ -9,6 +9,7 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { AiOutlineFilter } from 'react-icons/ai'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function SearchPage (): JSX.Element {
@@ -20,7 +21,8 @@ export default function SearchPage (): JSX.Element {
     dispatch(fetchMainItems())
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar/>
     <Container>
       <Row className="Header-row">
@@ -69,6 +71,7 @@ export default function SearchPage (): JSX.Element {
         }
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }
