@@ -58,7 +58,7 @@ export default function PostPage (): JSX.Element {
         <Col>
           <PostComments review_id={Number(id)} />
           <InputGroup>
-          <Form.Control type='commment' onChange = {(e) => setComment(e.target.value)} value={comment} />
+          <Form.Control type='commment' onChange = {(e) => setComment(e.target.value)} value = {comment} />
           <Button onClick={() => commentButtonHandler()}>Comment</Button>
           </InputGroup>
         </Col>
