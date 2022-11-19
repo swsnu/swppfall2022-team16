@@ -30,7 +30,10 @@ def signup(request):
 
         login(request, user)  
 
-        return JsonResponse({'id' : user.id }, status=201)
+        user_all_list = [{ 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight } 
+        for user in CustomUser.objects.all()]
+
+        return JsonResponse({'userlist': user_all_list, 'id' : user.id }, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 

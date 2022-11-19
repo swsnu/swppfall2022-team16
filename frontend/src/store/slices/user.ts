@@ -73,6 +73,8 @@ export const userSlice = createSlice({
             )!
         }),
         builder.addCase(signup.fulfilled, (state, action) => {
+            state.users = action.payload.userlist
+            
             state.currentLoggedIn = state.users.find(
                 (value) => {
                     return value.id === action.payload.id
