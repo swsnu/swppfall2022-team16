@@ -123,12 +123,12 @@ export const shopitemSlice = createSlice({
             state.current_shopitem = action.payload
         })
         builder.addCase(fetchTopResult.fulfilled, (state, action) => {
-            // state.top_results = action.payload
-            state.top_results = []
+            state.top_results = action.payload
+            // state.top_results = []
         })
         builder.addCase(fetchRecommendation.fulfilled, (state, action) => {
-            // state.recommendations = action.payload
-            state.recommendations = []
+            state.recommendations = action.payload
+            // state.recommendations = []
         })
     },
 });

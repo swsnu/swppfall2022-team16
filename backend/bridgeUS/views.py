@@ -279,10 +279,14 @@ def reviewlist(request):
 
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
-        body = request.body.decode()
-        review_title = json.loads(body)['title']
-        review_content = json.loads(body)['content']
-        review_item = json.loads(body)['review_item']
+        print(request.headers)
+        print(request.FILES)
+        body = request.POST
+        review_title = body.get('title')
+        review_content = body.get('content')
+        review_item = body.get('review_item')
+        review_rating = body.get('rating')
+        review_image = request.FILES.getlist('image')[0]
         print(review_title, review_content, review_item)
         
         review_shopItem = ShopItem.objects.get(id=review_item)
@@ -291,7 +295,7 @@ def reviewlist(request):
 
         review_author = request.user
 
-        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem)
+        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem, rating = review_rating, image = review_image)
 
         review.save()
         
@@ -517,7 +521,7 @@ def trendingposts(request, post_count):
     return JsonResponse(post_json_list, safe=False, status=200)
 
 def get_review_json(review):
-    return { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item.id, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes, 'image_url': review.image_url }
+    return { 'id' : review.id, 'rating' : review.rating, 'review_item' : review.review_item.id, 'title': review.title, 'content': review.content, 'author': review.author.id, 'likes' : review.likes, 'image_url': review.image.url if review.image else '' }
 
 def get_comment_json(comment):
     return { 'id' : comment.id, 'review' : comment.review.id, 'content' : comment.content, 'author': comment.author.id }
@@ -532,7 +536,7 @@ def get_shopitemdetail_json(detail):
     return { 'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }    
 
 def get_shopitem_json(shopitem):
-    return { 'id': shopitem.id, 'image_url' : shopitem.image_url, 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tag': shopitem.tag }
+    return { 'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '' , 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tags': shopitem.tags }
 
 def get_user_json(user):
     return { 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight }     

@@ -39,12 +39,8 @@ export const fetchReviews = createAsyncThunk(
 
 export const postReview = createAsyncThunk(
     "review/postReview", async (
-    review : {
-    title: string;
-    content: string;
-    review_item: number;
-    rating: number;
-}, {dispatch}) => {
+    review : FormData, {dispatch}) => {
+    console.log(review)
     const response = await axios.post('/api/review/', review);
     return response.data
 });
