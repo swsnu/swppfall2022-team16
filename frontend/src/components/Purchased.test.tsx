@@ -26,7 +26,8 @@ describe("<Purchased />", () => {
             color: 'red',
             size: 'S',
             ordered_amount: 1,
-            purchased_at: new Date()
+            purchased_at: new Date(),
+            fast_shipping : true,
         }}/>);
 
         screen.getByText("shipping");

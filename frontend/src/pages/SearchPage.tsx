@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Filter, { filters } from '../components/Filter'
@@ -18,12 +18,19 @@ export default function SearchPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
+  const [tags, setTags] = useState<string[]>([])
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchTopResult({ text: text, tags: [] }))
     dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
   }, [dispatch])
+
+  const tagHandler = (remove: string, add: string) => {
+    console.log('Remove:' + remove)
+    console.log('Add:' + add)
+    setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+  }
 
   return (<div className = 'page-container'>
     <div className = 'contents'>
@@ -41,11 +48,11 @@ export default function SearchPage (): JSX.Element {
         <Col md={5}></Col>
         {
           filters.map(({category, options}) => <Col key={category} md={1}>
-            <Filter key={category} category={category} options={options}/>
+            <Filter key={category} category={category} options={options} handler={tagHandler}/>
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}}>
+          <Button style={{backgroundColor: 'purple', color: 'white'}} onClick={() => {console.log(tags)}}>
             <AiOutlineFilter />
           </Button>
         </Col>

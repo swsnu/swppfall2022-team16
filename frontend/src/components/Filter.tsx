@@ -15,8 +15,13 @@ export const filters = [
   { category: "size", options: ["S", "M", "L", "XL"]}
 ]
 
-export default function Filter (props: { category: string, options: string[] }): JSX.Element {
+export default function Filter (props: { category: string, options: string[], handler: (remove: string, add: string) => void }): JSX.Element {
   const [selected, setSelected] = useState<string>(props.category)
+
+  const selectedHandler = (option: string) => {
+    props.handler(selected, props.category === option ? '' : option)
+    setSelected(option)
+  }
 
   return (
     <div>
@@ -29,10 +34,10 @@ export default function Filter (props: { category: string, options: string[] }):
     `}
       </style>
       <DropdownButton variant = 'flat' id="dropdown-basic-button" title = {selected}>
-        <Dropdown.Item>{props.category}</Dropdown.Item>
+        <Dropdown.Item onClick={() => {selectedHandler(props.category)}}>{props.category}</Dropdown.Item>
         <Dropdown.Divider />
         {
-          props.options.map((option) => <Dropdown.Item key={option} onClick={() => {setSelected(option)}} >
+          props.options.map((option) => <Dropdown.Item key={option} onClick={() => {selectedHandler(option)}} >
             {option}
           </Dropdown.Item>)
         }

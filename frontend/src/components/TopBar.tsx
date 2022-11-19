@@ -6,6 +6,7 @@ import { selectUser, signout } from '../store/slices/user'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
+import '../css/mainpage.css'
 /*eslint-disable */
 
 
@@ -49,7 +50,12 @@ export default function TopBar (): JSX.Element {
           </Stack>
         </Navbar.Brand>
         <Nav className ="side">
-          <Nav.Link href = '/community'>community</Nav.Link>
+            <Nav.Link href = '/community'>
+            <Stack direction = 'horizontal'>
+              <img src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
+              <div className = 'spacing3'></div>
+              </Stack>
+            </Nav.Link>
           <Form className="d-flex">
             <Form.Control
               type="search"

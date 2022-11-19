@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
 import Filter, { filters } from '../components/Filter'
@@ -18,11 +18,18 @@ import '../css/Banner.css'
 export default function MainPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
+  const [tags, setTags] = useState<string[]>([])
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
   }, [dispatch])
+
+  const tagHandler = (remove: string, add: string) => {
+    console.log('Remove:' + remove)
+    console.log('Add:' + add)
+    setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+  }
 
   return (<div className = 'page-container'>
     <div className = 'contents'>
@@ -32,26 +39,29 @@ export default function MainPage (): JSX.Element {
     </div>
     <div className = 'recommend'>
     <Container>
-      <br/>
+      <div className = 'spacing'></div>
       <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
-          <h3 id = 'Trending'>Trending</h3>
+          <Stack direction = 'horizontal' gap = {1}>
+            <h3 id = 'Trending'>Trending</h3>
+            <img src = '/trending-1.png' width = '25' height = '30'></img>
+          </Stack>
         </Col>
         <Col md={5}></Col>
         {
           filters.map(({category, options}) => <Col key={category} md={1}>
-            <Filter key={category} category={category} options={options}/>
+            <Filter key={category} category={category} options={options} handler={tagHandler}/>
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}}>
+          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}} onClick={() => {console.log(tags)}}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
-      <br/>
       <Row>
+        <div className = 'spacing2'></div>
         {
           shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
@@ -61,6 +71,12 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    <div className = 'spacing'></div>
+    <div className = 'community'>
+      <a href = '/community'>
+        <img src = '/communitybanner.png' width = '100%'></img>
+      </a>
+    </div>
     </div>
     </div>
     <Footer/>

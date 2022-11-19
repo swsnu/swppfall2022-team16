@@ -9,4 +9,26 @@
 #Trending {
     font-family : copperplate;
     font-weight : bold;
+    margin-top : 10px;
+}
+
+.spacing {
+    height : 50px;
+}
+
+.spacing2 {
+    height : 20px;
+}
+
+.spacing3 {
+    width : 10px;
+}
+
+.community {
+    position : relative;
+    width : 100vw;
+}
+
+.communitylogo {
+    margin-top : 2px
 }
