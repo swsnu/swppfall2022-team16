@@ -42,7 +42,12 @@ export default function TopBar (): JSX.Element {
       </style>
     <Navbar sticky = "top" bg="light" variant="light">
       <Container>
-        <Navbar.Brand href="/">{' '}BridgeUs</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <Stack direction = 'horizontal' gap = {2}>
+            <img src = './bridgeUsLogo.png' width = '20' height = '22'></img>
+            <img src ='./BridgeUs.png' width = '80' height = '20'></img>
+          </Stack>
+        </Navbar.Brand>
         <Nav className ="side">
           <Nav.Link href = '/community'>community</Nav.Link>
           <Form className="d-flex">
