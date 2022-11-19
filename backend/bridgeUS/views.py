@@ -419,12 +419,10 @@ def recommend_clothes(request, recommend_count):
 
     rating_dataframe = pd.DataFrame(data=data, columns=['user_id', 'shopitem_id', 'rating'])
 
-    user_orders = UserOrder.objects.all().filter(user=request.user)
-
     recommended_clothes = []
 
-    if user_orders.count > 0:
-        recommended_clothes = find_similar_shopItems(user_orders[0].ordered_item.id, recommend_count, rating_dataframe)
+    if request.user.is_authenticated and UserOrder.objects.first(user = request.user) is not None:
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.first(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
         recommended_clothes = find_similar_shopItems(trending_review[0].review_item.id, recommend_count, rating_dataframe)
