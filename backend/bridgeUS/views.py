@@ -282,9 +282,13 @@ def reviewlist(request):
         body = request.body.decode()
         review_title = json.loads(body)['title']
         review_content = json.loads(body)['content']
+        review_item = json.loads(body)['review_item']
+        
+        review_shopItem = ShopItem.objects.first(id=review_item)
+
         review_author = request.user
 
-        review = Review(title=review_title, content=review_content, author=review_author)
+        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem )
 
         review.save()
         
