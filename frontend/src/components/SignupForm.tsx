@@ -35,6 +35,7 @@ export default function SignupForm (): JSX.Element {
               background-image: linear-gradient(to right, #5C258D 0%, #4389A2  51%, #5C258D  100%);
               padding: 15px 45px;
               text-align: center;
+              font-weight : bold;
               text-transform: uppercase;
               transition: 0.5s;
               background-size: 200% auto;
@@ -46,7 +47,7 @@ export default function SignupForm (): JSX.Element {
   
             .btn-grad:hover {
               background-position: right center; /* change the direction of the change here */
-              color: #fff;
+              color: #FFE5B4;
               text-decoration: none;
             }
            
