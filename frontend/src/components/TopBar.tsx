@@ -35,10 +35,25 @@ export default function TopBar (): JSX.Element {
     <>
      <style type="text/css">
         {`
-    .btn-signout {
-      background-color: purple;
-      color: white;
-    }
+             
+             .btn-grad {
+              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+              text-align: center;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;       
+              font-weight : bold;     
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+              display: block;
+            }
+  
+            .btn-grad:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #FFE5B4;
+              text-decoration: none;
+            }
+           
     `}
       </style>
     <Navbar sticky = "top" bg="light" variant="light">
@@ -73,7 +88,7 @@ export default function TopBar (): JSX.Element {
           {
             loggedIn ? <Stack direction = 'horizontal'>
               <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
-              <Button variant = 'signout' onClick = {() => loggingout()} >log out</Button>
+              <Button variant = 'grad' onClick = {() => loggingout()} >log out</Button>
             </Stack>
              :  <Nav.Link href = '/login'>login</Nav.Link>
           }

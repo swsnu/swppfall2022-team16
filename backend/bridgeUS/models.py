@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from taggit.managers import TaggableManager
 
 class CustomUser(AbstractUser):
     nickname = models.TextField(null=True)
@@ -34,7 +35,7 @@ class ShopItem(models.Model):
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
     type = models.TextField(null=True)
-    tag = models.TextField(null=True)
+    tags = TaggableManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

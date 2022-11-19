@@ -30,6 +30,7 @@ export default function LoginForm (): JSX.Element {
               text-align: center;
               text-transform: uppercase;
               transition: 0.5s;
+              font-weight : bold;
               background-size: 200% auto;
               color: white;            
               box-shadow: 0 0 20px #eee;
@@ -39,7 +40,7 @@ export default function LoginForm (): JSX.Element {
   
             .btn-grad:hover {
               background-position: right center; /* change the direction of the change here */
-              color: #fff;
+              color: #FFE5B4;
               text-decoration: none;
             }
            
