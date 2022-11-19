@@ -17,6 +17,9 @@ export default function LoginForm (): JSX.Element {
     if (result.type === `${login.typePrefix}/fulfilled`) {
       navigate('/')
     }
+    else {
+      alert("Email or password is wrong")
+    }
   }
 
   return (
