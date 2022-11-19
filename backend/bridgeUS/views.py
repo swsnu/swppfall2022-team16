@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 import json
 import pandas as pd
 
-from bridgeUS.constants import OrderStatus
+from bridgeUS import constants
 
 from ml.cloth_recommendation import find_similar_shopItems
 
@@ -425,7 +425,7 @@ def recommend_clothes(request, recommend_count):
         trending_review = Review.objects.all().order_by('likes')
         recommended_clothes = find_similar_shopItems(trending_review[0].review_item.id, recommend_count, rating_dataframe)
 
-    response_dict = [{ 'shopitem_id' : int(recommended) } for recommended in recommended_clothes]
+    response_dict = [get_shopitem_json(ShopItem.objects.first(id=int(recommended))) for recommended in recommended_clothes]
 
     return JsonResponse(response_dict, status=200, safe=False)
 
@@ -433,6 +433,24 @@ def recommend_clothes(request, recommend_count):
 def search(request):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST']) 
+
+    body = request.body.decode()
+
+    text = json.loads(body)['text']
+    tags = json.loads(body)['tags']
+
+    if text is not None:
+        matched_items = ShopItem.objects.filter(name__icontains=text)
+        tag_matched = matched_items.filter(tags__name__in=tags)
+        ordered_items = tag_matched.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
+
+        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)
+    else:
+        matched_items = ShopItem.objects.filter(tags__name__in=tags)
+        ordered_items = matched_items.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
+        
+        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)    
+
 
 @ensure_csrf_cookie
 def purchase(request):
@@ -444,7 +462,7 @@ def purchase(request):
 
     user_orders = UserOrder.objects.filter(user = request.user)
 
-    pre_orders = user_orders.filter(order_status=OrderStatus.PRE_ORDER)
+    pre_orders = user_orders.filter(order_status = constants.OrderStatus.PRE_ORDER)
 
     user_shop = UserShop.objects.first(user = request.user)
     
@@ -461,7 +479,7 @@ def purchase(request):
     user_credit -= needed_credit
 
     for pre_order in pre_orders:
-        pre_order.order_status = OrderStatus.PRE_SHIPPING
+        pre_order.order_status = constants.OrderStatus.PRE_SHIPPING
         pre_order.save()
     
     return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
