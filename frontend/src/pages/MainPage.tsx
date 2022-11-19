@@ -12,6 +12,7 @@ import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/mainpage.css'
 import '../css/Footer.css'
+import '../css/Banner.css'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -26,13 +27,10 @@ export default function MainPage (): JSX.Element {
   return (<div className = 'page-container'>
     <div className = 'contents'>
     <TopBar />
-    <br/>
-    <Container>
-      <Row>
-        <Col>
+    <div className = 'banner'>
           <Banner />
-        </Col>
-      </Row>
+      </div>
+    <Container>
       <br/>
       <br/>
       <div className = 'mainpage'>

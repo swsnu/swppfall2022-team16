@@ -1,13 +1,15 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import Button from 'react-bootstrap/Button'
+import '../css/Banner.css'
 
 /*eslint-disable */
 
 export default function Banner (): JSX.Element {
   return (
-    <div>
-    <Carousel>
+    
+    <div className = 'banner'>
+    <Carousel data-interval = '1' data-pause = 'hover'>
     <Carousel.Item>
       <img
         id = "first image"
@@ -16,7 +18,7 @@ export default function Banner (): JSX.Element {
         alt="First slide"
       />
       <Carousel.Caption>
-        <Button variant="dark" size = 'sm' href = '/search/karina'>SHOP NOW</Button>
+        <Button variant="shopnow" size = 'sm' href = '/search/karina'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -26,7 +28,7 @@ export default function Banner (): JSX.Element {
         alt="Second slide"
       />
       <Carousel.Caption>
-       <Button variant="dark" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
+       <Button variant="shopnow" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
@@ -36,7 +38,7 @@ export default function Banner (): JSX.Element {
         alt="Third slide"
       />
       <Carousel.Caption>
-        <Button variant="dark" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
+        <Button variant="shopnow" size = 'sm' href = '/search/bts'>SHOP NOW</Button>
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>
