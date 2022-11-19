@@ -5,20 +5,24 @@ import Filter, { filters } from '../components/Filter'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItems, fetchRecommendation, fetchTopResult, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/Footer.css'
+import { selectUser } from '../store/slices/user'
 /*eslint-disable */
 
 export default function SearchPage (): JSX.Element {
   const { text } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
+  const userState = useSelector(selectUser)
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchTopResult({ text: text, tags: [] }))
+    dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
   }, [dispatch])
 
   return (<div className = 'page-container'>
@@ -48,7 +52,7 @@ export default function SearchPage (): JSX.Element {
       </Row>
       <Row style={{backgroundColor: 'gainsboro'}}>
         {
-          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
           </Col>)
         }
@@ -65,7 +69,7 @@ export default function SearchPage (): JSX.Element {
       </Row>
       <Row>
         {
-          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          shopItemState.recommendations?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
           </Col>)
         }

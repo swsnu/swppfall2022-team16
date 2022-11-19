@@ -21,11 +21,15 @@ export interface ShopItemInfo {
 
 export interface ShopItemState {
     shopitems: ShopItemInfo[],
+    top_results: ShopItemInfo[],
+    recommendations: ShopItemInfo[],
     current_shopitem: ShopItemInfo | null
 }
 
 const initialState : ShopItemState = {
     shopitems: [],
+    top_results: [],
+    recommendations: [],
     current_shopitem: null
 }
 
@@ -41,6 +45,22 @@ export const fetchMainItem = createAsyncThunk(
     "shopitem/fetchMainItem",
     async (id : number) => {
         const response = await axios.get<ShopItemInfo>(`/api/shopitem/${id}/`)
+        return response.data
+    }
+)
+
+export const fetchTopResult = createAsyncThunk(
+    "shopitem/fetchTopResult",
+    async (query?: {text?: string, tags: string[]}) => {
+        const response = await axios.get<ShopItemInfo[]>(`/api/search/${query?.text}`)
+        return response.data
+    }
+)
+
+export const fetchRecommendation = createAsyncThunk(
+    "shopitem/fetchRecommendation",
+    async (id?: number) => {
+        const response = await axios.get<ShopItemInfo[]>(`/api/recommend/${id}`)
         return response.data
     }
 )
@@ -101,6 +121,14 @@ export const shopitemSlice = createSlice({
         })
         builder.addCase(fetchMainItem.fulfilled, (state, action) => {
             state.current_shopitem = action.payload
+        })
+        builder.addCase(fetchTopResult.fulfilled, (state, action) => {
+            // state.top_results = action.payload
+            state.top_results = []
+        })
+        builder.addCase(fetchRecommendation.fulfilled, (state, action) => {
+            // state.recommendations = action.payload
+            state.recommendations = []
         })
     },
 });
