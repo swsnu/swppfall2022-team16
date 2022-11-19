@@ -5,3 +5,5 @@ class OrderStatus(Enum):
     PRE_SHIPPING = 1
     SHIPPING = 2
     POST_SHIPPING = 3
+
+SEARCH_RESULT_COUNT = 8    
