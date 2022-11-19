@@ -3,7 +3,7 @@ import ReviewForm from './ReviewForm'
 
 describe('<ReviewForm/>', () => {
   it('should render without errors', () => {
-    render(<ReviewForm />)
+    render(<ReviewForm shopItemId={1} />)
     screen.getByPlaceholderText('Karinas outfit from LA')
     screen.getByPlaceholderText('This is amazing')
     screen.getByPlaceholderText('upload your photo')

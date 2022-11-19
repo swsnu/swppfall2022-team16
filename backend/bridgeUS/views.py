@@ -283,8 +283,11 @@ def reviewlist(request):
         review_title = json.loads(body)['title']
         review_content = json.loads(body)['content']
         review_item = json.loads(body)['review_item']
+        print(review_title, review_content, review_item)
         
-        review_shopItem = ShopItem.objects.first(id=review_item)
+        review_shopItem = ShopItem.objects.get(id=review_item)
+
+        print(review_shopItem)
 
         review_author = request.user
 

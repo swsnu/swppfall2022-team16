@@ -8,7 +8,7 @@ import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
-import { selectReview } from '../store/slices/review'
+import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 /*eslint-disable */
 
@@ -23,6 +23,7 @@ export default function PostPage (): JSX.Element {
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
+    dispatch(fetchReviews())
   }, [dispatch])
 
   const findAuthorName = (ID : number | undefined) => {
