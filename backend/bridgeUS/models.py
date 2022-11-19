@@ -64,9 +64,12 @@ class UserOrder(models.Model):
 
     color = models.TextField(null=True)
     size = models.TextField(null=True)
+
+    fast_shipping = models.BooleanField(default=False)
+
     ordered_amount = models.IntegerField(null=True)
 
-    order_status = models.TextField(null=True)
+    order_status = models.IntegerField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

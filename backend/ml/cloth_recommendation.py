@@ -31,17 +31,17 @@ def find_similar_shopItems(shopitem_id, recommend_count, rating_csv):
 
     result = []
       
-    cloth_ind = shopItem_mapper[shopitem_id]
-    cloth_vec = X[cloth_ind]
+    shopItem_ind = shopItem_mapper[shopitem_id]
+    shopItem_vec = X[shopItem_ind]
     
     recommend_count += 1
 
     kNN = NearestNeighbors(n_neighbors=recommend_count, algorithm="brute", metric=metric)
     kNN.fit(X)
     
-    cloth_vec = cloth_vec.reshape(1, -1)
+    shopItem_vec = shopItem_vec.reshape(1, -1)
 
-    neighbour = kNN.kneighbors(cloth_vec, return_distance=show_distance)
+    neighbour = kNN.kneighbors(shopItem_vec, return_distance=show_distance)
     
     for i in range(0, recommend_count):
         n = neighbour.item(i)
