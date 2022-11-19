@@ -19,5 +19,7 @@ urlpatterns = [
     path('comment/<int:comment_id>/', views.comment, name='comment'),
     path('purchase/', views.purchase, name='purchase'),
     path('search/', views.search, name='search'),
-    path('recommend/', views.recommend_clothes, name='recommend')
+    path('recommend/', views.recommend_clothes, name='recommend'),
+    path('usercomments/', views.usercomments, name='usercomments'),
+    path('trendingposts/', views.trendingposts, name='trendingposts')
 ]

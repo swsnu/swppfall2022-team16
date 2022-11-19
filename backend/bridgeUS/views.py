@@ -257,7 +257,7 @@ def userorderlist(request):
         return HttpResponse(status=401)
 
     if request.method == 'GET':
-        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status, 'color' : userorder.color, 'ordered_amount' : userorder.ordered_amount, 'size' : userorder.size } for userorder in UserOrder.objects.all()]
+        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status, 'color' : userorder.color, 'ordered_amount' : userorder.ordered_amount, 'size' : userorder.size, 'purchased_at' : userorder.created_at } for userorder in UserOrder.objects.all()]
         return JsonResponse(userorder_all_list, safe=False, status=200)
 
 
@@ -419,3 +419,18 @@ def search(request):
 def purchase(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])    
+
+@ensure_csrf_cookie
+def purchase(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])    
+
+@ensure_csrf_cookie
+def usercomments(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])                    
+
+@ensure_csrf_cookie
+def trendingposts(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])                 

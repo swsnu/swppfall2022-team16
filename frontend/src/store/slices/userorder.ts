@@ -16,6 +16,7 @@ export interface UserOrderInfo {
     color: string
     size: string
     ordered_amount: number
+    purchased_at: Date
 }
 
 export interface UserOrderState {

@@ -34,6 +34,7 @@ class ShopItem(models.Model):
     price = models.FloatField(null=True)
     rating = models.FloatField(null=True)
     type = models.TextField(null=True)
+    tag = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
