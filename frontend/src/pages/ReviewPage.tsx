@@ -8,6 +8,7 @@ import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
+import '../css/Footer.css'
 /*eslint-disable */
 
 
@@ -20,7 +21,8 @@ export default function ReviewPage (): JSX.Element {
     dispatch(fetchMainItems())
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <Container>
       <Row>
@@ -37,6 +39,7 @@ export default function ReviewPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

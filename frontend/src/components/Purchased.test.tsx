@@ -22,7 +22,11 @@ describe("<Purchased />", () => {
             id: 1,
             user_id: 1,
             item_id: 1,
-            status: "shipping"
+            status: "shipping",
+            color: 'red',
+            size: 'S',
+            ordered_amount: 1,
+            purchased_at: new Date()
         }}/>);
 
         screen.getByText("shipping");

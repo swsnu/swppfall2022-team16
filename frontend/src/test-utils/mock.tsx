@@ -39,12 +39,14 @@ export const stubShopItemState: ShopItemState = {
     { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
     { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
   ],
+  top_results: [],
+  recommendations: [],
   current_shopitem: null
 }
 
 export const stubUserOrderState: UserOrderState = {
   userOrders: [
-    { id: 1, user_id: 1, item_id: 1, status: 'shipping' }
+    { id: 1, user_id: 1, item_id: 1, status: 'shipping', color: 'red', size: 'S', ordered_amount: 1, purchased_at: new Date()}
   ]
 }
 

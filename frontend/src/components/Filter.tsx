@@ -23,8 +23,8 @@ export default function Filter (props: { category: string, options: string[] }):
       <style type="text/css">
         {`
     .btn-flat {
-      background-color: purple;
-      color: white;
+      background-color: transparent;
+      color: #5A5A5A;
     }
     `}
       </style>

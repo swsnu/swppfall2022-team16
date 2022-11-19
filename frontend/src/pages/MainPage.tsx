@@ -12,6 +12,7 @@ import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/mainpage.css'
 import '../css/Footer.css'
+import '../css/Banner.css'
 /*eslint-disable */
 
 export default function MainPage (): JSX.Element {
@@ -26,19 +27,16 @@ export default function MainPage (): JSX.Element {
   return (<div className = 'page-container'>
     <div className = 'contents'>
     <TopBar />
-    <br/>
-    <Container>
-      <Row>
-        <Col>
+    <div className = 'banner'>
           <Banner />
-        </Col>
-      </Row>
-      <br/>
+    </div>
+    <div className = 'recommend'>
+    <Container>
       <br/>
       <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
-          <h1 className="Header">Trending</h1>
+          <h3 id = 'Trending'>Trending</h3>
         </Col>
         <Col md={5}></Col>
         {
@@ -47,11 +45,12 @@ export default function MainPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}}>
+          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
+      <br/>
       <Row>
         {
           shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
@@ -62,6 +61,7 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    </div>
     </div>
     <Footer/>
   </div>)
