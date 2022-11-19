@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Stack } from 'react-bootstrap'
+import { Stack, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
-import { CommentInfo, fetchComments, selectComment } from '../store/slices/comment'
+import { CommentInfo, deleteComment, fetchComments, putComment, selectComment } from '../store/slices/comment'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 /*eslint-disable */
 
 export interface IProps {
@@ -21,23 +22,23 @@ export default function PostComments (props: IProps): JSX.Element {
     dispatch(fetchUsers())
   }, [dispatch])
 
-  // const commentEditButtonHandler = (comment: CommentInfo) => {  
-  //   let notice = window.prompt("Edit Comment", comment.content);
-  //   if(notice === null){
-  //       return;
-  //   }
-  //   else if(notice.length === 0){
-  //       alert("user cannot create empty comment");
-  //   }
-  //   else{
-  //       const EdittedComment = {...comment, content: notice};
-  //       // dispatch(editComment(EdittedComment));//axios function
-  //   }
-  // };
+  const editButtonHandler = (comment: CommentInfo) => {  
+    let notice = window.prompt("Edit Comment", comment.content);
+    if(notice === null){
+        return;
+    }
+    else if(notice.length === 0){
+        alert("user cannot create empty comment");
+    }
+    else{
+        const EdittedComment = {...comment, content: notice};
+        dispatch(putComment(EdittedComment));
+    }
+  };
 
-  // const commentDeleteButtonHandler = (comment: CommentInfo) => {
-  //     // dispatch(deleteComment(comment.id));//axios function
-  // };
+  const deleteButtonHandler = (comment: CommentInfo) => {
+    dispatch(deleteComment(comment.id));
+  };
 
   const findAuthorName = (ID : number | undefined) => {
           return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
@@ -47,24 +48,24 @@ export default function PostComments (props: IProps): JSX.Element {
 
   let listedComments = CommentsforThisArticle.map((comment : CommentInfo) =>{
       return(
-          <div className="Comment" key={comment.id}>
-          <Stack direction = "horizontal" gap={3}>
+      <div className="Comment" key={comment.id}>
+        <Stack direction = "horizontal" gap={3}>
           <p className = "author" style={{fontWeight: 'bold'}}>[{findAuthorName(comment.author)}]</p>
           <p className = 'content'>{comment.content}</p>
-          </Stack>
-          {/* {
+          {
             (comment.author == userState.currentLoggedIn?.id) ? 
             (<div className = "button">
-              <button className = "edit-comment-button" id="edit-comment-button" onClick={() => commentEditButtonHandler(comment)}>
-                edit
-              </button>
-              <button className = "delete-comment-button" id="delete-comment-button" onClick={() => commentDeleteButtonHandler(comment)}>
-                delete
-              </button>
+              <Button className = "edit-comment-button" id="edit-comment-button" onClick={() => editButtonHandler(comment)}>
+                <AiFillEdit/>
+              </Button>
+              <Button className = "delete-comment-button" id="delete-comment-button" onClick={() => deleteButtonHandler(comment)}>
+                <AiFillDelete/>
+              </Button>
             </div>) 
             : (<div></div>)
-          } */}
-        </div>
+          }
+        </Stack>
+      </div>
       );
   });
 

@@ -11,7 +11,7 @@ import { fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/sh
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
-import { CommentInfo, deleteComment, postComment, putComment } from '../store/slices/comment'
+import { postComment } from '../store/slices/comment'
 /*eslint-disable */
 
 export default function PostPage (): JSX.Element {
@@ -34,28 +34,10 @@ export default function PostPage (): JSX.Element {
   };
 
   const commentButtonHandler = () => {
-    setComment("")
     const data = {review_id: Number(id), content: comment}
     dispatch(postComment(data))
+    setComment("")
   }
-
-  const commentEditButtonHandler = (comment: CommentInfo) => {  
-    let notice = window.prompt("Edit Comment", comment.content);
-    if(notice === null){
-        return;
-    }
-    else if(notice.length === 0){
-        alert("user cannot create empty comment");
-    }
-    else{
-        const EdittedComment = {...comment, content: notice};
-        dispatch(putComment(EdittedComment));
-    }
-};
-
-const commentDeleteButtonHandler = (comment: CommentInfo) => {
-    dispatch(deleteComment(comment.id));
-};
 
   const review = reviewState.reviews.find((review) => review.id === Number(id))!
 
@@ -77,7 +59,7 @@ const commentDeleteButtonHandler = (comment: CommentInfo) => {
           <PostComments review_id={Number(id)} />
           <InputGroup>
           <Form.Control type='commment' onChange = {(e) => setComment(e.target.value)} />
-            <Button onClick={() => commentButtonHandler()}>Comment</Button>
+          <Button onClick={() => commentButtonHandler()}>Comment</Button>
           </InputGroup>
         </Col>
       </Row>
