@@ -17,6 +17,7 @@ export interface UserOrderInfo {
     size: string
     ordered_amount: number
     purchased_at: Date
+    fast_shipping: boolean
 }
 
 export interface UserOrderState {
