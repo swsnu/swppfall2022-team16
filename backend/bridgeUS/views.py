@@ -534,7 +534,7 @@ def get_shopitemdetail_json(detail):
     return { 'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }    
 
 def get_shopitem_json(shopitem):
-    return { 'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '' , 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tags': shopitem.tags }
+    return { 'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '' , 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tags': shopitem.tags.names() }
 
 def get_user_json(user):
     return { 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight }     
