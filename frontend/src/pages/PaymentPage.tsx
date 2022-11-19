@@ -10,6 +10,8 @@ import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import '../css/Footer.css'
+
 /*eslint-disable */
 
 export default function PaymentPage (): JSX.Element {
@@ -31,7 +33,9 @@ export default function PaymentPage (): JSX.Element {
     return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
   };
 
-  return (<div>
+  return (
+  <div className = 'page-container'>
+      <div className = 'contents'>
     <TopBar />
     <Container>
       <Row className="Header-row">
@@ -84,6 +88,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

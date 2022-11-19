@@ -28,6 +28,30 @@ export default function SignupForm (): JSX.Element {
 
   return (
   <div className='Signup'>
+    <style type="text/css">
+        {`
+             
+             .btn-grad {
+              background-image: linear-gradient(to right, #5C258D 0%, #4389A2  51%, #5C258D  100%);
+              padding: 15px 45px;
+              text-align: center;
+              text-transform: uppercase;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;            
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+              display: block;
+            }
+  
+            .btn-grad:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #fff;
+              text-decoration: none;
+            }
+           
+    `}
+      </style>
     <div className = 'spacing'></div>
     <h1>Create Account</h1>
     <Form>
@@ -75,7 +99,7 @@ export default function SignupForm (): JSX.Element {
       </Stack>
       <div className = 'spacebetween'></div>
       <div className = "d-grid gap-2">
-      <Button size ='lg' onClick = {() => signupbuttonHandler()}>Sign-up</Button>
+      <Button variant = 'grad' size ='lg' onClick = {() => signupbuttonHandler()}>Sign-up</Button>
       </div>
       <div className = 'spacebetween'></div>
     </Form>
