@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
@@ -18,11 +18,18 @@ import '../css/Banner.css'
 export default function MainPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
+  const [tags, setTags] = useState<string[]>([])
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
   }, [dispatch])
+
+  const tagHandler = (remove: string, add: string) => {
+    console.log('Remove:' + remove)
+    console.log('Add:' + add)
+    setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+  }
 
   return (<div className = 'page-container'>
     <div className = 'contents'>
@@ -44,11 +51,11 @@ export default function MainPage (): JSX.Element {
         <Col md={5}></Col>
         {
           filters.map(({category, options}) => <Col key={category} md={1}>
-            <Filter key={category} category={category} options={options}/>
+            <Filter key={category} category={category} options={options} handler={tagHandler}/>
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}}>
+          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}} onClick={() => {console.log(tags)}}>
             <AiOutlineFilter />
           </Button>
         </Col>
