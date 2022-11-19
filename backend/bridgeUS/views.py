@@ -4,6 +4,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 
 import json
+import pandas as pd
+
+from ml.cloth_recommendation import find_similar_shopItems
 
 from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Review, Comment, UserOrder
 
@@ -253,7 +256,7 @@ def userorderlist(request):
         return HttpResponse(status=401)
 
     if request.method == 'GET':
-        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status } for userorder in UserOrder.objects.all()]
+        userorder_all_list = [{ 'id' : userorder.id,  'user_id' : userorder.user.id, 'item_id' : userorder.ordered_item.id, 'status': userorder.order_status, 'color' : userorder.color, 'ordered_amount' : userorder.ordered_amount, 'size' : userorder.size, 'purchased_at' : userorder.created_at } for userorder in UserOrder.objects.all()]
         return JsonResponse(userorder_all_list, safe=False, status=200)
 
 
@@ -386,3 +389,47 @@ def comment(request, comment_id):
         comment.delete()
         return HttpResponse(status=200)
 
+@ensure_csrf_cookie
+def recommend_clothes(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])
+
+    data = []
+
+    for review in Review.objects.all():
+        data.append([review.author.id, review.review_item.id, review.rating])
+
+    rating_dataframe = pd.DataFrame(data=data, columns=['user_id', 'shopitem_id', 'rating'])
+
+    # TODO@연태영 : shopitem_id input rule
+    recommended_clothes = find_similar_shopItems(1, 3, rating_dataframe)
+
+    response_dict = [{ 'shopitem_id' : int(recommended) } for recommended in recommended_clothes]
+
+    return JsonResponse(response_dict, status=200, safe=False)
+
+
+@ensure_csrf_cookie
+def search(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])          
+
+@ensure_csrf_cookie
+def purchase(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])    
+
+@ensure_csrf_cookie
+def purchase(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])    
+
+@ensure_csrf_cookie
+def usercomments(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])                    
+
+@ensure_csrf_cookie
+def trendingposts(request):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed(['GET'])                 
