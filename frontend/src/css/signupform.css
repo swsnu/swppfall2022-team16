@@ -1,0 +1,28 @@
+.signupimmi {
+    color : #5a5a5a;
+    font-size : 12px;
+    text-align : center;
+}
+
+.spacing {
+    width : auto;
+    height : 50px;
+}
+
+.spaces {
+    width : 2000 px;
+    height : auto;
+}
+
+.spacebetween {
+    height : 20px;
+}
+
+.signupbutton {
+    width : 100px;
+}
+
+.pictureinsignup {
+    width : 50vw ;
+    height : 100vh;
+}
