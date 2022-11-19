@@ -437,10 +437,29 @@ def purchase(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    user_orders = UserOrder.objects.filter(user=request.user)
+    user_orders = UserOrder.objects.filter(user = request.user)
 
     pre_orders = user_orders.filter(order_status=OrderStatus.PRE_ORDER)
 
+    user_shop = UserShop.objects.first(user = request.user)
+    
+    user_credit = user_shop.credit
+
+    needed_credit = 0
+
+    for pre_order in pre_orders:
+        needed_credit += pre_order.ordered_item.price * pre_order.ordered_amount
+
+    if needed_credit > user_credit:
+        return JsonResponse({'message' : 'not enough credit'}, status=200)
+
+    user_credit -= needed_credit
+
+    for pre_order in pre_orders:
+        pre_order.order_status = OrderStatus.PRE_SHIPPING
+        pre_order.save()
+    
+    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
 
 
     
