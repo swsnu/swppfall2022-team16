@@ -18,7 +18,7 @@ class UserShop(models.Model):
 
     credit = models.FloatField(null=True)
     cart = models.JSONField(null=True)
-    purchased_item = models.TextField(null=True)
+    purchased_item = models.JSONField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

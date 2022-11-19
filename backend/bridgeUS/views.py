@@ -282,9 +282,13 @@ def reviewlist(request):
         body = request.body.decode()
         review_title = json.loads(body)['title']
         review_content = json.loads(body)['content']
+        review_item = json.loads(body)['review_item']
+        
+        review_shopItem = ShopItem.objects.first(id=review_item)
+
         review_author = request.user
 
-        review = Review(title=review_title, content=review_content, author=review_author)
+        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem )
 
         review.save()
         
@@ -427,8 +431,6 @@ def search(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET']) 
 
-
-
 @ensure_csrf_cookie
 def purchase(request):
     if request.method != 'GET':
@@ -437,13 +439,30 @@ def purchase(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    user_orders = UserOrder.objects.filter(user=request.user)
+    user_orders = UserOrder.objects.filter(user = request.user)
 
     pre_orders = user_orders.filter(order_status=OrderStatus.PRE_ORDER)
 
-
-
+    user_shop = UserShop.objects.first(user = request.user)
     
+    user_credit = user_shop.credit
+
+    needed_credit = 0
+
+    for pre_order in pre_orders:
+        needed_credit += pre_order.ordered_item.price * pre_order.ordered_amount
+
+    if needed_credit > user_credit:
+        return JsonResponse({'message' : 'not enough credit'}, status=200)
+
+    user_credit -= needed_credit
+
+    for pre_order in pre_orders:
+        pre_order.order_status = OrderStatus.PRE_SHIPPING
+        pre_order.save()
+    
+    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
+
 @ensure_csrf_cookie
 def usercomments(request):
     if request.method != 'GET':
@@ -492,10 +511,7 @@ def get_shopitemdetail_json(detail):
     return { 'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }    
 
 def get_shopitem_json(shopitem):
-    return { 'id': shopitem.id, 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tag': shopitem.tag }
+    return { 'id': shopitem.id, 'image_url' : shopitem.image_url, 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tag': shopitem.tag }
 
 def get_user_json(user):
     return { 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight }     
-
-def get_usershop_json(usershop):
-    return { 'id' : usershop.id, 'credit' : usershop.credit, 'cart' : usershop.cart , 'purchased_item' : usershop.purchased_item }    
