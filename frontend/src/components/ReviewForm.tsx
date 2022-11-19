@@ -14,7 +14,7 @@ export interface IProps {
 export default function ReviewForm (props : IProps): JSX.Element {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File>();
 
   const [tmpRating, setTmpRating] = useState<number>(3)
   const [rating, setRating] = useState<number>(3)
@@ -26,9 +26,17 @@ export default function ReviewForm (props : IProps): JSX.Element {
   
   const postReviewButtonHandler = async () => {
     console.log(title, description, props.shopItemId, rating)
-    const result = await dispatch(postReview({title: title, content: description, review_item: props.shopItemId, rating: rating}))
+    console.log(selectedImage)
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('content', description)
+    formData.append('review_item', props.shopItemId.toString())
+    formData.append('rating', rating.toString())
+    formData.append('image', selectedImage!)
+    const result = await dispatch(postReview(formData))
+    console.log(result)
     if (result.type === `${postReview.typePrefix}/fulfilled`) {
-      navigate(`/community/${reviewState.current_review?.id}`)
+      navigate(`/community/${result.payload.id}`)
     }
   }
 
@@ -45,7 +53,13 @@ export default function ReviewForm (props : IProps): JSX.Element {
         </Form.Group>
         <Form.Group className='Upload_Photo' controlId = "reviewForm">
         <Form.Label>Upload Your Photo</Form.Label>
-        <Form.Control type = "file" accept='image/jpeg, image/png' placeholder='upload your photo' onChange={(e) => setSelectedImage(e.target.value)}/>
+        <Form.Control type = "file" accept='image/jpeg, image/png' placeholder='upload your photo' onChange={(e) => {
+          const target: any = e.target
+          const file = (target.files as FileList)[0]
+          if (file) {
+            setSelectedImage(file)
+          }
+        } }/>
         </Form.Group>
         <div>
           <span onMouseOver={() => setIsMouseOnStar(true)} onMouseOut={() => setIsMouseOnStar(false)}>
