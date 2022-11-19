@@ -1,3 +1,12 @@
 .mainpage{
     background-color: #ececec;
 }
+
+.recommend {
+    background-color: #ececec;
+}
+
+#Trending {
+    font-family : copperplate;
+    font-weight : bold;
+}

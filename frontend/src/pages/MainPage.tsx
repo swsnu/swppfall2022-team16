@@ -29,14 +29,14 @@ export default function MainPage (): JSX.Element {
     <TopBar />
     <div className = 'banner'>
           <Banner />
-      </div>
+    </div>
+    <div className = 'recommend'>
     <Container>
-      <br/>
       <br/>
       <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
-          <h1 className="Header">Trending</h1>
+          <h3 id = 'Trending'>Trending</h3>
         </Col>
         <Col md={5}></Col>
         {
@@ -45,11 +45,12 @@ export default function MainPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}}>
+          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
+      <br/>
       <Row>
         {
           shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
@@ -60,6 +61,7 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    </div>
     </div>
     <Footer/>
   </div>)

@@ -12,8 +12,10 @@
 .page-container{
   position : relative;
   min-height : 100vh;
+  left : 0;
 }
 
 .contents{
   padding-bottom : 100px;
+  width : 100vw;
 }
