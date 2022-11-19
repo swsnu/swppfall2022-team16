@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
 import Filter, { filters } from '../components/Filter'
@@ -32,11 +32,14 @@ export default function MainPage (): JSX.Element {
     </div>
     <div className = 'recommend'>
     <Container>
-      <br/>
+      <div className = 'spacing'></div>
       <div className = 'mainpage'>
       <Row className="Header-row">
         <Col md={3}>
-          <h3 id = 'Trending'>Trending</h3>
+          <Stack direction = 'horizontal' gap = {1}>
+            <h3 id = 'Trending'>Trending</h3>
+            <img src = '/trending-1.png' width = '25' height = '30'></img>
+          </Stack>
         </Col>
         <Col md={5}></Col>
         {
@@ -50,8 +53,8 @@ export default function MainPage (): JSX.Element {
           </Button>
         </Col>
       </Row>
-      <br/>
       <Row>
+        <div className = 'spacing2'></div>
         {
           shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
@@ -61,6 +64,12 @@ export default function MainPage (): JSX.Element {
       </Row>
       </div>
     </Container>
+    <div className = 'spacing'></div>
+    <div className = 'community'>
+      <a href = '/community'>
+        <img src = '/communitybanner.png' width = '100%'></img>
+      </a>
+    </div>
     </div>
     </div>
     <Footer/>
