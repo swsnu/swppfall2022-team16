@@ -288,7 +288,7 @@ def reviewlist(request):
 
         review_author = request.user
 
-        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem )
+        review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem)
 
         review.save()
         
@@ -428,8 +428,8 @@ def recommend_clothes(request, recommend_count):
 
 @ensure_csrf_cookie
 def search(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET']) 
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST']) 
 
 @ensure_csrf_cookie
 def purchase(request):
