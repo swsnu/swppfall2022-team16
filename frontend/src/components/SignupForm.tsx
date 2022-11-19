@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { signup } from '../store/slices/user'
+import '../css/signupform.css'
 
 /*eslint-disable */
 
@@ -27,30 +28,36 @@ export default function SignupForm (): JSX.Element {
 
   return (
   <div className='Signup'>
+    <div className = 'spacing'></div>
     <h1>Create Account</h1>
     <Form>
       <Form.Group className='nameForm'>
         <Form.Label>Name</Form.Label>
         <Form.Control type='name' placeholder='Name' onChange = {(e) => setName(e.target.value)} />
       </Form.Group>
+      <div className = 'spacebetween'></div>
       <Form.Group className='emailForm'>
         <Form.Label>Email</Form.Label>
         <Form.Control type='email' placeholder='Email Address' onChange = {(e) => setEmail(e.target.value)} />
       </Form.Group>
+      <div className = 'spacebetween'></div>
       <Form.Group className='passwordForm'>
         <Form.Label>Password</Form.Label>
         <Form.Control type='password' placeholder='Password' onChange = {(e) => setPassword(e.target.value)} />
       </Form.Group>
+      <div className = 'spacebetween'></div>
       <Stack direction = "horizontal" gap = {3}>
       <Form.Group className='heightForm'>
         <Form.Label>Height</Form.Label>
         <Form.Control type='height' placeholder='Your height in cm' onChange = {(e) => setHeight(e.target.value)} />
       </Form.Group>
+      <div className = 'spacebetween'></div>
       <Form.Group className='weightForm'>
         <Form.Label>Weight</Form.Label>
         <Form.Control type='weight' placeholder='Your weight in kg' onChange = {(e) => setWeight(e.target.value)} />
       </Form.Group>
       </Stack>
+      <div className = 'spacebetween'></div>
       <Stack direction = "horizontal" gap = {5}>
       <Form.Group className='male'>
         <Stack direction = "horizontal" gap = {1}>
@@ -64,8 +71,13 @@ export default function SignupForm (): JSX.Element {
         <Form.Label htmlFor = "gender2"> Female </Form.Label>
         </Stack>
       </Form.Group>
+      <div className = 'spacebetween'></div>
       </Stack>
-      <Button onClick = {() => signupbuttonHandler()}>Sign-up</Button>
+      <div className = 'spacebetween'></div>
+      <div className = "d-grid gap-2">
+      <Button size ='lg' onClick = {() => signupbuttonHandler()}>Sign-up</Button>
+      </div>
+      <div className = 'spacebetween'></div>
     </Form>
   </div>
   );

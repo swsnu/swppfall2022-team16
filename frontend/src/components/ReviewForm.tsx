@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
-import { postReview } from '../store/slices/review'
+import { postReview, selectReview } from '../store/slices/review'
 /*eslint-disable */
 
 export interface IProps {
@@ -22,11 +22,13 @@ export default function ReviewForm (props : IProps): JSX.Element {
     
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+  const reviewState = useSelector(selectReview)
   
   const postReviewButtonHandler = async () => {
+    console.log(title, description, props.shopItemId, rating)
     const result = await dispatch(postReview({title: title, content: description, review_item: props.shopItemId, rating: rating}))
     if (result.type === `${postReview.typePrefix}/fulfilled`) {
-      navigate(`/community/`)
+      navigate(`/community/${reviewState.current_review?.id}`)
     }
   }
 

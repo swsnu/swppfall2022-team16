@@ -19,7 +19,7 @@ export default function PostComments (props: IProps): JSX.Element {
   useEffect(() => {
     dispatch(fetchComments(props.review_id))
     dispatch(fetchUsers())
-  }, [dispatch, props])
+  }, [dispatch])
 
   // const commentEditButtonHandler = (comment: CommentInfo) => {  
   //   let notice = window.prompt("Edit Comment", comment.content);
