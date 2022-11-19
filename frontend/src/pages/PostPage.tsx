@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
 import { selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import '../css/Footer.css'
 /*eslint-disable */
 
 export default function PostPage (): JSX.Element {
@@ -33,7 +34,9 @@ export default function PostPage (): JSX.Element {
 
   const item = itemState.shopitems.find((item : ShopItemInfo) => item.id === review.review_item)!
 
-  return (<div>
+  return (
+  <div className = 'page-container'>
+      <div className = 'contents'>
     <TopBar />
     <Container>
       <Row>
@@ -52,6 +55,7 @@ export default function PostPage (): JSX.Element {
         </Col>
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }
