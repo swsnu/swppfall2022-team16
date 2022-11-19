@@ -52,7 +52,7 @@ export const fetchMainItem = createAsyncThunk(
 export const fetchTopResult = createAsyncThunk(
     "shopitem/fetchTopResult",
     async (query?: {text?: string, tags: string[]}) => {
-        const response = await axios.get<ShopItemInfo[]>(`/api/search/${query?.text}`)
+        const response = await axios.post<ShopItemInfo[]>(`/api/search/`, query)
         return response.data
     }
 )

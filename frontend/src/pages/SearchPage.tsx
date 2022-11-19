@@ -52,7 +52,7 @@ export default function SearchPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}} onClick={() => {console.log(tags)}}>
+          <Button style={{backgroundColor: 'purple', color: 'white'}} onClick={() => { dispatch(fetchTopResult({ text: text, tags: tags })) }}>
             <AiOutlineFilter />
           </Button>
         </Col>
