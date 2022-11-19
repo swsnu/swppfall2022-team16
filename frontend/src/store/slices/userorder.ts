@@ -13,6 +13,10 @@ export interface UserOrderInfo {
     user_id: number
     item_id: number
     status: string
+    color: string
+    size: string
+    ordered_amount: number
+    purchased_at: Date
 }
 
 export interface UserOrderState {
