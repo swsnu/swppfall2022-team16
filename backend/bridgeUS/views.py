@@ -446,16 +446,16 @@ def search(request):
         
         if tags is not None:
             tag_matched = matched_items.filter(tags__name__in=tags)
-            ordered_items = tag_matched.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
-            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)
+            ordered_items = tag_matched.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
+            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)
         else:
-            ordered_items = matched_items.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
-            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)    
+            ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
+            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)    
     else:
         matched_items = ShopItem.objects.filter(tags__name__in=tags)
-        ordered_items = matched_items.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
+        ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
         
-        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)    
+        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status = 200)    
 
 
 @ensure_csrf_cookie
