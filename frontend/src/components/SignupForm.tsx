@@ -43,7 +43,6 @@ export default function SignupForm (): JSX.Element {
       alertMessage = alertMessage + "Name\n";
   
     let emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null) ? true : false;
-    //regex to accomplish the conditions given by the TAs
     if(!emailValid)
       alertMessage = alertMessage + "Email\n";
  
@@ -57,7 +56,7 @@ export default function SignupForm (): JSX.Element {
   
     return (NameValid && emailValid && heightValid && weightValid)
   }
-  
+
   return (
   <div className='Signup'>
     <style type="text/css">
