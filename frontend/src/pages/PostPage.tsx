@@ -7,11 +7,12 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchMainItem, fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
-import { fetchReview, fetchReviews, selectReview } from '../store/slices/review'
+import { fetchMainItem, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
+import { fetchReview, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { postComment } from '../store/slices/comment'
+import { unwrapResult } from '@reduxjs/toolkit'
 /*eslint-disable */
 
 export default function PostPage (): JSX.Element {
@@ -24,11 +25,16 @@ export default function PostPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchMainItem(Number(id)))
     dispatch(fetchUsers())
-    dispatch(fetchReviews())
-    dispatch(fetchReview(Number(id)))
+    const fetchRequired = async () => {
+      const result = await dispatch(fetchReview(Number(id)));
+      
+      if (result.type === `${fetchReview.typePrefix}/fulfilled`) {
+        console.log(`review: ${unwrapResult(result).review_item}`)
+        dispatch(fetchMainItem(unwrapResult(result).review_item))
+      }
+    }
+    fetchRequired();
   }, [dispatch])
 
   const findAuthorName = (ID : number | undefined) => {
