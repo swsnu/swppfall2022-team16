@@ -57,7 +57,7 @@ export default function SearchPage (): JSX.Element {
           </Button>
         </Col>
       </Row>
-      <Row style={{backgroundColor: 'gainsboro'}}>
+      <Row md={4} style={{backgroundColor: 'gainsboro'}}>
         {
           shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
@@ -74,7 +74,7 @@ export default function SearchPage (): JSX.Element {
           <h1 className="Header">Recommendations</h1>
         </Col>
       </Row>
-      <Row>
+      <Row md={4}>
         {
           shopItemState.recommendations?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
