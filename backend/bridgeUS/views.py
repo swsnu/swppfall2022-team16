@@ -419,12 +419,10 @@ def recommend_clothes(request, recommend_count):
 
     rating_dataframe = pd.DataFrame(data=data, columns=['user_id', 'shopitem_id', 'rating'])
 
-    user_orders = UserOrder.objects.all().filter(user=request.user)
-
     recommended_clothes = []
 
-    if user_orders.count > 0:
-        recommended_clothes = find_similar_shopItems(user_orders[0].ordered_item.id, recommend_count, rating_dataframe)
+    if request.user.is_authenticated and UserOrder.objects.first(user = request.user) is not None:
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.first(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
         recommended_clothes = find_similar_shopItems(trending_review[0].review_item.id, recommend_count, rating_dataframe)
@@ -445,15 +443,19 @@ def search(request):
 
     if text is not None:
         matched_items = ShopItem.objects.filter(name__icontains=text)
-        tag_matched = matched_items.filter(tags__name__in=tags)
-        ordered_items = tag_matched.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
-
-        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)
+        
+        if tags is not None:
+            tag_matched = matched_items.filter(tags__name__in=tags)
+            ordered_items = tag_matched.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
+            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)
+        else:
+            ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
+            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)    
     else:
         matched_items = ShopItem.objects.filter(tags__name__in=tags)
-        ordered_items = matched_items.order_by('likes')[:constants.SEARCH_RESULT_COUNT]
+        ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
         
-        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , status=200)    
+        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status = 200)    
 
 
 @ensure_csrf_cookie
@@ -536,7 +538,7 @@ def get_shopitemdetail_json(detail):
     return { 'id' : detail.id, 'mainitem' : detail.main_item.id, 'color' : detail.color, 'size': detail.size, 'left_amount' : detail.left_amount }    
 
 def get_shopitem_json(shopitem):
-    return { 'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '' , 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tags': shopitem.tags }
+    return { 'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '' , 'name': shopitem.name, 'seller' : shopitem.seller.id, 'price' : shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type, 'tags': list(shopitem.tags.names().values()) }
 
 def get_user_json(user):
     return { 'id' : user.id, 'username' : user.username, 'nickname' : user.nickname, 'gender' : user.gender, 'height' : user.height, 'weight': user.weight }     

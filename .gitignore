@@ -184,3 +184,4 @@ backend/.idea/sqldialects.xml
 backend/.idea/vcs.xml
 backend/.idea/workspace.xml
 backend/.idea/dataSources.local.xml
+backend/db.sqlite3

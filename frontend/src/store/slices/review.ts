@@ -37,6 +37,14 @@ export const fetchReviews = createAsyncThunk(
     }
 )
 
+export const fetchReview= createAsyncThunk(
+    "shopitem/fetchMainItem",
+    async (id : number) => {
+        const response = await axios.get<ReviewInfo>(`/api/review/${id}/`)
+        return response.data
+    }
+)
+
 export const postReview = createAsyncThunk(
     "review/postReview", async (
     review : FormData, {dispatch}) => {
@@ -83,6 +91,9 @@ export const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchReviews.fulfilled, (state, action) => {
             state.reviews = action.payload
+        })
+        builder.addCase(fetchReview.fulfilled, (state, action) => {
+            state.current_review = action.payload
         })
         builder.addCase(postReview.fulfilled, (state, action) => {
             state.reviews.push(action.payload);

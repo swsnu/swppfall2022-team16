@@ -19,11 +19,42 @@ export default function SignupForm (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   
+  
+  let alertMessage = ""
+
   const signupbuttonHandler = async () => {
-    const result = await dispatch(signup({ username : email, password: password, nickname: name, height: Number(height), weight: Number(weight), gender: gender}))
-    if (result.type === `${signup.typePrefix}/fulfilled`) {
-      navigate('/')
+    if(handleSignUpFormSubmit()){
+      const result = await dispatch(signup({ username : email, password: password, nickname: name, height: Number(height), weight: Number(weight), gender: gender}))
+      if (result.type === `${signup.typePrefix}/fulfilled`) {
+        navigate('/')
+      }
     }
+    else{
+      return window.alert(alertMessage)
+    }
+  }
+
+  const handleSignUpFormSubmit = () => {
+    
+    alertMessage = "You must correct:\n\n";
+
+    let NameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null) ? true : false;
+    if(!NameValid)
+      alertMessage = alertMessage + "Name\n";
+  
+    let emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null) ? true : false;
+    if(!emailValid)
+      alertMessage = alertMessage + "Email\n";
+ 
+    let heightValid = (height.match(/^[0-9]{3}$/) !== null) ? true : false;
+    if(!heightValid)
+      alertMessage = alertMessage + "Height\n";
+
+    let weightValid = (weight.match(/^[0-9]{2,3}$/) !== null) ? true : false;
+    if(!weightValid)
+      alertMessage = alertMessage + "Weight\n";
+  
+    return (NameValid && emailValid && heightValid && weightValid)
   }
 
   return (
@@ -73,12 +104,12 @@ export default function SignupForm (): JSX.Element {
       <div className = 'spacebetween'></div>
       <Stack direction = "horizontal" gap = {3}>
       <Form.Group className='heightForm'>
-        <Form.Label>Height</Form.Label>
+        <Form.Label>Height cm</Form.Label>
         <Form.Control type='height' placeholder='Your height in cm' onChange = {(e) => setHeight(e.target.value)} />
       </Form.Group>
       <div className = 'spacebetween'></div>
       <Form.Group className='weightForm'>
-        <Form.Label>Weight</Form.Label>
+        <Form.Label>Weight kg</Form.Label>
         <Form.Control type='weight' placeholder='Your weight in kg' onChange = {(e) => setWeight(e.target.value)} />
       </Form.Group>
       </Stack>

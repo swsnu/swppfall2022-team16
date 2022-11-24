@@ -1,8 +1,6 @@
 import React from 'react'
 import { Col, Container, Row, Stack } from 'react-bootstrap'
 import LoginForm from '../components/LoginForm'
-import SideBar from '../components/SideBar'
-import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
 import '../css/loginpage.css'
 
