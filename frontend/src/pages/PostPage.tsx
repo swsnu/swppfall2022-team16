@@ -7,8 +7,8 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
-import { fetchReviews, selectReview } from '../store/slices/review'
+import { fetchMainItem, fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
+import { fetchReview, fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { postComment } from '../store/slices/comment'
@@ -25,8 +25,10 @@ export default function PostPage (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchMainItem(Number(id)))
     dispatch(fetchUsers())
     dispatch(fetchReviews())
+    dispatch(fetchReview(Number(id)))
   }, [dispatch])
 
   const findAuthorName = (ID : number | undefined) => {
@@ -50,10 +52,10 @@ export default function PostPage (): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <h1>{item.name}</h1>
-          <p>{findAuthorName(item.seller)}</p>
+          <h1>{itemState.current_shopitem?.name}</h1>
+          <p>{findAuthorName(itemState.current_shopitem?.seller)}</p>
           <Post id={Number(id)} />
-          <Button onClick={() => navigate(`/product/${review.review_item}`)}>Purchase the Look</Button>
+          <Button onClick={() => navigate(`/product/${reviewState.current_review?.review_item}`)}>Purchase the Look</Button>
         </Col>
         <Col>
           <PostComments review_id={Number(id)} />
