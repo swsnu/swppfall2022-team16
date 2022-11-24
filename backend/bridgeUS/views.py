@@ -452,7 +452,7 @@ def search(request):
     if tags is not None and len(tags) > 0:
         matched_items = matched_items.filter(tags__name__in=tags)
     
-    ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
+    ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
 
     return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)
 
@@ -506,10 +506,11 @@ def trendingposts(request, post_count):
     
     return_count = post_count
     
-    if post_count > Review.objects.all().count:
-        return_count = Review.objects.all().count
+    if post_count > Review.objects.all().count():
+        return_count = Review.objects.all().count()
 
-    trending_posts = Review.objects.all().order_by('likes')
+    trending_posts = Review.objects.all().order_by('-likes')
+    print(trending_posts)
 
     return_posts = []
 

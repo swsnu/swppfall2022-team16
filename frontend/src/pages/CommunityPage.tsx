@@ -10,14 +10,17 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import '../css/Footer.css'
 import '../css/communitypage.css'
+import { fetchTrendingPosts, selectReview } from '../store/slices/review'
 /*eslint-disable */
 
 export default function CommunityPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
+  const reviewState = useSelector(selectReview)
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchTrendingPosts())
   }, [dispatch])
 
   return (
@@ -33,60 +36,36 @@ export default function CommunityPage (): JSX.Element {
          <div className = 'theheader'>
           Community
          </div>
-        <Row className="Header-row" >
-          <Col>
-            <h4 id = 'title'>Karina</h4>
-          </Col>
-        </Row>
-        <div className = 'postsection'>
-          <Row md={4}>
-              <div className = 'white'>
+         {
+          reviewState.trending_posts ? reviewState.trending_posts.map((review) => <div>
+              <Row className="Header-row" >
                 <Col>
-                  {
-                    shopItemState.shopitems &&
-                      shopItemState.shopitems[2] &&
-                    <ShopItem shopItem={shopItemState.shopitems[2]} />
-                  }
+                  <h4 id = 'title'>Karina</h4>
                 </Col>
+              </Row>
+              <div className = 'postsection'>
+                <Row md={4}>
+                    <div className = 'white'>
+                      <Col>
+                        {
+                          shopItemState.shopitems &&
+                            <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!} />
+                        }
+                      </Col>
+                    </div>
+                  <Col>
+                  <div className = 'trendingpost'>
+                      <h5 id ='postitself'>Trending Post</h5>
+                      <Post id={review.id} />
+                    </div>
+                  </Col>
+                  <Col>
+                    <PostComments review_id={review.id} />
+                  </Col>
+                </Row>
               </div>
-            <Col>
-            <div className = 'trendingpost'>
-                <h5 id ='postitself'>Trending Post</h5>
-                <Post id={2} />
-              </div>
-            </Col>
-            <Col>
-              <PostComments review_id={2} />
-            </Col>
-          </Row>
-        </div>
-        <Row className="Header-row" >
-          <Col>
-            <h4 id = 'title'>Suga</h4>
-          </Col>
-        </Row>
-        <div className = 'postsection'>
-          <Row md={4}>
-              <div className = 'white'>
-                <Col>
-                  {
-                    shopItemState.shopitems &&
-                      shopItemState.shopitems[0] &&
-                    <ShopItem shopItem={shopItemState.shopitems[0]} />
-                  }
-                </Col>
-              </div>
-            <Col>
-            <div className = 'trendingpost'>
-                <h5 id ='postitself'>Trending Post</h5>
-                <Post id={1} />
-              </div>
-            </Col>
-            <Col>
-              <PostComments review_id={1} />
-            </Col>
-          </Row>
-        </div>
+            </div>) : false
+         }
     </div>
     </div>
     <Footer/>
