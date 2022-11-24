@@ -33,6 +33,7 @@ export default function CommunityPage (): JSX.Element {
          <div className = 'theheader'>
           Community
          </div>
+         <hr></hr>
         <Row className="Header-row" >
           <Col>
             <h4 id = 'title'>Karina</h4>
