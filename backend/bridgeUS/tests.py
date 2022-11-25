@@ -129,6 +129,10 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 401)
 
+        response = client.get('/api/purchase/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 401)
+
     # test empty data
         response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
@@ -141,7 +145,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 204)
     # add data
-        new_shopitem1 = ShopItem(seller=new_user, name='item1')
+        new_shopitem1 = ShopItem(seller=new_user, name='item1', price= 100)
         new_shopitem1.save()
 
         new_shopitem2 = ShopItem(seller=new_user, name='item2')
@@ -168,7 +172,6 @@ class BlogTestCase(TestCase):
         new_review6 = Review(title='I Love SWPP!6',review_item=new_shopitem3, content='Believe it or not3', author=new_user, rating=3)
         new_review6.save()
 
-        new_userorder = UserOrder()
         response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 204)
@@ -485,5 +488,42 @@ class BlogTestCase(TestCase):
         response = client.get('/api/trendingposts/100/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)   
+    # test purchase
+        response = client.post('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        test_user = CustomUser.objects.get(id=3)
+        
+        test_usershop = UserShop.objects.get(user=test_user)
+
+        test_usershop.credit = 0
+        new_userorder = UserOrder(user=test_user, ordered_item=new_shopitem1, order_status=0, ordered_amount=10)
+        
+        new_userorder.save()
+        
+        test_usershop.save()
+
+        response = client.get('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)        
+
+        test_usershop.credit = 100000
+        
+        test_usershop.save()
+
+        response = client.get('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)           
+    # test search
+        response = client.get('/api/search/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+        
+        data = json.dumps({'text' : "test", 'tags' : "test"})
+
+        response = client.post('/api/search/', data, content_type='application/json',HTTP_X_CSRFTOKEN=csrftoken)
+        
+        self.assertEqual(response.status_code, 200)
         pass
 

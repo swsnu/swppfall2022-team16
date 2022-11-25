@@ -466,7 +466,7 @@ def purchase(request):
 
     user_orders = UserOrder.objects.filter(user = request.user)
 
-    pre_orders = user_orders.filter(order_status = constants.OrderStatus.PRE_ORDER)
+    pre_orders = user_orders.filter(order_status = int(constants.OrderStatus.PRE_ORDER))
 
     user_shop = UserShop.objects.get(user = request.user)
     
@@ -483,10 +483,10 @@ def purchase(request):
     user_credit -= needed_credit
 
     for pre_order in pre_orders:
-        pre_order.order_status = constants.OrderStatus.PRE_SHIPPING
+        pre_order.order_status = int(constants.OrderStatus.PRE_SHIPPING)
         pre_order.save()
     
-    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
+    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ],safe=False , status = 200)     
 
 @ensure_csrf_cookie
 def usercomments(request):
