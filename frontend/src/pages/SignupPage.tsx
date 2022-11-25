@@ -3,8 +3,8 @@ import { Col, Container, Row, Stack } from 'react-bootstrap'
 import SignupForm from '../components/SignupForm'
 import '../css/signupform.css'
 
-/*eslint-disable */
-/*eslint no-multiple-empty-lines: "error"*/
+
+/* eslint no-multiple-empty-lines: "error" */
 export default function SignupPage (): JSX.Element {
   return (
   <div className = 'page-container'>
