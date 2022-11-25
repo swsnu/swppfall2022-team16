@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from .models import  CustomUser, UserShop, ShopItem, ShopItemDetail, UserOrder, Review, Comment
+from PIL import Image
 
 import json
 
@@ -339,9 +340,12 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        response = client.post('/api/review/', json.dumps({'title' : "test", 'content' : "test"}),
-            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        test_file = Image.new('RGB',(100, 100))
+        
+        data = {'title' : "test", 'content' : "test", 'image': test_file, 'review_item' : 1}
 
+        response = client.post('/api/review/', data, HTTP_X_CSRFTOKEN=csrftoken)
+        
         self.assertEqual(response.status_code, 201)
 
         new_review4 = Review.objects.get(id=4)

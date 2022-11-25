@@ -280,13 +280,13 @@ def reviewlist(request):
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
         print(request.headers)
-        print(request.FILES)
+        print(request.FILES.getlist)
         body = request.POST
         review_title = body.get('title')
         review_content = body.get('content')
         review_item = body.get('review_item')
         review_rating = body.get('rating')
-        review_image = request.FILES.getlist('image')[0]
+        review_image = request.FILES.getlist('image')[0] if len(request.FILES.getlist('image')) > 0 else None
         print(review_title, review_content, review_item)
         
         review_shopItem = ShopItem.objects.get(id=review_item)
