@@ -5,25 +5,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { postReview, selectReview } from '../store/slices/review'
-/*eslint-disable */
 
 export interface IProps {
   shopItemId: number
 }
 
-export default function ReviewForm (props : IProps): JSX.Element {
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [selectedImage, setSelectedImage] = useState<File>();
+export default function ReviewForm (props: IProps): JSX.Element {
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [selectedImage, setSelectedImage] = useState<File>()
 
   const [tmpRating, setTmpRating] = useState<number>(3)
   const [rating, setRating] = useState<number>(3)
   const [isMouseOnStar, setIsMouseOnStar] = useState<boolean>(false)
-    
+
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const reviewState = useSelector(selectReview)
-  
+
   const postReviewButtonHandler = async () => {
     console.log(title, description, props.shopItemId, rating)
     console.log(selectedImage)
@@ -64,13 +63,13 @@ export default function ReviewForm (props : IProps): JSX.Element {
         <div>
           <span onMouseOver={() => setIsMouseOnStar(true)} onMouseOut={() => setIsMouseOnStar(false)}>
             {
-              [1, 2, 3, 4, 5].map((idx) => (idx <= (isMouseOnStar ? tmpRating : rating) ?
-                <Icon.StarFill key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} /> :
-                <Icon.Star key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} /> ))
+              [1, 2, 3, 4, 5].map((idx) => (idx <= (isMouseOnStar ? tmpRating : rating)
+                ? <Icon.StarFill key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />
+                : <Icon.Star key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />))
             }
           </span>
         </div>
-        <Button variant = "secondary" onClick={() => postReviewButtonHandler()}>
+        <Button variant = "secondary" onClick={async () => await postReviewButtonHandler()}>
           Post Your Review
         </Button>
       </Form>

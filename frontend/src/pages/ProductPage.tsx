@@ -11,7 +11,6 @@ import { useParams } from 'react-router-dom'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
-/*eslint-disable */
 
 export default function ProductPage (): JSX.Element {
   const { id } = useParams()
@@ -29,9 +28,9 @@ export default function ProductPage (): JSX.Element {
   const item = shopItemState.current_shopitem
   const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
-  const findAuthorName = (ID : number | undefined) => {
-    return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-};
+  const findAuthorName = (ID: number | undefined) => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
   return (<div className = 'page-container'>
     <div className = 'contents'>
@@ -42,11 +41,11 @@ export default function ProductPage (): JSX.Element {
           <Stack>
             <h1 className="Header">{item?.name}</h1>
             <h3>{findAuthorName(item?.seller)}</h3>
-            <Image rounded style={{width: '24rem', height: '32rem'}} src={item?.image_url} />
+            <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
           </Stack>
         </Col>
-        <Col style={{paddingTop: '144px'}}>
-          <OrderDetailForm 
+        <Col style={{ paddingTop: '144px' }}>
+          <OrderDetailForm
                 itemID={item?.id}
                 itemName={item?.name}
                 sellerName={findAuthorName(item?.seller)}
@@ -63,7 +62,8 @@ export default function ProductPage (): JSX.Element {
       </Row>
       <Row md={4}>
         {
-          reviews.length > 0 ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
+          reviews.length > 0
+            ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
             : <Col>No reviews yet.</Col>
         }
       </Row>

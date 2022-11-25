@@ -9,8 +9,6 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import '../css/Footer.css'
-/*eslint-disable */
-
 
 export default function ReviewPage (): JSX.Element {
   const { id } = useParams()

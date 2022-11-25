@@ -13,7 +13,6 @@ import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { postComment } from '../store/slices/comment'
 import { unwrapResult } from '@reduxjs/toolkit'
-/*eslint-disable */
 
 export default function PostPage (): JSX.Element {
   const { id } = useParams()
@@ -27,29 +26,29 @@ export default function PostPage (): JSX.Element {
   useEffect(() => {
     dispatch(fetchUsers())
     const fetchRequired = async () => {
-      const result = await dispatch(fetchReview(Number(id)));
-      
+      const result = await dispatch(fetchReview(Number(id)))
+
       if (result.type === `${fetchReview.typePrefix}/fulfilled`) {
         console.log(`review: ${unwrapResult(result).review_item}`)
         dispatch(fetchMainItem(unwrapResult(result).review_item))
       }
     }
-    fetchRequired();
+    fetchRequired()
   }, [dispatch])
 
-  const findAuthorName = (ID : number | undefined) => {
-    return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-  };
+  const findAuthorName = (ID: number | undefined) => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
   const commentButtonHandler = () => {
-    const data = {review_id: Number(id), content: comment}
+    const data = { review_id: Number(id), content: comment }
     dispatch(postComment(data))
-    setComment("")
+    setComment('')
   }
 
   const review = reviewState.reviews.find((review) => review.id === Number(id))!
 
-  const item = itemState.shopitems.find((item : ShopItemInfo) => item.id === review.review_item)!
+  const item = itemState.shopitems.find((item: ShopItemInfo) => item.id === review.review_item)!
 
   return (
   <div className = 'page-container'>

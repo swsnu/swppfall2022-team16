@@ -11,7 +11,6 @@ import { useParams } from 'react-router-dom'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/Footer.css'
 import { selectUser } from '../store/slices/user'
-/*eslint-disable */
 
 export default function SearchPage (): JSX.Element {
   const { text } = useParams()
@@ -22,7 +21,7 @@ export default function SearchPage (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchMainItems())
-    dispatch(fetchTopResult({ text: text, tags: [] }))
+    dispatch(fetchTopResult({ text, tags: [] }))
     dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
   }, [dispatch])
 
@@ -38,35 +37,35 @@ export default function SearchPage (): JSX.Element {
     <Container>
       <Row className="Header-row">
         <Col>
-          <h1 className="Header" style={{color: 'deeppink'}}>Search result for '{text}'</h1>
+          <h1 className="Header" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
         </Col>
       </Row>
-      <Row className="Header-row" style={{backgroundColor: 'gainsboro', paddingTop: '16px'}}>
+      <Row className="Header-row" style={{ backgroundColor: 'gainsboro', paddingTop: '16px' }}>
         <Col md={3}>
           <h1 className="Header">Top Results</h1>
         </Col>
         <Col md={5}></Col>
         {
-          filters.map(({category, options}) => <Col key={category} md={1}>
+          filters.map(({ category, options }) => <Col key={category} md={1}>
             <Filter key={category} category={category} options={options} handler={tagHandler}/>
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'purple', color: 'white'}} onClick={() => { dispatch(fetchTopResult({ text: text, tags: tags })) }}>
+          <Button style={{ backgroundColor: 'purple', color: 'white' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
-      <Row md={4} style={{backgroundColor: 'gainsboro'}}>
+      <Row md={4} style={{ backgroundColor: 'gainsboro' }}>
         {
           shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
           </Col>)
         }
       </Row>
-      <Row style={{backgroundColor: 'gainsboro', paddingBottom: '16px'}}>
-        <Col style={{textAlign: 'center'}}>
-          <Button style={{marginTop: '16px'}}>Show More</Button>
+      <Row style={{ backgroundColor: 'gainsboro', paddingBottom: '16px' }}>
+        <Col style={{ textAlign: 'center' }}>
+          <Button style={{ marginTop: '16px' }}>Show More</Button>
         </Col>
       </Row>
       <Row className="Header-row">
