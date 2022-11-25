@@ -441,22 +441,20 @@ def search(request):
     text = json.loads(body)['text']
     tags = json.loads(body)['tags']
 
-    if text is not None:
-        matched_items = ShopItem.objects.filter(name__icontains=text)
-        
-        if tags is not None:
-            tag_matched = matched_items.filter(tags__name__in=tags)
-            ordered_items = tag_matched.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
-            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)
-        else:
-            ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
-            return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)    
-    else:
-        matched_items = ShopItem.objects.filter(tags__name__in=tags)
-        ordered_items = matched_items.order_by('rating')[:constants.SEARCH_RESULT_COUNT]
-        
-        return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status = 200)    
+    print(f"text: ${text}")
+    print(f"tags: ${tags}")
 
+    matched_items = ShopItem.objects
+
+    if text is not None and text != "":
+        matched_items = matched_items.filter(name__icontains=text)
+    
+    if tags is not None and len(tags) > 0:
+        matched_items = matched_items.filter(tags__name__in=tags)
+    
+    ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
+
+    return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items ] , safe = False, status=200)
 
 @ensure_csrf_cookie
 def purchase(request):
@@ -508,10 +506,11 @@ def trendingposts(request, post_count):
     
     return_count = post_count
     
-    if post_count > Review.objects.all().count:
-        return_count = Review.objects.all().count
+    if post_count > Review.objects.all().count():
+        return_count = Review.objects.all().count()
 
-    trending_posts = Review.objects.all().order_by('likes')
+    trending_posts = Review.objects.all().order_by('-likes')
+    print(trending_posts)
 
     return_posts = []
 

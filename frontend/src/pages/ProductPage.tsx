@@ -5,7 +5,7 @@ import OrderDetailForm from '../components/OrderDetailForm'
 import Review from '../components/Review'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItem, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { fetchReviews, selectReview } from '../store/slices/review'
@@ -21,12 +21,12 @@ export default function ProductPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
+    dispatch(fetchMainItem(Number(id)))
     dispatch(fetchReviews())
     dispatch(fetchUsers())
   }, [dispatch])
 
-  const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
+  const item = shopItemState.current_shopitem
   const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
   const findAuthorName = (ID : number | undefined) => {
