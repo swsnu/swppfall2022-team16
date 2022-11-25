@@ -3,10 +3,8 @@ import { Stack } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 
-/*eslint-disable */
-
-export default function PaymentForm (props: {shippingFee: number}): JSX.Element {
-  const dispatch = useDispatch<AppDispatch>();
+export default function PaymentForm (props: { shippingFee: number }): JSX.Element {
+  // const dispatch = useDispatch<AppDispatch>()
   return <div>
     {/* Overall structure of the layout. Need to integrate and get data from the redux store */}
     <Stack direction = 'vertical' gap = {3}>
@@ -15,11 +13,11 @@ export default function PaymentForm (props: {shippingFee: number}): JSX.Element 
         <div className = 'credits ms-auto'>$300.00 </div>
       </Stack>
       <hr style={{
-          background: 'grey',
-          color: 'grey',
-          borderColor: 'black',
-          height: '3px',
-        }}></hr>
+        background: 'grey',
+        color: 'grey',
+        borderColor: 'black',
+        height: '3px'
+      }}></hr>
       <Stack direction = 'vertical' gap = {3}>
         <div className = 'subtotal'>
           <Stack direction = 'horizontal'>
@@ -35,31 +33,31 @@ export default function PaymentForm (props: {shippingFee: number}): JSX.Element 
         </div>
       </Stack>
       <hr style={{
-          background: 'grey',
-          color: 'grey',
-          borderColor: 'black',
-          height: '3px',
-        }}></hr>
+        background: 'grey',
+        color: 'grey',
+        borderColor: 'black',
+        height: '3px'
+      }}></hr>
       <Stack direction = 'horizontal' gap = {5}>
         <div className = "total">Total</div>
         <div className = "totalfee ms-auto">${190 + props.shippingFee}.00</div>
       </Stack>
       <hr style={{
-          background: 'grey',
-          color: 'grey',
-          borderColor: 'black',
-          height: '3px',
-        }}></hr>
+        background: 'grey',
+        color: 'grey',
+        borderColor: 'black',
+        height: '3px'
+      }}></hr>
       <Stack direction = 'horizontal'>
         <div className = 'remainingfee'>Remaining Credits</div>
         <div className = 'remainingfee ms-auto'>${110 - props.shippingFee}.00</div>
       </Stack>
       <hr style={{
-          background: 'grey',
-          color: 'grey',
-          borderColor: 'black',
-          height: '3px',
-        }}></hr>
+        background: 'grey',
+        color: 'grey',
+        borderColor: 'black',
+        height: '3px'
+      }}></hr>
     </Stack>
   </div>
 }

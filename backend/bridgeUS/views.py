@@ -280,13 +280,13 @@ def reviewlist(request):
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
         print(request.headers)
-        print(request.FILES)
+        print(request.FILES.getlist)
         body = request.POST
         review_title = body.get('title')
         review_content = body.get('content')
         review_item = body.get('review_item')
         review_rating = body.get('rating')
-        review_image = request.FILES.getlist('image')[0]
+        review_image = request.FILES.getlist('image')[0] if len(request.FILES.getlist('image')) > 0 else None
         print(review_title, review_content, review_item)
         
         review_shopItem = ShopItem.objects.get(id=review_item)
@@ -421,13 +421,13 @@ def recommend_clothes(request, recommend_count):
 
     recommended_clothes = []
 
-    if request.user.is_authenticated and UserOrder.objects.first(user = request.user) is not None:
-        recommended_clothes = find_similar_shopItems(UserOrder.objects.first(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
+    if request.user.is_authenticated and len(UserOrder.objects.filter(user = request.user)) > 0:
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.get(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
         recommended_clothes = find_similar_shopItems(trending_review[0].review_item.id, recommend_count, rating_dataframe)
 
-    response_dict = [get_shopitem_json(ShopItem.objects.first(id=int(recommended))) for recommended in recommended_clothes]
+    response_dict = [get_shopitem_json(ShopItem.objects.get(id=int(recommended))) for recommended in recommended_clothes]
 
     return JsonResponse(response_dict, status=200, safe=False)
 
@@ -466,9 +466,9 @@ def purchase(request):
 
     user_orders = UserOrder.objects.filter(user = request.user)
 
-    pre_orders = user_orders.filter(order_status = constants.OrderStatus.PRE_ORDER)
+    pre_orders = user_orders.filter(order_status = int(constants.OrderStatus.PRE_ORDER))
 
-    user_shop = UserShop.objects.first(user = request.user)
+    user_shop = UserShop.objects.get(user = request.user)
     
     user_credit = user_shop.credit
 
@@ -483,10 +483,10 @@ def purchase(request):
     user_credit -= needed_credit
 
     for pre_order in pre_orders:
-        pre_order.order_status = constants.OrderStatus.PRE_SHIPPING
+        pre_order.order_status = int(constants.OrderStatus.PRE_SHIPPING)
         pre_order.save()
     
-    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ], status = 200)     
+    return JsonResponse([ get_userorder_json(pre_order) for pre_order in pre_orders ],safe=False , status = 200)     
 
 @ensure_csrf_cookie
 def usercomments(request):

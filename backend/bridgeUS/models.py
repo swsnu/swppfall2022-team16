@@ -17,7 +17,7 @@ class UserShop(models.Model):
         on_delete = models.CASCADE,
     )
 
-    credit = models.FloatField(null=True)
+    credit = models.FloatField(null=True, default=0)
     cart = models.JSONField(null=True)
     purchased_item = models.JSONField(null=True)
 
@@ -32,7 +32,7 @@ class ShopItem(models.Model):
     
     name = models.TextField(null=True)
     image = models.ImageField(upload_to='images/', null=True)
-    price = models.FloatField(null=True)
+    price = models.FloatField(null=True, default=0)
     rating = models.FloatField(null=True)
     type = models.TextField(null=True)
     tags = TaggableManager()
@@ -47,7 +47,7 @@ class ShopItemDetail(models.Model):
     
     color = models.TextField(null=True)
     size = models.TextField(null=True)
-    left_amount = models.IntegerField(null=True)
+    left_amount = models.IntegerField(null=True, default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -68,7 +68,7 @@ class UserOrder(models.Model):
 
     fast_shipping = models.BooleanField(default=False)
 
-    ordered_amount = models.IntegerField(null=True)
+    ordered_amount = models.IntegerField(null=True, default=1)
 
     order_status = models.IntegerField(null=True)
 
@@ -93,8 +93,8 @@ class Review(models.Model):
 
     image = models.ImageField(upload_to='images/', null=True)
 
-    rating = models.IntegerField(null=True)
-    likes = models.IntegerField(null=True)
+    rating = models.IntegerField(null=True, default=5)
+    likes = models.IntegerField(null=True, default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

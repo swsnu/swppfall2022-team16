@@ -7,21 +7,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import '../css/mainpage.css'
-/*eslint-disable */
-
 
 export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState('')
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
 
-  useEffect(()=>{
-      if (userState.currentLoggedIn){
-        setloggedIn(true)
-      } else setloggedIn(false)
+  useEffect(() => {
+    if (userState.currentLoggedIn != null) {
+      setloggedIn(true)
+    } else setloggedIn(false)
   })
-  
+
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
   const userName = userState.currentLoggedIn?.nickname
@@ -80,17 +78,19 @@ export default function TopBar (): JSX.Element {
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
               onKeyDown={e => {
-                if (e.key === "Enter"){
+                if (e.key === 'Enter') {
                   navigate(`/search/${searchText}`)
-                }}}
+                }
+              }}
             />
           </Form>
           {
-            loggedIn ? <Stack direction = 'horizontal'>
+            loggedIn
+              ? <Stack direction = 'horizontal'>
               <Nav.Link href = {path}> welcome, {userName} </Nav.Link>
-              <Button variant = 'grad' onClick = {() => loggingout()} >log out</Button>
+              <Button variant = 'grad' onClick = {async () => await loggingout()} >log out</Button>
             </Stack>
-             :  <Nav.Link href = '/login'>login</Nav.Link>
+              : <Nav.Link href = '/login'>login</Nav.Link>
           }
         </Nav>
       </Container>
