@@ -421,13 +421,13 @@ def recommend_clothes(request, recommend_count):
 
     recommended_clothes = []
 
-    if request.user.is_authenticated and UserOrder.objects.first(user = request.user) is not None:
-        recommended_clothes = find_similar_shopItems(UserOrder.objects.first(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
+    if request.user.is_authenticated and len(UserOrder.objects.filter(user = request.user)) > 0:
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.get(user = request.user).ordered_item.id, recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
         recommended_clothes = find_similar_shopItems(trending_review[0].review_item.id, recommend_count, rating_dataframe)
 
-    response_dict = [get_shopitem_json(ShopItem.objects.first(id=int(recommended))) for recommended in recommended_clothes]
+    response_dict = [get_shopitem_json(ShopItem.objects.get(id=int(recommended))) for recommended in recommended_clothes]
 
     return JsonResponse(response_dict, status=200, safe=False)
 
@@ -468,7 +468,7 @@ def purchase(request):
 
     pre_orders = user_orders.filter(order_status = constants.OrderStatus.PRE_ORDER)
 
-    user_shop = UserShop.objects.first(user = request.user)
+    user_shop = UserShop.objects.get(user = request.user)
     
     user_credit = user_shop.credit
 
