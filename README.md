@@ -52,6 +52,8 @@ docker run --rm -it \
     snuspl/swpp:practice11 \
 /bin/bash
 
+source newenv/bin/activate
+
 sudo docker build -t backend .
 
 sudo docker run  -d --rm  --name "backend" -p 8000:8000  backend:latest
