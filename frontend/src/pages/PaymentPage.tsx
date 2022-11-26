@@ -13,6 +13,7 @@ import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
 import { fetchCart, selectUserOrder } from '../store/slices/userorder'
+import usershop, { fetchUserShop, selectUserShop } from '../store/slices/usershop'
 
 export default function PaymentPage (): JSX.Element {
   const { id } = useParams()
@@ -23,11 +24,13 @@ export default function PaymentPage (): JSX.Element {
   const userState = useSelector(selectUser)
   const shopItemDetailState = useSelector(selectShopItemDetail)
   const userOrderState = useSelector(selectUserOrder)
+  const userShopState = useSelector(selectUserShop)
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
     dispatch(fetchCart())
+    dispatch(fetchUserShop())
   }, [dispatch])
 
   const items = userOrderState.cart
@@ -109,7 +112,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {userShopState.usershop?.credit}/>
             <Button variant = 'grad' onClick={() => navigate('/user/8')}>Buy with my credit</Button>
           </Stack>
         </Col>
