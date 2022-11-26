@@ -66,7 +66,7 @@ export default function TopBar (): JSX.Element {
             <Nav.Link href = '/community'>
             <Stack direction = 'horizontal'>
               <img alt = 'community' src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
-              <div className = 'spacing3'></div>
+              <div className = 'sp    acing3'></div>
               </Stack>
             </Nav.Link>
           <Form className="d-flex">

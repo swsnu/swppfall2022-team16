@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
@@ -24,6 +25,9 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const userState = useSelector(selectUser)
+  const [color, setColor] = useState<string>(props.colors[0])
+  const [quantity, setQuantity] = useState<string>('')
+  const [size, setSize] = useState<string>('')
 
   const rating = props.rating ?? 0
 
@@ -85,14 +89,14 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
           </span>
         </Card.Text>
         <Form>
-          <Form.Select aria-label = "Color">
+          <Form.Select aria-label = "Color" onChange={(e) => setColor(e.target.value)}>
             {props.colors.map((color, index) => (
               <option key = {index}>{color}</option>
             ))}
           </Form.Select>
           <br/>
           <Stack direction = "horizontal" gap = {5}>
-            <Form.Select aria-label = "Quantity">
+            <Form.Select aria-label = "Quantity" onChange={(e) => setQuantity(e.target.value)}>
               <option>Quantity</option>
               <option value = "1">1</option>
               <option value = "2">2</option>
@@ -100,11 +104,11 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               <option value = "4">4</option>
               <option value = "5">5</option>
             </Form.Select>
-            <Form.Select aria-label = "Size">
+            <Form.Select aria-label = "Size" onChange={(e) => setSize(e.target.value)}>
               <option>Size</option>
-              <option value = "1">S</option>
-              <option value = "2">M</option>
-              <option value = "3">L</option>
+              <option value = "S">S</option>
+              <option value = "M">M</option>
+              <option value = "L">L</option>
             </Form.Select>
           </Stack>
         </Form>
@@ -114,10 +118,10 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
           item_id: props.itemID!,
           single_price: props.price,
           status: 0,
-          color: props.colors[0],
-          size: 'S',
-          ordered_amount: 1,
-          purchased_at: null,
+          color: color,
+          size: size,
+          ordered_amount: Number(quantity),
+          purchased_at: new Date(),
           fast_shipping: true
         })) } }>Add to Cart</Button>
         <Button variant='secondary' onClick = { () => {
@@ -127,10 +131,10 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             item_id: props.itemID!,
             single_price: props.price,
             status: 0,
-            color: props.colors[0],
-            size: 'S',
-            ordered_amount: 1,
-            purchased_at: null,
+            color: color,
+            size: size,
+            ordered_amount: Number(quantity),
+            purchased_at: new Date(),
             fast_shipping: true
           }))
           navigate('/payment')
