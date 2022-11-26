@@ -33,9 +33,22 @@ export default function Post (props: IProps): JSX.Element {
   const likeButtonHandler = async () => {
     if (userState.currentLoggedIn === null)
         return;
-        
-    if (userState.currentLoggedIn.liked_posts !== undefined &&  userState.currentLoggedIn.liked_posts.split(',').includes(review.id.toString()))
-      alert("You already liked the post.")
+    
+    var alreadyLiked = false;
+    console.log(userState.currentLoggedIn.liked_posts)
+    if (userState.currentLoggedIn.liked_posts !== undefined){
+      var list = userState.currentLoggedIn.liked_posts.split(',');
+      for (var element in list){
+        var liked = parseInt(element);
+        if (liked == review.id){
+          alreadyLiked = true;
+          break;
+        }
+      }
+    }
+
+    if (alreadyLiked)
+        alert("You already liked the post.")
     else await dispatch(likePost(review.id))
   }
   const review = reviewState.reviews.find((review) => review.id === props.id)!

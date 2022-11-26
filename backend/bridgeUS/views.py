@@ -573,7 +573,7 @@ def addlikes(request, post_id):
 
     post.save()
 
-    return HttpResponse(status=200)
+    return JsonResponse(get_user_json(customUser), safe=False, status=200)
 
 def get_review_json(review):
     return {'id': review.id, 'rating': review.rating, 'review_item': review.review_item.id, 'title': review.title,
