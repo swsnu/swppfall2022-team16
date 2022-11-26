@@ -12,13 +12,13 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-describe("<Filter />", () => {
+describe("<OrderDetailForm />", () => {
     it("should render without errors", async () => {
         render(<OrderDetailForm 
         itemID = {1}
         itemName = "BridgeUs"
         sellerName= "team16"
-        colors={['red']}
+        colors={['White', 'Black', 'Brown']}
         quantity = {5}
         price = {100}
         recommendedSize = "M"
@@ -53,7 +53,7 @@ describe("<Filter />", () => {
             itemID = {undefined}
             itemName = "BridgeUs"
             sellerName= "team16"
-            colors={['red']}
+            colors={['White', 'Black', 'Brown']}
             quantity = {5}
             price = {undefined}
             recommendedSize = "M"
