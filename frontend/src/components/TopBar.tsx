@@ -84,6 +84,11 @@ export default function TopBar (): JSX.Element {
               }}
             />
           </Form>
+            
+            <Stack direction = 'horizontal'>
+              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
+              <div className = 'spacing3'></div>
+              </Stack>
           {
             loggedIn
               ? <Stack direction = 'horizontal'>
