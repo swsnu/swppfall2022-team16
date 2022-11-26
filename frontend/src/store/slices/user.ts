@@ -3,7 +3,7 @@ import axios from 'axios'
 import { RootState } from '..'
 
 
-/*eslint no-multiple-empty-lines: "error"*/
+/* eslint no-multiple-empty-lines: "error" */
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
