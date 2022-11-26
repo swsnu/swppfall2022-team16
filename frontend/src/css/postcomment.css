@@ -1,0 +1,16 @@
+.commentwrapper {
+    background-color: transparent;
+    border : 1.5px solid;
+    border-color: #ececec;
+    margin-bottom : 5px;
+
+}
+
+.commentbox {
+    width : 100%;
+    height : 100%;
+}
+
+.editbutton {
+    left : 0;
+}
