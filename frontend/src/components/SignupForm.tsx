@@ -38,8 +38,8 @@ export default function SignupForm (): JSX.Element {
     
     alertMessage = "You must correct:\n\n";
 
-    let NameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null) ? true : false;
-    if(!NameValid)
+    let nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null) ? true : false;
+    if(!nameValid)
       alertMessage = alertMessage + "Name\n";
   
     let emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null) ? true : false;
@@ -54,7 +54,7 @@ export default function SignupForm (): JSX.Element {
     if(!weightValid)
       alertMessage = alertMessage + "Weight\n";
   
-    return (NameValid && emailValid && heightValid && weightValid)
+    return (nameValid && emailValid && heightValid && weightValid)
   }
 
   return (
