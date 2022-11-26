@@ -110,12 +110,14 @@ def cart(request):
         userorder_user = request.user
         userorder_item = json.loads(body)['item_id']
         userorder_status = json.loads(body)['status']
+        userorder_single_price = json.loads(body)['single_price']
         userorder_color = json.loads(body)['color']
         userorder_size = json.loads(body)['size']
         userorder_amount = json.loads(body)['ordered_amount']
         userorder_shipping = json.loads(body)['fast_shipping']
         userorder = UserOrder(user = userorder_user,
                   ordered_item_id = userorder_item,
+                  single_price = userorder_single_price,
                   color = userorder_color,
                   size = userorder_size,
                   fast_shipping = userorder_shipping,
