@@ -24,16 +24,14 @@ export default function PostPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    const fetchRequired = async (): void => {
+    const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchUsers())
-      const result = await dispatch(fetchReview(Number(id)))
-
-      if (result.type === `${fetchReview.typePrefix}/fulfilled`) {
-        // console.log(`review: ${unwrapResult(result).review_item}`)
-        await dispatch(fetchMainItem(unwrapResult(result).review_item))
-      }
+      const result = unwrapResult(await dispatch(fetchReview(Number(id))))
+      await dispatch(fetchMainItem(result.review_item))
     }
-    fetchRequired()
+    fetchRequired().catch(() => {
+
+    })
   }, [dispatch])
 
   const findAuthorName = (ID: number | undefined): string | undefined => {

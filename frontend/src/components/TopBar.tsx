@@ -58,14 +58,14 @@ export default function TopBar (): JSX.Element {
       <Container>
         <Navbar.Brand href="/">
           <Stack direction = 'horizontal' gap = {2}>
-            <img src = '/bridgeUsLogo.png' width = '20' height = '22'></img>
-            <img src ='/BridgeUs.png' width = '80' height = '20'></img>
+            <img alt = 'bridgeUsLogo' src = '/bridgeUsLogo.png' width = '20' height = '22'></img>
+            <img alt = 'BridgeUs' src ='/BridgeUs.png' width = '80' height = '20'></img>
           </Stack>
         </Navbar.Brand>
         <Nav className ="side">
             <Nav.Link href = '/community'>
             <Stack direction = 'horizontal'>
-              <img src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
+              <img alt = 'community' src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
               <div className = 'spacing3'></div>
               </Stack>
             </Nav.Link>

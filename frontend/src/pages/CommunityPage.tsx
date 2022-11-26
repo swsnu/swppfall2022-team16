@@ -31,13 +31,12 @@ export default function CommunityPage (): JSX.Element {
           <a href = '/community'>
             <img src = '/bannerforcommunity.png' width = '100%'></img>
           </a>
-         </div>
-         <div className = 'theheader'>
-          Community
-         </div>
-         {
-          reviewState.trending_posts
-            ? reviewState.trending_posts.map((review) => <div>
+        </div>
+        <div className = 'theheader'>
+        Community
+        </div>
+        {
+          reviewState.trending_posts.map((review) => <div key={review.id}>
               <Row className="Header-row" >
                 <Col>
                   <h4 id = 'title'>Karina</h4>
@@ -48,8 +47,7 @@ export default function CommunityPage (): JSX.Element {
                     <div className = 'white'>
                       <Col>
                         {
-                          shopItemState.shopitems &&
-                            <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!} />
+                          <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!} />
                         }
                       </Col>
                     </div>
@@ -65,8 +63,7 @@ export default function CommunityPage (): JSX.Element {
                 </Row>
               </div>
             </div>)
-            : false
-         }
+        }
     </div>
     </div>
     <Footer/>

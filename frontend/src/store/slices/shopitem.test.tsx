@@ -11,7 +11,9 @@ describe('shopitem reducer', () => {
   it('should use correct initial state', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual({
       shopitems: [],
-      current_shopitem: null
+      recommendations: [],
+      current_shopitem: null,
+      top_results: [],
     })
   })
   it('should handle fetchMainItems', async () => {

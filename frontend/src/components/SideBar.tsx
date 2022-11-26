@@ -10,8 +10,8 @@ export default function SideBar (): JSX.Element {
       <Container>
         <Navbar.Brand href="/">
         <Stack direction = 'horizontal' gap = {2}>
-            <img src = '/bridgeUsLogo.png' width = '20' height = '22'></img>
-            <img src ='/BridgeUsWhite.png' width = '80' height = '20'></img>
+            <img alt = 'bridgeUsLogo' src = '/bridgeUsLogo.png' width = '20' height = '22'></img>
+            <img alt = 'BridgeUs' src ='/BridgeUsWhite.png' width = '80' height = '20'></img>
           </Stack>
         </Navbar.Brand>
       </Container>
