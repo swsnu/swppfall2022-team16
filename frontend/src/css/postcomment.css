@@ -3,10 +3,17 @@
     border : 1.5px solid;
     border-color: #ececec;
     margin-bottom : 5px;
+    width : 80%;
+    height : 100%;
 
 }
 
+.Comment {
+    overflow: hidden;
+}
+
 .commentbox {
+    
     width : 100%;
     height : 100%;
 }

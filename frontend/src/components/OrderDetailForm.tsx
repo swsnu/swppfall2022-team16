@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import '../css/orderdetailform.css'
 
 export interface OrderDetailProps {
   itemID?: number | undefined
@@ -26,6 +27,54 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   }
 
   return (
+    <>
+    <style type="text/css">
+        {`
+             
+             .btn-grad {
+              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+              text-align: center;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;       
+              font-weight : bold;     
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+              display: block;
+            }
+  
+            .btn-grad:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #FFE5B4;
+              text-decoration: none;
+            }
+           
+    `}
+    {`
+             
+                      
+         .btn-cart {
+          background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%);
+          text-align: center;
+          text-transform: uppercase;
+          transition: 0.5s;
+          background-size: 200% auto;
+          color: white;            
+          box-shadow: 0 0 20px #eee;
+          border-radius: 10px;
+          font-weight : bold;     
+          display: block;
+        }
+
+        .btn-cart:hover {
+          background-position: right center; /* change the direction of the change here */
+          color: #fff;
+          text-decoration: none;
+        }
+       
+           
+    `}
+      </style>
     <Card style={{ width: '36rem' }}>
       <Card.Body>
         <Card.Title>{'★'.repeat(Math.round(props.rating)) + '☆'.repeat(5 - Math.round(props.rating))}</Card.Title>
@@ -42,6 +91,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               </span>
             ))} 
           </Form.Select>
+          <br/>
           <Stack direction = "horizontal" gap = {5}>
             <Form.Select aria-label = "Quantity">
               <option>Quantity</option>
@@ -57,14 +107,15 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               <option value = "2">M</option>
               <option value = "3">L</option>
             </Form.Select>
-            <Form.Text style={{ width: '20rem' }}>
-              { 'recommended size: ' + props.recommendedSize }
-            </Form.Text>
           </Stack>
         </Form>
-        <Button variant='primary'>Add to Cart</Button>
-        <Button variant='secondary' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
+        <br/>
+        <Stack direction = 'horizontal' gap = {1}>
+          <Button variant='cart'>Add to Cart</Button>
+          <Button variant='grad' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
+        </Stack>
       </Card.Body>
     </Card>
+    </>
   )
 }

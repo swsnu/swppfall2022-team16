@@ -29,7 +29,7 @@ export default function CommunityPage (): JSX.Element {
     <div className = 'mainsection'>
         <div className = 'community'>
           <a href = '/community'>
-            <img src = '/bannerforcommunity.png' width = '100%'></img>
+            <img src = '/communitybanner.png' width = '100%'></img>
           </a>
         </div>
         <div className = 'theheader'>
@@ -45,7 +45,8 @@ export default function CommunityPage (): JSX.Element {
                 </Col>
               </Row>
               <div className = 'postsection'>
-                <Row md={4}>
+                <Row md={3}>
+                  <Col>
                     <div className = 'white'>
                       <Col>
                         {
@@ -53,6 +54,7 @@ export default function CommunityPage (): JSX.Element {
                         }
                       </Col>
                     </div>
+                  </Col>
                   <Col>
                   <div className = 'trendingpost'>
                       <h5 id ='postitself'>Trending Post</h5>
