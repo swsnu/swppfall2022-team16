@@ -12,6 +12,7 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
+import { fetchUserShop } from '../store/slices/usershop'
 
 export default function PaymentPage (): JSX.Element {
   const { id } = useParams()
@@ -25,6 +26,7 @@ export default function PaymentPage (): JSX.Element {
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
+    dispatch(fetchUserShop())
   }, [dispatch])
 
   const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
@@ -106,7 +108,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption == 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
             <Button variant = 'grad' onClick={() => navigate('/user/8')}>Buy with my credit</Button>
           </Stack>
         </Col>

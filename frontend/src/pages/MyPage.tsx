@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import { fetchOrders, selectUserOrder } from '../store/slices/userorder'
 import '../css/Footer.css'
 import { fetchRelatedComments, selectComment } from '../store/slices/comment'
-import { selectUser } from '../store/slices/user'
+import { selectUser, User } from '../store/slices/user'
 
 export default function MyPage (): JSX.Element {
   const { id } = useParams()
