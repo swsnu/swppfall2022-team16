@@ -532,6 +532,8 @@ def purchase(request):
         return JsonResponse({'message': 'not enough credit'}, status=400)
 
     user_credit -= needed_credit
+    user_shop.credit = user_credit
+    user_shop.save()
 
     for pre_order in pre_orders:
         pre_order.order_status = int(constants.OrderStatus.PRE_SHIPPING)
