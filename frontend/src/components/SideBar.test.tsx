@@ -4,6 +4,7 @@ import SideBar from './SideBar'
 describe ('<SideBar/>', ()=>{
     it ("should render without errors", ()=>{
         render (<SideBar/>)
-        screen.getByText('BridgeUs')
+        screen.getByAltText('bridgeUsLogo')
+        screen.getByAltText('BridgeUs')
     })
 })

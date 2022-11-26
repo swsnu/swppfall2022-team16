@@ -15,7 +15,8 @@ describe('review reducer', () => {
   it('should use correct initial state', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual({
       reviews: [],
-      current_review: null
+      current_review: null,
+      trending_posts: [],
     })
   })
   it('should handle fetchReviews', async () => {

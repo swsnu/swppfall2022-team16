@@ -4,16 +4,8 @@ import { renderWithProviders } from '../test-utils/mock'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import SignupPage from './SignupPage'
 
-jest.mock('../components/SideBar', () => () => (
-  <div data-testid='spySideBar'></div>
-))
-
 jest.mock('../components/SignupForm', () => () => (
   <div data-testid='spySignupForm'></div>
-))
-
-jest.mock('../components/Footer', () => () => (
-  <div data-testid='spyFooter'></div>
 ))
 
 const mockDispatch = jest.fn()
@@ -35,8 +27,6 @@ const renderSignupPage = () => {
 describe('<SignupPage />', () => {
   it('should render without errors', () => {
     renderSignupPage()
-    expect(screen.getAllByTestId('spySideBar')).toHaveLength(1)
     expect(screen.getAllByTestId('spySignupForm')).toHaveLength(1)
-    expect(screen.getAllByTestId('spyFooter')).toHaveLength(1)
   })
 })
