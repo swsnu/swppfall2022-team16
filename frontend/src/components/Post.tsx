@@ -67,10 +67,10 @@ export default function Post (props: IProps): JSX.Element {
         <Stack direction = 'vertical'>
           <Card.Text as= "h5" data-testid = "rating">
             {
-              Array.from({ length: review?.rating && 0 }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
+              Array.from({ length: (review ? review.rating :  0) }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
             }
             {
-              Array.from({ length: 5 - (review?.rating && 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
+              Array.from({ length: 5 - (review ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
             }
           </Card.Text>
           <Card.Text as= "h5" data-testid = "author">
