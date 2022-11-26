@@ -52,6 +52,7 @@ export const fetchMainItem = createAsyncThunk(
 export const fetchTopResult = createAsyncThunk(
   'shopitem/fetchTopResult',
   async (query?: { text?: string, tags: string[] }) => {
+    console.log(query?.tags)
     const response = await axios.post<ShopItemInfo[]>('/api/search/', query)
     return response.data
   }
@@ -59,8 +60,8 @@ export const fetchTopResult = createAsyncThunk(
 
 export const fetchRecommendation = createAsyncThunk(
   'shopitem/fetchRecommendation',
-  async (id?: number) => {
-    const response = await axios.get<ShopItemInfo[]>(`/api/recommend/${id}`)
+  async (count: number) => {
+    const response = await axios.get<ShopItemInfo[]>(`/api/recommend/${count}`)
     return response.data
   }
 )
