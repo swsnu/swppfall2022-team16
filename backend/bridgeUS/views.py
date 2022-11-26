@@ -439,7 +439,7 @@ def recommend_clothes(request, recommend_count):
     recommended_clothes = []
 
     if request.user.is_authenticated and len(UserOrder.objects.filter(user=request.user)) > 0:
-        recommended_clothes = find_similar_shopItems(UserOrder.objects.get(user=request.user).ordered_item.id,
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.filter(user=request.user).last().ordered_item.id,
                                                      recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
