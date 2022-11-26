@@ -336,7 +336,7 @@ def reviewlist(request):
                         rating=review_rating, image=review_image)
 
         current_total_rate = review_shopItem.raters * review_shopItem.rating 
-        changed_rating = (review_rating + current_total_rate) / (review_shopItem.raters + 1)
+        changed_rating = (float(review_rating) + current_total_rate) / (review_shopItem.raters + 1)
 
         review_shopItem.raters = review_shopItem.raters + 1
         review_shopItem.rating = changed_rating
