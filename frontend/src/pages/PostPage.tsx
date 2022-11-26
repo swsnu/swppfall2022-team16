@@ -7,12 +7,12 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchMainItems, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
-import { fetchReviews, selectReview } from '../store/slices/review'
+import { fetchMainItem, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
+import { fetchReview, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { postComment } from '../store/slices/comment'
-/*eslint-disable */
+import { unwrapResult } from '@reduxjs/toolkit'
 
 export default function PostPage (): JSX.Element {
   const { id } = useParams()
@@ -24,24 +24,31 @@ export default function PostPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
     dispatch(fetchUsers())
-    dispatch(fetchReviews())
+    const fetchRequired = async () => {
+      const result = await dispatch(fetchReview(Number(id)))
+
+      if (result.type === `${fetchReview.typePrefix}/fulfilled`) {
+        console.log(`review: ${unwrapResult(result).review_item}`)
+        dispatch(fetchMainItem(unwrapResult(result).review_item))
+      }
+    }
+    fetchRequired()
   }, [dispatch])
 
-  const findAuthorName = (ID : number | undefined) => {
-    return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-  };
+  const findAuthorName = (ID: number | undefined) => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
   const commentButtonHandler = () => {
-    const data = {review_id: Number(id), content: comment}
+    const data = { review_id: Number(id), content: comment }
     dispatch(postComment(data))
-    setComment("")
+    setComment('')
   }
 
   const review = reviewState.reviews.find((review) => review.id === Number(id))!
 
-  const item = itemState.shopitems.find((item : ShopItemInfo) => item.id === review.review_item)!
+  const item = itemState.shopitems.find((item: ShopItemInfo) => item.id === review.review_item)!
 
   return (
   <div className = 'page-container'>
@@ -50,10 +57,10 @@ export default function PostPage (): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <h1>{item.name}</h1>
-          <p>{findAuthorName(item.seller)}</p>
+          <h1>{itemState.current_shopitem?.name}</h1>
+          <p>{findAuthorName(itemState.current_shopitem?.seller)}</p>
           <Post id={Number(id)} />
-          <Button onClick={() => navigate(`/product/${review.review_item}`)}>Purchase the Look</Button>
+          <Button onClick={() => navigate(`/product/${reviewState.current_review?.review_item}`)}>Purchase the Look</Button>
         </Col>
         <Col>
           <PostComments review_id={Number(id)} />

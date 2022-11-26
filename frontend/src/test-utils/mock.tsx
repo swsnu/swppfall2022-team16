@@ -55,12 +55,14 @@ export const stubReviewState: ReviewState = {
     { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' },
     { id: 2, title: 'title2', content: 'content2', author: 1, review_item: 1, rating: 4, likes: 1, image_url: 'url' }
   ],
-  current_review: null
+  current_review: null,
+  trending_posts: []
 }
 
 export const stubNoReviewState: ReviewState = {
   reviews: [],
-  current_review: null
+  current_review: null,
+  trending_posts: []
 }
 
 export const stubUserState: UserState = {

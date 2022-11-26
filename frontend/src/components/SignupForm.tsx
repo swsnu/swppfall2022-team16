@@ -6,38 +6,34 @@ import { AppDispatch } from '../store'
 import { signup } from '../store/slices/user'
 import '../css/signupform.css'
 
-/*eslint-disable */
-
 export default function SignupForm (): JSX.Element {
-  const [name, setName] = useState('Full name');
-  const [email, setEmail] = useState('Email Address');
-  const [password, setPassword] = useState('Password');
-  const [height, setHeight] = useState('Height');
-  const [weight, setWeight] = useState('Weight');
-  const [gender, setGender] = useState('Male');
+  const [name, setName] = useState('Full name')
+  const [email, setEmail] = useState('Email Address')
+  const [password, setPassword] = useState('Password')
+  const [height, setHeight] = useState('Height')
+  const [weight, setWeight] = useState('Weight')
+  const [gender, setGender] = useState('Male')
 
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  
-  
-  let alertMessage = ""
+
+  let alertMessage = ''
 
   const signupbuttonHandler = async () => {
-    if(handleSignUpFormSubmit()){
-      const result = await dispatch(signup({ username : email, password: password, nickname: name, height: Number(height), weight: Number(weight), gender: gender}))
+    if (handleSignUpFormSubmit()) {
+      const result = await dispatch(signup({ username: email, password, nickname: name, height: Number(height), weight: Number(weight), gender }))
       if (result.type === `${signup.typePrefix}/fulfilled`) {
         navigate('/')
       }
-    }
-    else{
+    } else {
       return window.alert(alertMessage)
     }
   }
 
   const handleSignUpFormSubmit = () => {
-    
-    alertMessage = "You must correct:\n\n";
+    alertMessage = 'You must correct:\n\n'
 
+<<<<<<< HEAD
     let nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null) ? true : false;
     if(!nameValid)
       alertMessage = alertMessage + "Name\n";
@@ -55,6 +51,21 @@ export default function SignupForm (): JSX.Element {
       alertMessage = alertMessage + "Weight\n";
   
     return (nameValid && emailValid && heightValid && weightValid)
+=======
+    const NameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
+    if (!NameValid) { alertMessage = alertMessage + 'Name\n' }
+
+    const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
+    if (!emailValid) { alertMessage = alertMessage + 'Email\n' }
+
+    const heightValid = (height.match(/^[0-9]{3}$/) !== null)
+    if (!heightValid) { alertMessage = alertMessage + 'Height\n' }
+
+    const weightValid = (weight.match(/^[0-9]{2,3}$/) !== null)
+    if (!weightValid) { alertMessage = alertMessage + 'Weight\n' }
+
+    return (NameValid && emailValid && heightValid && weightValid)
+>>>>>>> 0074544a31ffad41c745a9eeff905c6b4c65f8f5
   }
 
   return (
@@ -117,13 +128,13 @@ export default function SignupForm (): JSX.Element {
       <Stack direction = "horizontal" gap = {5}>
       <Form.Group className='male'>
         <Stack direction = "horizontal" gap = {1}>
-        <Form.Check placeholder = 'gender1' type='radio' name = "gender" id = "gender1" onClick={(e) => setGender("Male")} defaultChecked />
+        <Form.Check placeholder = 'gender1' type='radio' name = "gender" id = "gender1" onClick={(e) => setGender('Male')} defaultChecked />
         <Form.Label htmlFor = "gender1"> Male </Form.Label>
         </Stack>
       </Form.Group>
       <Form.Group className='female'>
         <Stack direction = "horizontal" gap = {1}>
-        <Form.Check placeholder = 'gender2' type='radio' name = "gender" id = "gender2" onClick={(e) => setGender("Female")}/> 
+        <Form.Check placeholder = 'gender2' type='radio' name = "gender" id = "gender2" onClick={(e) => setGender('Female')}/>
         <Form.Label htmlFor = "gender2"> Female </Form.Label>
         </Stack>
       </Form.Group>
@@ -131,10 +142,10 @@ export default function SignupForm (): JSX.Element {
       </Stack>
       <div className = 'spacebetween'></div>
       <div className = "d-grid gap-2">
-      <Button variant = 'grad' size ='lg' onClick = {() => signupbuttonHandler()}>Sign-up</Button>
+      <Button variant = 'grad' size ='lg' onClick = {async () => await signupbuttonHandler()}>Sign-up</Button>
       </div>
       <div className = 'spacebetween'></div>
     </Form>
   </div>
-  );
+  )
 }

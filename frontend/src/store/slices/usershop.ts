@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-/*eslint-disable */
+
 /*eslint no-multiple-empty-lines: "error"*/
 
 axios.defaults.xsrfCookieName = 'csrftoken';

@@ -13,7 +13,6 @@ import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/mainpage.css'
 import '../css/Footer.css'
 import '../css/Banner.css'
-/*eslint-disable */
 
 export default function MainPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
@@ -50,12 +49,12 @@ export default function MainPage (): JSX.Element {
         </Col>
         <Col md={5}></Col>
         {
-          filters.map(({category, options}) => <Col key={category} md={1}>
+          filters.map(({ category, options }) => <Col key={category} md={1}>
             <Filter key={category} category={category} options={options} handler={tagHandler}/>
           </Col>)
         }
         <Col md={1}>
-          <Button style={{backgroundColor: 'transparent', color: 'black', borderColor : 'black'}} onClick={() => {console.log(tags)}}>
+          <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { console.log(tags) }}>
             <AiOutlineFilter />
           </Button>
         </Col>

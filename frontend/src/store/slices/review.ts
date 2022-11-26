@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
 
-/*eslint-disable */
+
 /*eslint no-multiple-empty-lines: "error"*/
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -21,18 +21,36 @@ export interface ReviewInfo {
 
 export interface ReviewState {
     reviews: ReviewInfo[],
-    current_review: ReviewInfo | null
+    current_review: ReviewInfo | null,
+    trending_posts: ReviewInfo[]
 }
 
 const initialState : ReviewState = {
     reviews: [],
-    current_review: null
+    current_review: null,
+    trending_posts: []
 }
 
 export const fetchReviews = createAsyncThunk(
     "review/fetchReviews",
     async () => {
         const response = await axios.get<ReviewInfo[]>('/api/review/')
+        return response.data
+    }
+)
+
+export const fetchReview = createAsyncThunk(
+    "shopitem/fetchMainItem",
+    async (id : number) => {
+        const response = await axios.get<ReviewInfo>(`/api/review/${id}/`)
+        return response.data
+    }
+)
+
+export const fetchTrendingPosts = createAsyncThunk(
+    "review/trendingPosts",
+    async () => {
+        const response = await axios.get<ReviewInfo[]>('/api/trendingposts/3/')
         return response.data
     }
 )
@@ -84,9 +102,15 @@ export const reviewSlice = createSlice({
         builder.addCase(fetchReviews.fulfilled, (state, action) => {
             state.reviews = action.payload
         })
+        builder.addCase(fetchReview.fulfilled, (state, action) => {
+            state.current_review = action.payload
+        })
         builder.addCase(postReview.fulfilled, (state, action) => {
             state.reviews.push(action.payload);
             state.current_review = action.payload;
+        })
+        builder.addCase(fetchTrendingPosts.fulfilled, (state, action) => {
+            state.trending_posts = action.payload;
         })
     },
 });
