@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
 import { selectUserShop } from '../store/slices/usershop'
 
-export default function PaymentForm (props: { shippingFee: number, totalCost : number, credit : number}): JSX.Element {
+export default function PaymentForm (props: { shippingFee: number, totalCost : number, credit : number | undefined}): JSX.Element {
   // const dispatch = useDispatch<AppDispatch>()
   const [userCredit, setUserCredit] = useState(0)
   const dispatch = useDispatch<AppDispatch>()
