@@ -616,7 +616,7 @@ def get_comment_json(comment):
 
 
 def get_userorder_json(userorder):
-    return {'id': userorder.id, 'user_id': userorder.user.id, 'item_id': userorder.ordered_item.id,
+    return {'id': userorder.id, 'user_id': userorder.user.id, 'item_id': userorder.ordered_item.id, 'single_price': userorder.single_price,
             'status': userorder.order_status, 'color': userorder.color, 'ordered_amount': userorder.ordered_amount,
             'size': userorder.size, 'purchased_at': userorder.created_at}
 

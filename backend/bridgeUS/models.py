@@ -73,6 +73,8 @@ class UserOrder(models.Model):
     color = models.TextField(null=True)
     size = models.TextField(null=True)
 
+    single_price = models.IntegerField(null=True)
+
     fast_shipping = models.BooleanField(default=False)
 
     ordered_amount = models.IntegerField(null=True, default=1)
