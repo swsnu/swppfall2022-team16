@@ -6,7 +6,7 @@ import { AppDispatch } from '../store'
 import { ShopItemInfo } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 
-export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Element {
+export default function ShopItem (props: { shopItem: ShopItemInfo | undefined }): JSX.Element {
   const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const shopItem = props.shopItem
@@ -22,11 +22,11 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
   }
 
   return <div>
-    <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-      <Card.Img variant="top" src={shopItem.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+    <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
       <Card.Body>
-        <Card.Title >{shopItem.name}</Card.Title>
-        <Card.Text data-testid = "test">{findAuthorName(shopItem.seller)}</Card.Text>
+        <Card.Title >{shopItem?.name}</Card.Title>
+        <Card.Text data-testid = "test">{findAuthorName(shopItem?.seller)}</Card.Text>
       </Card.Body>
     </Card>
   </div>

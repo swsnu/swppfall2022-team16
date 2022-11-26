@@ -51,7 +51,7 @@ export default function Post (props: IProps): JSX.Element {
         alert("You already liked the post.")
     else await dispatch(likePost(review.id))
   }
-  const review = reviewState.reviews.find((review) => review.id === props.id)!
+  const review = reviewState.reviews.find((review) => review.id === props.id)
 
   const findAuthorName = (ID: number | undefined) => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
@@ -67,10 +67,10 @@ export default function Post (props: IProps): JSX.Element {
         <Stack direction = 'vertical'>
           <Card.Text as= "h5" data-testid = "rating">
             {
-              Array.from({ length: review.rating }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
+              Array.from({ length: review?.rating && 0 }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
             }
             {
-              Array.from({ length: 5 - review.rating }, (_, i) => i).map((key) => <Icon.Star key={key} />)
+              Array.from({ length: 5 - (review?.rating && 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
             }
           </Card.Text>
           <Card.Text as= "h5" data-testid = "author">

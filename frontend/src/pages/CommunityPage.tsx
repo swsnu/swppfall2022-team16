@@ -37,11 +37,11 @@ export default function CommunityPage (): JSX.Element {
         </div>
         {
           reviewState.trending_posts.map((review, idx) => {
-            const shopitem = shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!
+            const shopitem = shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)
             return <div key={review.id}>
               <Row className="Header-row" >
                 <Col>
-                  <h4 id = 'title'>{`Top ${idx + 1} : ${shopitem.tags.join(', ')}`}</h4>
+                  <h4 id = 'title'>{shopitem && shopitem.tags && `Top ${idx + 1} : ${shopitem.tags.join(', ')}`}</h4>
                 </Col>
               </Row>
               <div className = 'postsection'>
