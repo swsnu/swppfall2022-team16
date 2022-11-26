@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
+import { userActions } from './user'
 
 
 /* eslint no-multiple-empty-lines: "error" */
@@ -75,6 +76,13 @@ export const deleteReview = createAsyncThunk(
     dispatch(reviewActions.deleteReview({ targetId: id }))
   })
 
+export const likePost = createAsyncThunk(
+    'review/likePost', async (post_id: number, { dispatch }) => {
+      await axios.post(`/api/addlikes/${post_id}/`)
+      dispatch(reviewActions.likePost({ targetId: post_id }))
+      dispatch(userActions.likePost({ targetId: post_id }))
+  })
+
 export const reviewSlice = createSlice({
   name: 'review',
   initialState,
@@ -89,6 +97,15 @@ export const reviewSlice = createSlice({
       state.current_review = action.payload
     },
     deleteReview: (state, action: PayloadAction<{ targetId: Number }>) => {
+      const review = state.reviews.find(
+        (value) => { return value.id === action.payload.targetId }
+      )
+      
+      if (review !== undefined){
+          review.likes++
+      }
+    },
+    likePost: (state, action: PayloadAction<{ targetId: Number }>) => {
       state.reviews = state.reviews.filter(
         (value) => { return value.id !== action.payload.targetId }
       )

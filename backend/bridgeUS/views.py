@@ -551,10 +551,14 @@ def addlikes(request, post_id):
 
     customUser = CustomUser.objects.get(id=request.user.id)
 
-    if customUser.liked_posts.__contains__(post_id):
+    liked_posts_list = [int(num) for num in customUser.liked_posts.split(',')]
+    
+    if liked_posts_list.__contains__(int(post_id)):
         return HttpResponse(status=400)
 
-    customUser.liked_posts.append(post_id)
+    liked_posts_list.append(int(post_id))
+
+    customUser.liked_posts = ','.join(str(item) for item in liked_posts_list)
 
     customUser.save()
 
@@ -600,4 +604,4 @@ def get_shopitem_json(shopitem):
 
 def get_user_json(user):
     return {'id': user.id, 'username': user.username, 'nickname': user.nickname, 'gender': user.gender,
-            'height': user.height, 'weight': user.weight}
+            'height': user.height, 'weight': user.weight, 'liked_posts': user.liked_posts}

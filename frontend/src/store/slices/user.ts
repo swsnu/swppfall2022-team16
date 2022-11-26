@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
 
@@ -15,6 +15,7 @@ export interface User {
   height: number
   weight: number
   gender: string
+  liked_posts: string
 }
 
 export interface UserState {
@@ -63,6 +64,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    likePost: (state, action: PayloadAction<{ targetId: number }>) => {
+      state.currentLoggedIn?.liked_posts.concat("," + action.payload.targetId.toString)
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
