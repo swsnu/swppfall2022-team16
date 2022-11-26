@@ -47,46 +47,30 @@ export default function PostComments (props: IProps): JSX.Element {
 
   let listedComments = CommentsforThisArticle.map((comment : CommentInfo) =>{
       return(
-      <div className = 'commentbox'>
-      <Stack direction = 'horizontal'>
-      <div className = 'commentwrapper'>
-      <div className="Comment" key={comment.id}>
-        <Stack direction = "horizontal" gap={3}>
-          <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
-          <p className = 'content'>{comment.content}</p>
-          {
-            (comment.author === userState.currentLoggedIn?.id)
-              ? (<div className = "button">
-              <Button data-testid = 'edit' className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
-                <AiFillEdit/>
-              </Button>
-              <Button data-testid = 'delete' className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
-                <AiFillDelete/>
-              </Button>
-            </div>)
-              : (<div></div>)
-          }
-        </Stack>
-      </div>
-      </div>
-       <div className = 'editbutton'>
-       {
-           (comment.author == userState.currentLoggedIn?.id) ? 
-           (
-             <Stack direction = 'horizontal' gap ={1}>
-             <Button className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
-               <AiFillEdit/>
-             </Button>
-             <Button className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
-               <AiFillDelete/>
-             </Button>
-             </Stack>
-           ) 
-           : (<div></div>)
-         }
-       </div>
-       </Stack>
-       </div>
+        <div className = 'commentbox'>
+          <Stack direction = 'horizontal'>
+            <div className = 'commentwrapper'>
+              <div className="Comment" key={comment.id}>
+                <Stack direction = "horizontal" gap={3}>
+                  <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
+                  <p className = 'content'>{comment.content}</p>
+                  {
+                    (comment.author === userState.currentLoggedIn?.id)
+                      ? (<div className = "button">
+                      <Button data-testid = 'edit' className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+                        <AiFillEdit/>
+                      </Button>
+                      <Button data-testid = 'delete' className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+                        <AiFillDelete/>
+                      </Button>
+                    </div>)
+                      : (<div></div>)
+                  }
+                </Stack>
+              </div>
+            </div>
+          </Stack>
+        </div>
       );
   });
 
