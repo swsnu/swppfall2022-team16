@@ -3,13 +3,14 @@ import { Image, Stack, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
-import { fetchUsers, selectUser } from '../store/slices/user'
+import { fetchUsers, selectUser, User } from '../store/slices/user'
 
 export interface IProps {
   itemID: number
   color: string
   size: string
   quantity: number
+  price : number
 }
 
 export default function OrderForm (props: IProps): JSX.Element {
@@ -29,6 +30,7 @@ export default function OrderForm (props: IProps): JSX.Element {
   }
 
   return (
+    <>
     <Stack direction="horizontal" gap={3}>
       <Image alt='itemimage' rounded style={{ width: 210, height: 280, objectFit: 'cover' }} src={item.image_url}/>
       <Stack direction="vertical" gap ={3}>
@@ -40,6 +42,7 @@ export default function OrderForm (props: IProps): JSX.Element {
               <th>Color</th>
               <th>Size</th>
               <th>Quantity</th>
+              <th>Price</th>
             </tr>
           </thead>
           <tbody>
@@ -47,10 +50,13 @@ export default function OrderForm (props: IProps): JSX.Element {
               <td>{props.color}</td>
               <td>{props.size}</td>
               <td>{props.quantity}</td>
+              <td>{props.price}</td>
             </tr>
           </tbody>
         </Table>
       </Stack>
     </Stack>
+    <br/>
+    </>
   )
 }

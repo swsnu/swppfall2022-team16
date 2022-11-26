@@ -23,6 +23,7 @@ export default function PaymentPage (): JSX.Element {
   const userState = useSelector(selectUser)
   const shopItemDetailState = useSelector(selectShopItemDetail)
   const userOrderState = useSelector(selectUserOrder)
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     dispatch(fetchMainItems())
@@ -79,7 +80,9 @@ export default function PaymentPage (): JSX.Element {
                   color={userorder.color}
                   size={userorder.size}
                   quantity={userorder.ordered_amount}
-                />)
+                  price = {userorder.ordered_amount}
+                />
+                ) 
             }
             <Container fluid>
               <Row className='Header-row'>
@@ -109,7 +112,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {totalPrice} credit = {400}/>
             <Button variant = 'grad' onClick={() => navigate('/user/8')}>Buy with my credit</Button>
           </Stack>
         </Col>
