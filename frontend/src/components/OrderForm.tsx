@@ -10,7 +10,7 @@ export interface IProps {
   color: string
   size: string
   quantity: number
-  price : number
+  price : number | undefined
 }
 
 export default function OrderForm (props: IProps): JSX.Element {
