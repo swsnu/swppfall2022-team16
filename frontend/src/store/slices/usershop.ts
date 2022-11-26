@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { RootState } from '..'
+
 
 
 /*eslint no-multiple-empty-lines: "error"*/
@@ -45,5 +47,6 @@ export const userShopSlice = createSlice({
 });
 
 export const userShopActions = userShopSlice.actions;
+export const selectUserShop = (state: RootState) => state.usershop
 
 export default userShopSlice.reducer;
