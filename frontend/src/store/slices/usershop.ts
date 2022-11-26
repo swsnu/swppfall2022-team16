@@ -2,48 +2,48 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 
-/*eslint no-multiple-empty-lines: "error"*/
+/* eslint no-multiple-empty-lines: "error" */
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export interface UserShopInfo {
-    id: number
-    user_id: number
-    credit: number
-    cart: string
-    favorite_clothes : string
-    purchased_item : string
+  id: number
+  user_id: number
+  credit: number
+  cart: string
+  favorite_clothes: string
+  purchased_item: string
 }
 
 export interface UserShopState {
-    usershop: UserShopInfo | null
+  usershop: UserShopInfo | null
 }
 
-const initialState : UserShopState = {
-    usershop: null
+const initialState: UserShopState = {
+  usershop: null
 }
 
 export const fetchUserShop = createAsyncThunk(
-    "usershop/fetchUserShop",
-    async ( _ ,{ dispatch } ) => {
-        const response = await axios.get<UserShopInfo>('/api/usershop/')
-        dispatch(userShopActions.usershop(response.data))
-        return response.data    
-    }
+  'usershop/fetchUserShop',
+  async (_, { dispatch }) => {
+    const response = await axios.get<UserShopInfo>('/api/usershop/')
+    dispatch(userShopActions.usershop(response.data))
+    return response.data
+  }
 )
 
 export const userShopSlice = createSlice({
-    name: "usershop",
-    initialState,
-    reducers: { 
-        usershop: (state, action: PayloadAction<UserShopInfo>) => {
-            state.usershop = action.payload;
-        }
-    },
-    extraReducers: (builder) => { },
-});
+  name: 'usershop',
+  initialState,
+  reducers: {
+    usershop: (state, action: PayloadAction<UserShopInfo>) => {
+      state.usershop = action.payload
+    }
+  },
+  extraReducers: (builder) => { }
+})
 
-export const userShopActions = userShopSlice.actions;
+export const userShopActions = userShopSlice.actions
 
-export default userShopSlice.reducer;
+export default userShopSlice.reducer

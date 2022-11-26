@@ -5,8 +5,8 @@ import { RootState } from '..'
 
 /* eslint no-multiple-empty-lines: "error" */
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export interface User {
   id: number
@@ -18,22 +18,22 @@ export interface User {
 }
 
 export interface UserState {
-  users: User[],
-  currentLoggedIn : User | null;
+  users: User[]
+  currentLoggedIn: User | null
 }
 
-const initialState : UserState = {
-  users : [],
-  currentLoggedIn : null
+const initialState: UserState = {
+  users: [],
+  currentLoggedIn: null
 }
 
 
 export const fetchUsers = createAsyncThunk(
-  "user/fetchUsers", 
+  'user/fetchUsers',
   async () => {
-  const response = await axios.get<User[]>("/api/user/");
-  return response.data;
-});
+    const response = await axios.get<User[]>('/api/user/')
+    return response.data
+  })
 
 export const login = createAsyncThunk(
   'user/login',
@@ -60,9 +60,9 @@ export const signout = createAsyncThunk(
 )
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
-  reducers:{
+  reducers: {
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -74,7 +74,7 @@ export const userSlice = createSlice({
     })
     builder.addCase(signup.fulfilled, (state, action) => {
       state.users = action.payload.userlist
-      
+
       state.currentLoggedIn = state.users.find(
         (value) => {
           return value.id === action.payload.id
@@ -82,15 +82,15 @@ export const userSlice = createSlice({
       )!
     })
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.users = action.payload
     })
     builder.addCase(signout.fulfilled, (state, action) => {
-      state.currentLoggedIn = null;
+      state.currentLoggedIn = null
     })
   }
 })
 
-export const userActions = userSlice.actions;
+export const userActions = userSlice.actions
 export const selectUser = (state: RootState) => state.user
 
-export default userSlice.reducer;
+export default userSlice.reducer
