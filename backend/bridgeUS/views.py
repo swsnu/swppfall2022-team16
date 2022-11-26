@@ -462,9 +462,6 @@ def search(request):
     text = json.loads(body)['text']
     tags = json.loads(body)['tags']
 
-    print(f"text: ${text}")
-    print(f"tags: ${tags}")
-
     matched_items = ShopItem.objects
 
     if text is not None and text != "":
@@ -534,7 +531,6 @@ def trendingposts(request, post_count):
         return_count = Review.objects.all().count()
 
     trending_posts = Review.objects.all().order_by('-likes')
-    print(trending_posts)
 
     return_posts = []
 
