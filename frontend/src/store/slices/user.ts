@@ -64,8 +64,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    likePost: (state, action: PayloadAction<{ targetId: number }>) => {
-      state.currentLoggedIn?.liked_posts.concat("," + action.payload.targetId.toString)
+    likePost: (state, action: PayloadAction<{ liked_posts: string }>) => {
+      if (state.currentLoggedIn !== null)
+          state.currentLoggedIn.liked_posts = action.payload.liked_posts;
     },
   },
   extraReducers: (builder) => {

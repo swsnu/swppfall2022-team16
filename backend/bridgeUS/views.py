@@ -553,7 +553,10 @@ def addlikes(request, post_id):
 
     customUser = CustomUser.objects.get(id=request.user.id)
 
-    liked_posts_list = [int(num) for num in customUser.liked_posts.split(',')]
+    liked_posts_list = []
+
+    if len(customUser.liked_posts) > 0:
+        liked_posts_list = [int(num) for num in customUser.liked_posts.split(',')]
     
     if liked_posts_list.__contains__(int(post_id)):
         return HttpResponse(status=400)
@@ -570,7 +573,7 @@ def addlikes(request, post_id):
 
     post.save()
 
-
+    return JsonResponse(get_user_json(customUser), safe=False, status=200)
 
 def get_review_json(review):
     return {'id': review.id, 'rating': review.rating, 'review_item': review.review_item.id, 'title': review.title,

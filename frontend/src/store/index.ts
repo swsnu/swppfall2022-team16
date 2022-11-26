@@ -7,7 +7,7 @@ import shopitemDetailReducer from './slices/shopitemdetail'
 import reviewReducer from './slices/review'
 import commentReducer from './slices/comment'
 import userorderReducer from './slices/userorder'
-import storage from 'redux-persist/lib/storage'
+import storageSession from 'redux-persist/lib/storage/session'
 
 const reducers = combineReducers({
   user: userReducer,
@@ -21,7 +21,8 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage: storageSession,
+  whitelist: ['user']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)
