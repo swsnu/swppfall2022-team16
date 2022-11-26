@@ -8,6 +8,7 @@
 __pycache__/
 local_settings.py
 backend/db.sqlite3
+backend/media
 db.sqlite3-journal
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
