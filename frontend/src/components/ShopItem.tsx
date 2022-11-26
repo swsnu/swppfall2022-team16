@@ -13,11 +13,14 @@ export default function ShopItem (props: { shopItem: ShopItemInfo }): JSX.Elemen
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchUsers())
+    }
+    fetches().catch(() => {})
   }, [dispatch])
 
   const navigate = useNavigate()
-  const findAuthorName = (ID: number | undefined) => {
+  const findAuthorName = (ID: number | undefined): string | undefined => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
 

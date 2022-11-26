@@ -25,8 +25,8 @@ const initialState: ShopItemDetailState = {
 
 export const fetchDetails = createAsyncThunk(
   'shopitemdetail/fetchDetails',
-  async (item_id: number) => {
-    const response = await axios.get<ShopItemDetailInfo[]>(`/api/shopitem/${item_id}/shopitemdetail/`)
+  async (itemId: number) => {
+    const response = await axios.get<ShopItemDetailInfo[]>(`/api/shopitem/${itemId}/shopitemdetail/`)
     return response.data
   }
 )

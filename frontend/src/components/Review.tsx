@@ -14,10 +14,13 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
   const review = props.review
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchUsers())
+    }
+    fetches().catch(() => {})
   }, [dispatch])
 
-  const findAuthorName = (ID: number | undefined) => {
+  const findAuthorName = (ID: number | undefined): any => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
 

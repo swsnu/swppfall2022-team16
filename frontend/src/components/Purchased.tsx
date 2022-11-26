@@ -22,7 +22,7 @@ export default function Purchased (props: { order: UserOrderInfo }): JSX.Element
     <div className = "Purchases">
       <Stack direction = "horizontal" gap ={3}>
         <h5>{item?.name}</h5>
-        <h3>{'$' + item?.price}</h3>
+        <h3>{'$' + String(item?.price)}</h3>
         <p>{props.order.status}</p>
         {/* <h3>{props.purchaseDate}</h3> */}
       </Stack>
