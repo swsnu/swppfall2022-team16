@@ -12,7 +12,7 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
-import { fetchCart, selectUserOrder } from '../store/slices/userorder'
+import { fetchCart, purchaseWithCredit, selectUserOrder } from '../store/slices/userorder'
 import usershop, { fetchUserShop, selectUserShop } from '../store/slices/usershop'
 
 export default function PaymentPage (): JSX.Element {
@@ -40,6 +40,16 @@ export default function PaymentPage (): JSX.Element {
   const findAuthorName = (ID: number | undefined) => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
+
+  const buyWithMyCreditHandler = () => {
+    const result = await dispatch(purchaseWithCredit())
+    if (result.type === `${purchaseWithCredit.typePrefix}/fulfilled`) {
+      navigate('/user/8')
+    } else {
+      alert('Your purchase has errors. Please try again!')
+    }
+  }
+
   return (
   <div className = 'page-container'>
     <style type="text/css">
@@ -115,7 +125,7 @@ export default function PaymentPage (): JSX.Element {
         <Col>
           <Stack>
             <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
-            <Button variant = 'grad' onClick={() => navigate('/user/8')}>Buy with my credit</Button>
+            <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
           </Stack>
         </Col>
       </Row>

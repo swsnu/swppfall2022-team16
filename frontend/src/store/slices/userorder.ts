@@ -55,6 +55,14 @@ export const addToCart = createAsyncThunk(
   }
 )
 
+export const purchaseWithCredit = createAsyncThunk(
+  'userorder/purchaseWithCredit',
+  async () => {
+    const response = await axios.get('/api/purchase/')
+    return response.data
+  }
+)
+
 export const userOrderSlice = createSlice({
   name: 'userorder',
   initialState,
