@@ -34,6 +34,11 @@ describe('user reducer', () => {
     store = getMockStore({ user: stubUserState })
     axios.post = jest.fn().mockResolvedValueOnce({
       data: {
+        userlist: [
+          { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
+          { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
+          { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' }
+        ],
         id: 1
       }
     })

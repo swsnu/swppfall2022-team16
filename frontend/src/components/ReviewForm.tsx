@@ -1,3 +1,4 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
@@ -32,11 +33,9 @@ export default function ReviewForm (props: IProps): JSX.Element {
     formData.append('review_item', props.shopItemId.toString())
     formData.append('rating', rating.toString())
     formData.append('image', selectedImage!)
-    const result = await dispatch(postReview(formData))
-    console.log(result)
-    if (result.type === `${postReview.typePrefix}/fulfilled`) {
-      navigate(`/community/${result.payload.id}`)
-    }
+
+    const result = unwrapResult(await dispatch(postReview(formData)))
+    navigate(`/community/${result.id}`)
   }
 
   return (
@@ -55,17 +54,15 @@ export default function ReviewForm (props: IProps): JSX.Element {
         <Form.Control type = "file" accept='image/jpeg, image/png' placeholder='upload your photo' onChange={(e) => {
           const target: any = e.target
           const file = (target.files as FileList)[0]
-          if (file) {
-            setSelectedImage(file)
-          }
+          setSelectedImage(file)
         } }/>
         </Form.Group>
         <div>
           <span onMouseOver={() => setIsMouseOnStar(true)} onMouseOut={() => setIsMouseOnStar(false)}>
             {
               [1, 2, 3, 4, 5].map((idx) => (idx <= (isMouseOnStar ? tmpRating : rating)
-                ? <Icon.StarFill key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />
-                : <Icon.Star key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />))
+                ? <Icon.StarFill data-testid={idx} key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />
+                : <Icon.Star data-testid={idx} key={idx} onMouseOver={() => setTmpRating(idx)} onClick={() => setRating(idx)} size={24} />))
             }
           </span>
         </div>

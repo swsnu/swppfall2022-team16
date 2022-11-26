@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
 
+
 class CustomUser(AbstractUser):
     nickname = models.TextField(null=True)
     height = models.IntegerField(null=True)
@@ -11,10 +12,11 @@ class CustomUser(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class UserShop(models.Model):
     user = models.ForeignKey(
-        CustomUser,   
-        on_delete = models.CASCADE,
+        CustomUser,
+        on_delete=models.CASCADE,
     )
 
     credit = models.FloatField(null=True, default=0)
@@ -24,12 +26,13 @@ class UserShop(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class ShopItem(models.Model):
     seller = models.ForeignKey(
-        CustomUser,   
-        on_delete = models.CASCADE,
-    )   
-    
+        CustomUser,
+        on_delete=models.CASCADE,
+    )
+
     name = models.TextField(null=True)
     image = models.ImageField(upload_to='images/', null=True)
     price = models.FloatField(null=True, default=0)
@@ -39,12 +42,13 @@ class ShopItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class ShopItemDetail(models.Model):
     main_item = models.ForeignKey(
-        ShopItem,   
-        on_delete = models.CASCADE,
-    )   
-    
+        ShopItem,
+        on_delete=models.CASCADE,
+    )
+
     color = models.TextField(null=True)
     size = models.TextField(null=True)
     left_amount = models.IntegerField(null=True, default=0)
@@ -52,16 +56,17 @@ class ShopItemDetail(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class UserOrder(models.Model):
     user = models.ForeignKey(
         CustomUser,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
     )
 
     ordered_item = models.ForeignKey(
         ShopItem,
-        on_delete = models.CASCADE,
-    )    
+        on_delete=models.CASCADE,
+    )
 
     color = models.TextField(null=True)
     size = models.TextField(null=True)
@@ -75,19 +80,20 @@ class UserOrder(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Review(models.Model):
     title = models.CharField(null=True, max_length=64)
 
     content = models.TextField(null=True)
 
     author = models.ForeignKey(
-        CustomUser,   
-        on_delete = models.CASCADE,
+        CustomUser,
+        on_delete=models.CASCADE,
     )
 
     review_item = models.ForeignKey(
         ShopItem,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
         null=True
     )
 
@@ -99,18 +105,19 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Comment(models.Model):
     """Comment class"""
 
     review = models.ForeignKey(
         Review,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
     )
 
     content = models.TextField(null=True)
 
     author = models.ForeignKey(
-        CustomUser, on_delete = models.CASCADE,
+        CustomUser, on_delete=models.CASCADE,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)

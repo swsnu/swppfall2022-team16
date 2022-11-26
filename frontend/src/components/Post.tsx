@@ -24,7 +24,7 @@ export default function Post (props: IProps): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchReviews()).then(() => {
-      setNumLike(reviewState.reviews.find((review) => review.id === props.id)?.likes ?? 0)
+      setNumLike(review.likes)
     })
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
@@ -36,8 +36,8 @@ export default function Post (props: IProps): JSX.Element {
   const findAuthorName = (ID: number | undefined) => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
-  console.debug(props.id)
-  console.debug(itemState.shopitems)
+  // console.debug(props.id)
+  // console.debug(itemState.shopitems)
 
   return <div>
     <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
@@ -45,7 +45,7 @@ export default function Post (props: IProps): JSX.Element {
       <Card.Body>
         <Stack direction = 'horizontal'>
         <Stack direction = 'vertical'>
-          <Card.Text as= "h5" data-testid = "test">
+          <Card.Text as= "h5" data-testid = "rating">
             {
               Array.from({ length: review.rating }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
             }
@@ -53,7 +53,7 @@ export default function Post (props: IProps): JSX.Element {
               Array.from({ length: 5 - review.rating }, (_, i) => i).map((key) => <Icon.Star key={key} />)
             }
           </Card.Text>
-          <Card.Text as= "h5" data-testid = "test">
+          <Card.Text as= "h5" data-testid = "author">
             @{findAuthorName(review?.author)}
           </Card.Text>
           </Stack>

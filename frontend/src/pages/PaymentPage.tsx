@@ -56,7 +56,7 @@ export default function PaymentPage (): JSX.Element {
             <Container fluid>
               <Row className='Header-row'>
                 <Col>
-                  <Card style={{ width: '18rem' }} border={shippingOption == 'Fast' ? 'primary' : ''} onClick={() => setShippingOption('Fast')} data-testid='fast'>
+                  <Card style={{ width: '18rem' }} border={shippingOption === 'Fast' ? 'primary' : ''} onClick={() => setShippingOption('Fast')} data-testid='fast'>
                     <Card.Body>
                       <Card.Title as= "h3">Fast Shipping</Card.Title>
                       <Card.Text as= "h5">1 ~ 3 business days</Card.Text>
@@ -65,7 +65,7 @@ export default function PaymentPage (): JSX.Element {
                   </Card>
                 </Col>
                 <Col>
-                  <Card style={{ width: '18rem' }} border={shippingOption == 'Standard' ? 'primary' : ''} onClick={() => setShippingOption('Standard')} data-testid='standard'>
+                  <Card style={{ width: '18rem' }} border={shippingOption === 'Standard' ? 'primary' : ''} onClick={() => setShippingOption('Standard')} data-testid='standard'>
                     <Card.Body>
                       <Card.Title as= "h3">Standard</Card.Title>
                       <Card.Text as= "h5">3 ~ 5 business days</Card.Text>
@@ -80,7 +80,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption == 'Fast' ? 10 : 5} />
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} />
             <Button onClick={() => navigate('/user/8')}>Buy with my credit</Button>
           </Stack>
         </Col>

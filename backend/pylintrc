@@ -150,6 +150,16 @@ disable=abstract-method,
         relative-beyond-top-level,
         line-too-long,
         missing-class-docstring,
+        bad-indentation,
+        ungrouped-imports,
+        redefined-outer-name,
+        inconsistent-quotes,
+        missing-final-newline,
+        consider-using-in,
+        invalid-name,
+        reimported,
+        missing-module-docstring,
+        django-not-configured
 
 [REPORTS]
 

@@ -51,11 +51,21 @@ export default function PostComments (props: IProps): JSX.Element {
       <Stack direction = 'horizontal'>
       <div className = 'commentwrapper'>
       <div className="Comment" key={comment.id}>
-        <Stack direction = 'horizontal'>
-          <Stack direction = "horizontal" gap={3}>
-            <p className = "author" style={{fontWeight: 'bold'}}>[{findAuthorName(comment.author)}]</p>
-            <p className = 'content'>{comment.content}</p>
-          </Stack>
+        <Stack direction = "horizontal" gap={3}>
+          <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
+          <p className = 'content'>{comment.content}</p>
+          {
+            (comment.author === userState.currentLoggedIn?.id)
+              ? (<div className = "button">
+              <Button data-testid = 'edit' className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+                <AiFillEdit/>
+              </Button>
+              <Button data-testid = 'delete' className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+                <AiFillDelete/>
+              </Button>
+            </div>)
+              : (<div></div>)
+          }
         </Stack>
       </div>
       </div>

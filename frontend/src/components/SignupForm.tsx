@@ -35,16 +35,14 @@ export default function SignupForm (): JSX.Element {
 
     const nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
     if (!nameValid) { alertMessage = alertMessage + 'Name\n' }
-
     const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
     if (!emailValid) { alertMessage = alertMessage + 'Email\n' }
-
+    // @englisn.twoorthree
     const heightValid = (height.match(/^[0-9]{3}$/) !== null)
     if (!heightValid) { alertMessage = alertMessage + 'Height\n' }
-
+    //number 3
     const weightValid = (weight.match(/^[0-9]{2,3}$/) !== null)
     if (!weightValid) { alertMessage = alertMessage + 'Weight\n' }
-
     return (nameValid && emailValid && heightValid && weightValid)
   }
 
