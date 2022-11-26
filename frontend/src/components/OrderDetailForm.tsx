@@ -9,7 +9,7 @@ export interface OrderDetailProps {
   itemID?: number | undefined
   itemName: string | undefined
   sellerName: string | undefined
-  rating: number
+  rating: number | undefined
   colors: string[]
   quantity: number
   price: number | undefined
@@ -25,6 +25,8 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
       
     }
   }
+
+  const rating = props.rating ?? 0
 
   return (
     <>
@@ -77,7 +79,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
       </style>
     <Card style={{ width: '36rem' }}>
       <Card.Body>
-        <Card.Title>{'★'.repeat(Math.round(props.rating)) + '☆'.repeat(5 - Math.round(props.rating))}</Card.Title>
+        <Card.Title>{'★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating))}</Card.Title>
         <Card.Text>
           <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
             { '$' + (props.price !== undefined ? props.price.toString() : '0') }
