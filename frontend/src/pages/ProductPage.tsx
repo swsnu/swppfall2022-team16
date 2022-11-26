@@ -54,8 +54,7 @@ export default function ProductPage (): JSX.Element {
                 itemID={item?.id}
                 itemName={item?.name}
                 sellerName={findAuthorName(item?.seller)}
-                rating={item!.rating}
-                colors={['White', 'Black', 'Brown']}
+                colors={[]}
                 quantity = {10}
                 price = {item?.price}
                 recommendedSize = 'M'
