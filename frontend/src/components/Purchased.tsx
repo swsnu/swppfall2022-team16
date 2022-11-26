@@ -13,17 +13,20 @@ export default function Purchased (props: { order: UserOrderInfo }): JSX.Element
   const shopItemState = useSelector(selectShopItem)
 
   useEffect(() => {
-    dispatch(fetchMainItems)
+    dispatch(fetchMainItems())
   }, [dispatch])
 
   const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.order.item_id)
+  console.log(props.order.item_id)
+
+  const statusString = ['In cart', 'Processing', 'In Delivery', 'Delivery Complete']
 
   return (
     <div className = "Purchases">
       <Stack direction = "horizontal" gap ={3}>
         <h5>{item?.name}</h5>
         <h3>{'$' + item?.price}</h3>
-        <p>{props.order.status}</p>
+        <p>{statusString[props.order.status]}</p>
         {/* <h3>{props.purchaseDate}</h3> */}
       </Stack>
       <Button variant = "secondary" type = "submit" onClick = {() => { navigate(`/review/${props.order.item_id}`) }}>
