@@ -35,12 +35,10 @@ export default function PaymentPage (): JSX.Element {
   const findAuthorName = (ID: number | undefined) => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
-
   return (
   <div className = 'page-container'>
     <style type="text/css">
         {`
-             
              .btn-grad {
               background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
               text-align: center;
@@ -58,7 +56,6 @@ export default function PaymentPage (): JSX.Element {
               color: blue;
               text-decoration: none;
             }
-           
     `}
       </style>
       <div className = 'contents'>

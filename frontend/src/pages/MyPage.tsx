@@ -43,7 +43,7 @@ export default function MyPage (): JSX.Element {
               <Card.Img variant="top" src="../mypagebackground.jpg" />
               <Card.ImgOverlay style={{ textAlign: 'center' }}>
                 <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
-                <Card.Title style={{ fontSize: '30px', color: 'white' }}>Alice</Card.Title>
+                <Card.Title style={{ fontSize: '30px', color: 'white' }}>{findAuthorName(Number(id))}</Card.Title>
               </Card.ImgOverlay>
             </Card>
             <h1 className="Header-row  Header">Purchased</h1>

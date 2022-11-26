@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import * as Icon from 'react-bootstrap-icons'
 import { AppDispatch } from '../store'
-import { fetchReviews, selectReview } from '../store/slices/review'
+import { fetchReviews, likePost, selectReview } from '../store/slices/review'
 import { AiFillLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
@@ -30,7 +30,14 @@ export default function Post (props: IProps): JSX.Element {
     dispatch(fetchUsers())
   }, [dispatch])
 
-  const likeButtonHandler = (): void => { setNumLike(numLike + 1) } // axios command necessary
+  const likeButtonHandler = async () => {
+    if (userState.currentLoggedIn === null)
+        return;
+        
+    if (userState.currentLoggedIn.liked_posts !== undefined &&  userState.currentLoggedIn.liked_posts.split(',').includes(review.id.toString()))
+      alert("You already liked the post.")
+    else await dispatch(likePost(review.id))
+  }
   const review = reviewState.reviews.find((review) => review.id === props.id)!
 
   const findAuthorName = (ID: number | undefined) => {
