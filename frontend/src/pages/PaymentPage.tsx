@@ -34,6 +34,10 @@ export default function PaymentPage (): JSX.Element {
   }, [dispatch])
 
   const items = userOrderState.cart
+  let subtotal = 0
+  for (let i =0; i< items.length; i++){
+    subtotal = subtotal + (items[i].ordered_amount * items[i].single_price)
+  }
   const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
   // for each item, itemDetail exists. Retrieve shopitemdetail through item id to get color and size of the product
   const itemDetail = shopItemDetailState.shopitem_details.find((shopitemdetail) => shopitemdetail.main_item === Number(id))
@@ -93,7 +97,7 @@ export default function PaymentPage (): JSX.Element {
                   size={userorder.size}
                   quantity={userorder.ordered_amount}
                   price = {userorder.single_price}
-                />
+                /> 
                 ) 
             }
             <Container fluid>
@@ -124,7 +128,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {100} credit = {400}/>
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {400}/>
             <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
           </Stack>
         </Col>

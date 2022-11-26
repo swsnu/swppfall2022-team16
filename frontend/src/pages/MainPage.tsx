@@ -6,7 +6,7 @@ import Filter, { filters } from '../components/Filter'
 import ShopItem from '../components/ShopItem'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItems, fetchTopResult, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
@@ -26,6 +26,7 @@ export default function MainPage (): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchMainItems())
+    dispatch(fetchTopResult({text: '', tags: []}))
     dispatch(fetchUsers())
   }, [dispatch])
 
@@ -85,7 +86,7 @@ export default function MainPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { console.log(tags) }}>
+          <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text: '', tags })) }}>
             <AiOutlineFilter />
           </Button>
         </Col>
@@ -95,10 +96,10 @@ export default function MainPage (): JSX.Element {
         <div className = 'shopitems'>
         <Row md={4}>
           {  showMoreCount == 4 ? 
-          (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
-          </Col>).slice(0,4)) : (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          </Col>).slice(0,4)) : (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
           </Col>).slice(0,showMoreCount))  
@@ -133,11 +134,12 @@ export default function MainPage (): JSX.Element {
       </Row>
       <div className = 'spacing2'></div>
       <Row>
-      { reviewState.trending_posts.map((review) => <Col key={review.id}>
+      {
+        reviewState.trending_posts.map((review) => <Col key={review.id}>
           <Post id = {review.id} />
           <br/>
-        </Col>).slice(0,4)
-        }
+        </Col>).slice(0, 4)
+      }
       </Row>
       <div className = 'spacing2'></div>
       </div>
