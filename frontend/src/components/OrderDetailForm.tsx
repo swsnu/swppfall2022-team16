@@ -3,6 +3,10 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../store'
+import { addToCart } from '../store/slices/userorder'
+import { selectUser } from '../store/slices/user'
 
 export interface OrderDetailProps {
   itemID?: number | undefined
@@ -17,13 +21,8 @@ export interface OrderDetailProps {
 
 export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const navigate = useNavigate()
-
-  const quantityOptions = () => {
-    let i
-    for(i = 0; i < props.quantity; i++){
-      
-    }
-  }
+  const dispatch = useDispatch<AppDispatch>()
+  const userState = useSelector(selectUser)
 
   return (
     <Card style={{ width: '36rem' }}>
@@ -37,10 +36,8 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
         <Form>
           <Form.Select aria-label = "Color">
             {props.colors.map((color, index) => (
-              <span key={index}>
-              <option>{color}</option>
-              </span>
-            ))} 
+              <option key = {index}>{color}</option>
+            ))}
           </Form.Select>
           <Stack direction = "horizontal" gap = {5}>
             <Form.Select aria-label = "Quantity">
@@ -62,8 +59,31 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             </Form.Text>
           </Stack>
         </Form>
-        <Button variant='primary'>Add to Cart</Button>
-        <Button variant='secondary' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
+        <Button variant='primary' onClick = { () => { dispatch(addToCart({
+          id: 0,
+          user_id: userState.currentLoggedIn!.id,
+          item_id: props.itemID!,
+          status: 0,
+          color: props.colors[0],
+          size: 'S',
+          ordered_amount: 1,
+          purchased_at: null,
+          fast_shipping: true
+        })) } }>Add to Cart</Button>
+        <Button variant='secondary' onClick = { () => {
+          dispatch(addToCart({
+            id: 0,
+            user_id: userState.currentLoggedIn!.id,
+            item_id: props.itemID!,
+            status: 0,
+            color: props.colors[0],
+            size: 'S',
+            ordered_amount: 1,
+            purchased_at: null,
+            fast_shipping: true
+          }))
+          navigate('/payment')
+        } }>Buy Now</Button>
       </Card.Body>
     </Card>
   )

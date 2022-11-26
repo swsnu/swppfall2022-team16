@@ -78,26 +78,56 @@ def signout(request):
 
 
 @ensure_csrf_cookie
-def usershop(request, user_id):
+def usershop(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not CustomUser.objects.filter(id=user_id).exists():
-        return HttpResponse(status=404)
-
-    user = CustomUser.objects.filter(id=user_id).first()
-
-    if not UserShop.objects.filter(user=user).exists():
-        return HttpResponse(status=404)
-
-    usershop = UserShop.objects.filter(user=user).first()
+    usershop = UserShop.objects.filter(user=request.user).first()
 
     response_dict = get_usershop_json(usershop)
 
     return JsonResponse(response_dict, safe=False, status=200)
+
+@ensure_csrf_cookie
+def cart(request):
+    if request.method != 'GET' and request.method != 'POST':
+        return HttpResponseNotAllowed(['GET'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    if request.method == 'GET':    
+        cart = UserOrder.objects.filter(user=request.user, order_status=int(constants.OrderStatus.PRE_ORDER))
+
+        cart_all_list = [get_userorder_json(order) for order in cart]
+
+        return JsonResponse(cart_all_list, safe=False, status=200)
+    else: # 'POST'
+        body = request.body.decode()
+        userorder_user = request.user
+        userorder_item = json.loads(body)['item_id']
+        userorder_status = json.loads(body)['status']
+        userorder_color = json.loads(body)['color']
+        userorder_size = json.loads(body)['size']
+        userorder_amount = json.loads(body)['ordered_amount']
+        userorder_shipping = json.loads(body)['fast_shipping']
+        userorder = UserOrder(user = userorder_user,
+                  ordered_item_id = userorder_item,
+                  color = userorder_color,
+                  size = userorder_size,
+                  fast_shipping = userorder_shipping,
+                  ordered_amount = userorder_amount,
+                  order_status = userorder_status)
+        userorder.save()
+
+        cart = UserOrder.objects.filter(user=request.user, order_status=int(constants.OrderStatus.PRE_ORDER))
+
+        cart_all_list = [get_userorder_json(order) for order in cart]
+
+        return JsonResponse(cart_all_list, safe=False, status=200)
 
 
 @ensure_csrf_cookie
