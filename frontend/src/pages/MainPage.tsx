@@ -10,7 +10,7 @@ import { fetchMainItems, fetchTopResult, selectShopItem } from '../store/slices/
 import Footer from '../components/Footer'
 import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
-import { selectReview } from '../store/slices/review'
+import { fetchTrendingPosts, selectReview } from '../store/slices/review'
 import Post from '../components/Post'
 import '../css/mainpage.css'
 import '../css/Footer.css'
@@ -28,6 +28,7 @@ export default function MainPage (): JSX.Element {
     dispatch(fetchMainItems())
     dispatch(fetchTopResult({text: '', tags: []}))
     dispatch(fetchUsers())
+    dispatch(fetchTrendingPosts())
   }, [dispatch])
 
   const tagHandler = (remove: string, add: string) => {
