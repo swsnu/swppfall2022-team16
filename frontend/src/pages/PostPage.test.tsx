@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from "@testing-library/react"
-import { renderWithProviders, stubShopItemState } from '../test-utils/mock'
+import { renderWithProviders, stubReviewState, stubShopItemState } from '../test-utils/mock'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ShopItemState } from '../store/slices/shopitem'
 import PostPage from './PostPage'
@@ -39,6 +39,10 @@ const renderPostPage = () => {
 
 describe('<PostPage />', () => {
   it('should render without errors', () => {
+    mockDispatch.mockResolvedValue({
+      type: 'review/fetchReview/fulfilled',
+      payload: stubReviewState.reviews[0]
+    })
     renderPostPage()
 
     expect(screen.getAllByTestId('spyTopBar')).toHaveLength(1)
