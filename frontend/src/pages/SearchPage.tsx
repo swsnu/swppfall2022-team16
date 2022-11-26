@@ -10,6 +10,8 @@ import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { AiOutlineFilter } from 'react-icons/ai'
 import '../css/Footer.css'
+import '../css/mainpage.css'
+import '../css/searchpage.css'
 import { selectUser } from '../store/slices/user'
 
 export default function SearchPage (): JSX.Element {
@@ -18,13 +20,18 @@ export default function SearchPage (): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
   const [tags, setTags] = useState<string[]>([])
+  const [showMoreCount, setShowMoreCount] = useState(4)
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchTopResult({ text, tags: [] }))
     dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
   }, [dispatch])
+  
 
+  const showMoreHandler = ()=>{
+    setShowMoreCount(showMoreCount + 4)
+  }
   const tagHandler = (remove: string, add: string) => {
     console.log('Remove:' + remove)
     console.log('Add:' + add)
@@ -32,17 +39,39 @@ export default function SearchPage (): JSX.Element {
   }
 
   return (<div className = 'page-container'>
+     <style type="text/css">
+        {`
+             
+             .btn-showmore {
+              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+              text-align: center;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;       
+              font-weight : bold;     
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+            }
+  
+            .btn-showmore:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #FFE5B4;
+              text-decoration: none;
+            }
+           
+    `}
+      </style>
     <div className = 'contents'>
     <TopBar/>
     <Container>
       <Row className="Header-row">
         <Col>
-          <h1 className="Header" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
+          <h1 className="searchresult" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
         </Col>
       </Row>
-      <Row className="Header-row" style={{ backgroundColor: 'gainsboro', paddingTop: '16px' }}>
+      <Row className="Header-row">
         <Col md={3}>
-          <h1 className="Header">Top Results</h1>
+          <h3 id="Trending">Top Results</h3>
         </Col>
         <Col md={5}></Col>
         {
@@ -51,23 +80,25 @@ export default function SearchPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{ backgroundColor: 'purple', color: 'white' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
+          <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
             <AiOutlineFilter />
           </Button>
         </Col>
       </Row>
-      <Row md={4} style={{ backgroundColor: 'gainsboro' }}>
-        {
+      <Row md={4}>
+        { showMoreCount == 4 ?
           shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem shopItem={shopItem} />
-          </Col>)
+            <br/>
+          </Col>).slice(0,4) : shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
+            <ShopItem shopItem={shopItem} />
+            <br/>
+          </Col>).slice(0,showMoreCount)
         }
       </Row>
-      <Row style={{ backgroundColor: 'gainsboro', paddingBottom: '16px' }}>
-        <Col style={{ textAlign: 'center' }}>
-          <Button style={{ marginTop: '16px' }}>Show More</Button>
-        </Col>
-      </Row>
+      <div className ='showmore'>
+      <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+      </div>
       <Row className="Header-row">
         <Col>
           <h1 className="Header">Recommendations</h1>

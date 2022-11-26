@@ -43,7 +43,6 @@ export const shopitemDetailSlice = createSlice({
   }
 })
 
-export const shopitemDetailActions = shopitemDetailSlice.actions
 
 export const shopitemDetailActions = shopitemDetailSlice.actions;
 export const selectShopItemDetail = (state: RootState) => state.shopitemdetail;
