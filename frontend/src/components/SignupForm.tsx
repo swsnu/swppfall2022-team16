@@ -33,9 +33,8 @@ export default function SignupForm (): JSX.Element {
   const handleSignUpFormSubmit = () => {
     alertMessage = 'You must correct:\n\n'
 
-    const NameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
-    if (!NameValid) { alertMessage = alertMessage + 'Name\n' }
-    //name checks first capital rest lower
+    const nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
+    if (!nameValid) { alertMessage = alertMessage + 'Name\n' }
     const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
     if (!emailValid) { alertMessage = alertMessage + 'Email\n' }
     // @englisn.twoorthree
@@ -44,8 +43,7 @@ export default function SignupForm (): JSX.Element {
     //number 3
     const weightValid = (weight.match(/^[0-9]{2,3}$/) !== null)
     if (!weightValid) { alertMessage = alertMessage + 'Weight\n' }
-    //number 2
-    return (NameValid && emailValid && heightValid && weightValid)
+    return (nameValid && emailValid && heightValid && weightValid)
   }
 
   return (

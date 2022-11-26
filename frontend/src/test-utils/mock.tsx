@@ -4,7 +4,7 @@ import { render, RenderOptions } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { AppStore, RootState } from '../store'
 import userReducer, { UserState } from '../store/slices/user'
-import userShopReducer from '../store/slices/usershop'
+import userShopReducer, { UserShopState } from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer, { ShopItemDetailState } from '../store/slices/shopitemdetail'
 import reviewReducer, { ReviewState } from '../store/slices/review'
@@ -100,6 +100,17 @@ export const stubShopItemDetailState: ShopItemDetailState = {
     { id: 2, main_item: 2, color: 'red', size: 'S', left_amount: 1 },
     { id: 3, main_item: 3, color: 'red', size: 'S', left_amount: 1 }
   ]
+}
+
+export const stubUserShopState: UserShopState = {
+  usershop: {
+    id: 1,
+    user_id: 1,
+    credit: 100,
+    cart: '',
+    favorite_clothes: '',
+    purchased_item: ''
+  }
 }
 
 // const persistedReducer = persistReducer(persistConfig, getMockStore)

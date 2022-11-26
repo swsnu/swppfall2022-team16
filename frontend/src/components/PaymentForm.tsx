@@ -6,11 +6,9 @@ import { selectUserShop } from '../store/slices/usershop'
 
 export default function PaymentForm (props: { shippingFee: number }): JSX.Element {
   // const dispatch = useDispatch<AppDispatch>()
-  const [userCredit, setUserCredit] = useState(0)
-  const dispatch = useDispatch<AppDispatch>()
-  const usershopState = useSelector(selectUserShop)
-
-
+  // const [userCredit, setUserCredit] = useState(0)
+  // const dispatch = useDispatch<AppDispatch>()
+  // const usershopState = useSelector(selectUserShop)
 
   return <div>
     {/* Overall structure of the layout. Need to integrate and get data from the redux store */}

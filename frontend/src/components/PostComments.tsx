@@ -5,6 +5,8 @@ import { AppDispatch } from '../store'
 import { CommentInfo, deleteComment, fetchComments, putComment, selectComment } from '../store/slices/comment'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import '../css/postcomment.css'
+/*eslint-disable */
 
 export interface IProps {
   review_id: number
@@ -43,8 +45,11 @@ export default function PostComments (props: IProps): JSX.Element {
 
   const CommentsforThisArticle = commentState.comments.filter((comment: CommentInfo) => { return (comment.review === props.review_id) }).sort((a, b) => a.id - b.id)
 
-  const listedComments = CommentsforThisArticle.map((comment: CommentInfo) => {
-    return (
+  let listedComments = CommentsforThisArticle.map((comment : CommentInfo) =>{
+      return(
+      <div className = 'commentbox'>
+      <Stack direction = 'horizontal'>
+      <div className = 'commentwrapper'>
       <div className="Comment" key={comment.id}>
         <Stack direction = "horizontal" gap={3}>
           <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
@@ -63,8 +68,27 @@ export default function PostComments (props: IProps): JSX.Element {
           }
         </Stack>
       </div>
-    )
-  })
+      </div>
+       <div className = 'editbutton'>
+       {
+           (comment.author == userState.currentLoggedIn?.id) ? 
+           (
+             <Stack direction = 'horizontal' gap ={1}>
+             <Button className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+               <AiFillEdit/>
+             </Button>
+             <Button className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+               <AiFillDelete/>
+             </Button>
+             </Stack>
+           ) 
+           : (<div></div>)
+         }
+       </div>
+       </Stack>
+       </div>
+      );
+  });
 
   return (
     <div className = "Comment">
