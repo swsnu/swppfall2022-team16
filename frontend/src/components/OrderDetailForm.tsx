@@ -112,7 +112,9 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             </Form.Select>
           </Stack>
         </Form>
-        <Button variant='primary' onClick = { () => { dispatch(addToCart({
+        <div className = 'spacing2'></div>
+        <Stack direction = 'horizontal' gap = {1}>
+        <Button variant='cart' onClick = { () => { dispatch(addToCart({
           id: 0,
           user_id: userState.currentLoggedIn!.id,
           item_id: props.itemID!,
@@ -124,7 +126,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
           purchased_at: new Date(),
           fast_shipping: true
         })) } }>Add to Cart</Button>
-        <Button variant='secondary' onClick = { () => {
+        <Button variant='grad' onClick = { () => {
           dispatch(addToCart({
             id: 0,
             user_id: userState.currentLoggedIn!.id,
@@ -139,6 +141,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
           }))
           navigate('/payment')
         } }>Buy Now</Button>
+        </Stack>
       </Card.Body>
     </Card>
     </>

@@ -82,7 +82,7 @@ export default function PaymentPage (): JSX.Element {
                   color={userorder.color}
                   size={userorder.size}
                   quantity={userorder.ordered_amount}
-                  price = {userorder.ordered_amount}
+                  price = {userorder.single_price}
                 />
                 ) 
             }
