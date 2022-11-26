@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +17,12 @@ export default function ReviewPage (): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+    }
+    fetchRequired().catch(() => {
+
+    })
   }, [dispatch])
 
   return (<div className = 'page-container'>

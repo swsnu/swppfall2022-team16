@@ -25,8 +25,8 @@ const initialState: CommentState = {
 
 export const fetchComments = createAsyncThunk(
   'comment/fetchComments',
-  async (review_id: number) => {
-    const response = await axios.get<CommentInfo[]>(`/api/review/${review_id}/comment/`)
+  async (reviewId: number) => {
+    const response = await axios.get<CommentInfo[]>(`/api/review/${reviewId}/comment/`)
     return response.data
   }
 )
@@ -75,14 +75,14 @@ export const commentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchComments.fulfilled, (state, action) => {
-      const review_id = action.meta.arg
-      state.comments = state.comments.filter((comment) => comment.review !== review_id)
+      const reviewId = action.meta.arg
+      state.comments = state.comments.filter((comment) => comment.review !== reviewId)
         .concat(action.payload)
     })
   }
 })
 
 export const commentActions = commentSlice.actions
-export const selectComment = (state: RootState) => state.comment
+export const selectComment = (state: RootState): CommentState => state.comment
 
 export default commentSlice.reducer

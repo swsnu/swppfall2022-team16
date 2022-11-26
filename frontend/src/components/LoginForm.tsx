@@ -61,7 +61,7 @@ export default function LoginForm (): JSX.Element {
         </Form.Group>
         <div className = 'spacebetween'></div>
         <div className = "d-grid gap-2">
-        <Button variant = 'grad' onClick = {() => { loginbuttonHandler() }}>Login</Button>
+        <Button variant = 'grad' onClick = {() => loginbuttonHandler() }>Login</Button>
         </div>
       </Form>
     </div>

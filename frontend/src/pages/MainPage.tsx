@@ -21,17 +21,22 @@ export default function MainPage (): JSX.Element {
   const [showMoreCount, setShowMoreCount] = useState(4)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchUsers())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+      await dispatch(fetchUsers())
+    }
+    fetches().catch(() => {
+
+    })
   }, [dispatch])
 
-  const tagHandler = (remove: string, add: string) => {
+  const tagHandler = (remove: string, add: string): void => {
     console.log('Remove:' + remove)
     console.log('Add:' + add)
     setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
   }
 
-  const showMoreHandler = ()=>{
+  const showMoreHandler = (): void => {
     setShowMoreCount(showMoreCount + 4)
   }
 
@@ -91,20 +96,22 @@ export default function MainPage (): JSX.Element {
         <div className = 'spacing2'></div>
         <div className = 'shopitems'>
         <Row>
-          {  showMoreCount == 4 ? 
-          (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          { showMoreCount === 4
+            ? (shopItemState.shopitems.map(
+                (shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
-          </Col>).slice(0,4)) : (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+          </Col>).slice(0, 4))
+            : (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
-          </Col>).slice(0,showMoreCount))  
+          </Col>).slice(0, showMoreCount))
         }
         </Row>
         </div>
       </Row>
       <div className ='showmore'>
-      <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+      <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
       </div>
       <div className = 'spacing2'></div>
       </div>

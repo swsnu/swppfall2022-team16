@@ -48,6 +48,6 @@ export const userOrderSlice = createSlice({
 })
 
 export const userOrderActions = userOrderSlice.actions
-export const selectUserOrder = (state: RootState) => state.userorder
+export const selectUserOrder = (state: RootState): UserOrderState => state.userorder
 
 export default userOrderSlice.reducer

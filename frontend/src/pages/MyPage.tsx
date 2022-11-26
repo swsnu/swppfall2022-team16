@@ -20,7 +20,12 @@ export default function MyPage (): JSX.Element {
   const time = new Date()
 
   useEffect(() => {
-    dispatch(fetchOrders())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchOrders())
+    }
+    fetches().catch(() => {
+
+    })
   }, [dispatch])
 
   return (<div className = 'page-container'>

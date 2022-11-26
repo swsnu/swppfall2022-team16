@@ -18,8 +18,11 @@ export default function CommunityPage (): JSX.Element {
   const reviewState = useSelector(selectReview)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchTrendingPosts())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+      await dispatch(fetchTrendingPosts())
+    }
+    fetches().catch(() => {})
   }, [dispatch])
 
   return (
@@ -47,6 +50,7 @@ export default function CommunityPage (): JSX.Element {
                     <div className = 'white'>
                       <Col>
                         {
+                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                           <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!} />
                         }
                       </Col>

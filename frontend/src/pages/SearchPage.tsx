@@ -20,15 +20,29 @@ export default function SearchPage (): JSX.Element {
   const [tags, setTags] = useState<string[]>([])
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchTopResult({ text, tags: [] }))
-    dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+      await dispatch(fetchTopResult({ text, tags: [] }))
+      await dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
+    }
+    fetchRequired().catch(() => {
+
+    })
   }, [dispatch])
 
-  const tagHandler = (remove: string, add: string) => {
+  const tagHandler = (remove: string, add: string): void => {
     console.log('Remove:' + remove)
     console.log('Add:' + add)
     setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+  }
+
+  const topResult = (): void => {
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchTopResult({ text, tags }))
+    }
+    fetchRequired().catch(() => {
+
+    })
   }
 
   return (<div className = 'page-container'>
@@ -37,7 +51,7 @@ export default function SearchPage (): JSX.Element {
     <Container>
       <Row className="Header-row">
         <Col>
-          <h1 className="Header" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
+          <h1 className="Header" style={{ color: 'deeppink' }}>Search result for &apos{text}&apos</h1>
         </Col>
       </Row>
       <Row className="Header-row" style={{ backgroundColor: 'gainsboro', paddingTop: '16px' }}>
@@ -51,7 +65,7 @@ export default function SearchPage (): JSX.Element {
           </Col>)
         }
         <Col md={1}>
-          <Button style={{ backgroundColor: 'purple', color: 'white' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
+          <Button style={{ backgroundColor: 'purple', color: 'white' }} onClick={() => topResult() }>
             <AiOutlineFilter />
           </Button>
         </Col>

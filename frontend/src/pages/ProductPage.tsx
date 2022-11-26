@@ -20,15 +20,20 @@ export default function ProductPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItem(Number(id)))
-    dispatch(fetchReviews())
-    dispatch(fetchUsers())
-  }, [dispatch])
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItem(Number(id)))
+      await dispatch(fetchReviews())
+      await dispatch(fetchUsers())
+    }
+    fetchRequired().catch(() => {
 
+    })
+  }, [dispatch])
+  
   const item = shopItemState.current_shopitem
   const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
-  const findAuthorName = (ID: number | undefined) => {
+  const findAuthorName = (ID: number | undefined): string | undefined => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
 

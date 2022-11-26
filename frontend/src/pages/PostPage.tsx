@@ -7,7 +7,7 @@ import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchMainItem, selectShopItem, ShopItemInfo } from '../store/slices/shopitem'
+import { fetchMainItem, selectShopItem } from '../store/slices/shopitem'
 import { fetchReview, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
@@ -40,13 +40,21 @@ export default function PostPage (): JSX.Element {
 
   const commentButtonHandler = (): void => {
     const data = { review_id: Number(id), content: comment }
-    dispatch(postComment(data))
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(postComment(data))
+    }
+    fetchRequired().catch(() => {
+
+    })
     setComment('')
   }
 
-  const review = reviewState.reviews.find((review) => review.id === Number(id))!
-
-  const item = itemState.shopitems.find((item: ShopItemInfo) => item.id === review.review_item)!
+  const purchaseTheLookButtonHandler = (): void => {
+    if (reviewState.current_review === null) {
+      return
+    }
+    navigate(`/product/${reviewState.current_review?.review_item}`)
+  }
 
   return (
   <div className = 'page-container'>
@@ -58,7 +66,7 @@ export default function PostPage (): JSX.Element {
           <h1>{itemState.current_shopitem?.name}</h1>
           <p>{findAuthorName(itemState.current_shopitem?.seller)}</p>
           <Post id={Number(id)} />
-          <Button onClick={() => navigate(`/product/${reviewState.current_review?.review_item}`)}>Purchase the Look</Button>
+          <Button onClick={() => purchaseTheLookButtonHandler()}>Purchase the Look</Button>
         </Col>
         <Col>
           <PostComments review_id={Number(id)} />

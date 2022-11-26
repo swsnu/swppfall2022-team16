@@ -21,13 +21,18 @@ export default function PaymentPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchUsers())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+      await dispatch(fetchUsers())
+    }
+    fetches().catch(() => {
+
+    })
   }, [dispatch])
 
   const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
 
-  const findAuthorName = (ID: number | undefined) => {
+  const findAuthorName = (ID: number | undefined): string | undefined => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
 
@@ -80,7 +85,7 @@ export default function PaymentPage (): JSX.Element {
         </Col>
         <Col>
           <Stack>
-            <PaymentForm shippingFee={shippingOption == 'Fast' ? 10 : 5} />
+            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} />
             <Button onClick={() => navigate('/user/8')}>Buy with my credit</Button>
           </Stack>
         </Col>
