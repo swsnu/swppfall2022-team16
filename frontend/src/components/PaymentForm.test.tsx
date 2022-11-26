@@ -5,7 +5,7 @@ import { UserShopState } from "../store/slices/usershop";
 
 const renderPaymentForm = (userShopState: UserShopState) => {
   renderWithProviders(
-    <PaymentForm shippingFee={10} />, { preloadedState: {usershop: userShopState}}
+    <PaymentForm shippingFee={10} totalCost = {190} credit = {300} />, { preloadedState: {usershop: userShopState}}
   )
 }
 

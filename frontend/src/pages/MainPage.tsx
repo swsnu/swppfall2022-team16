@@ -60,7 +60,6 @@ export default function MainPage (): JSX.Element {
               color: #FFE5B4;
               text-decoration: none;
             }
-           
     `}
       </style>
     <div className = 'contents'>
