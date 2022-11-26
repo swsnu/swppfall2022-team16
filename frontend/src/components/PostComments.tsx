@@ -50,12 +50,12 @@ export default function PostComments (props: IProps): JSX.Element {
           <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
           <p className = 'content'>{comment.content}</p>
           {
-            (comment.author == userState.currentLoggedIn?.id)
+            (comment.author === userState.currentLoggedIn?.id)
               ? (<div className = "button">
-              <Button className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+              <Button data-testid = 'edit' className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
                 <AiFillEdit/>
               </Button>
-              <Button className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+              <Button data-testid = 'delete' className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
                 <AiFillDelete/>
               </Button>
             </div>)
