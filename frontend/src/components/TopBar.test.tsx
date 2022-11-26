@@ -25,10 +25,11 @@ const renderTopBar = (userState: UserState): any => {
 describe('<TopBar/>', () => {
   it('should render without error', () => {
     renderTopBar(stubUserState)
-    const logo = screen.getByText('BridgeUs')
+    const title = screen.getByAltText('BridgeUs')
+    const logo = screen.getByAltText('bridgeUsLogo')
     fireEvent.click(logo)
     // expect(mockNavigate).toHaveBeenCalled()
-    const community = screen.getByText('community')
+    const community = screen.getByAltText('community')
     fireEvent.click(community)
     // expect(mockNavigate).toHaveBeenCalled()
     const search = screen.getByPlaceholderText('Search')

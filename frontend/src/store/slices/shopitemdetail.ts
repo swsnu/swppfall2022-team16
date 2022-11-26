@@ -2,46 +2,46 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 
-/*eslint no-multiple-empty-lines: "error"*/
+/* eslint no-multiple-empty-lines: "error" */
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export interface ShopItemDetailInfo {
-    id: number
-    main_item: number
-    color: string
-    size: string
-    left_amount: number
+  id: number
+  main_item: number
+  color: string
+  size: string
+  left_amount: number
 }
 
 export interface ShopItemDetailState {
-    shopitem_details: ShopItemDetailInfo[]
+  shopitem_details: ShopItemDetailInfo[]
 }
 
-const initialState : ShopItemDetailState = {
-    shopitem_details: []
+const initialState: ShopItemDetailState = {
+  shopitem_details: []
 }
 
 export const fetchDetails = createAsyncThunk(
-    "shopitemdetail/fetchDetails",
-    async (item_id : number) => {
-        const response = await axios.get<ShopItemDetailInfo[]>(`/api/shopitem/${item_id}/shopitemdetail/`)
-        return response.data
-    }
+  'shopitemdetail/fetchDetails',
+  async (item_id: number) => {
+    const response = await axios.get<ShopItemDetailInfo[]>(`/api/shopitem/${item_id}/shopitemdetail/`)
+    return response.data
+  }
 )
 
 export const shopitemDetailSlice = createSlice({
-    name: "shopitemDetail",
-    initialState,
-    reducers:{},
-    extraReducers: (builder) => {
-        builder.addCase(fetchDetails.fulfilled, (state, action) => {
-            state.shopitem_details = action.payload
-        })
-    },
-});
+  name: 'shopitemDetail',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchDetails.fulfilled, (state, action) => {
+      state.shopitem_details = action.payload
+    })
+  }
+})
 
-export const shopitemDetailActions = shopitemDetailSlice.actions;
+export const shopitemDetailActions = shopitemDetailSlice.actions
 
-export default shopitemDetailSlice.reducer;
+export default shopitemDetailSlice.reducer

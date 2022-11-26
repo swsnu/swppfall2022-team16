@@ -8,5 +8,6 @@ describe("<Filter />", () => {
             await waitFor(() => fireEvent.click(dropdown_button));
             await waitFor(() => fireEvent.click(screen.getByText("B")));
             expect(screen.getAllByText("B").length).toEqual(2);
+            await waitFor(() => fireEvent.click(screen.getByText('grades')))
         })
 });

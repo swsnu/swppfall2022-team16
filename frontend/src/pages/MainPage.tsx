@@ -18,6 +18,7 @@ export default function MainPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
   const [tags, setTags] = useState<string[]>([])
+  const [showMoreCount, setShowMoreCount] = useState(4)
 
   useEffect(() => {
     dispatch(fetchMainItems())
@@ -30,7 +31,34 @@ export default function MainPage (): JSX.Element {
     setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
   }
 
-  return (<div className = 'page-container'>
+  const showMoreHandler = ()=>{
+    setShowMoreCount(showMoreCount + 4)
+  }
+
+  return (
+  <div className = 'page-container'>
+     <style type="text/css">
+        {`
+             
+             .btn-showmore {
+              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+              text-align: center;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;       
+              font-weight : bold;     
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+            }
+  
+            .btn-showmore:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #FFE5B4;
+              text-decoration: none;
+            }
+           
+    `}
+      </style>
     <div className = 'contents'>
     <TopBar />
     <div className = 'banner'>
@@ -61,13 +89,24 @@ export default function MainPage (): JSX.Element {
       </Row>
       <Row>
         <div className = 'spacing2'></div>
-        {
-          shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+        <div className = 'shopitems'>
+        <Row>
+          {  showMoreCount == 4 ? 
+          (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
             <br/>
-          </Col>)
+          </Col>).slice(0,4)) : (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
+            <ShopItem key={shopItem.id} shopItem={shopItem} />
+            <br/>
+          </Col>).slice(0,showMoreCount))  
         }
+        </Row>
+        </div>
       </Row>
+      <div className ='showmore'>
+      <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+      </div>
+      <div className = 'spacing2'></div>
       </div>
     </Container>
     <div className = 'spacing'></div>

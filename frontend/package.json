@@ -70,7 +70,8 @@
       "!src/index.tsx",
       "!src/test-utils/*",
       "!src/reportWebVitals.ts",
-      "!src/react-app-env.d.ts"
+      "!src/react-app-env.d.ts",
+      "!src/Constants.ts"
     ]
   }
 }
