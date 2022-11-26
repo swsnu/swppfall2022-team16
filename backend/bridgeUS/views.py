@@ -534,7 +534,6 @@ def trendingposts(request, post_count):
         return_count = Review.objects.all().count()
 
     trending_posts = Review.objects.all().order_by('-likes')
-    print(trending_posts)
 
     return_posts = []
 
