@@ -11,17 +11,26 @@ import { Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { fetchOrders, selectUserOrder } from '../store/slices/userorder'
 import '../css/Footer.css'
+import { fetchRelatedComments, selectComment } from '../store/slices/comment'
+import { selectUser } from '../store/slices/user'
 
 export default function MyPage (): JSX.Element {
   const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
+  const commentState = useSelector(selectComment)
+  const userState = useSelector(selectUser)
 
   const time = new Date()
 
   useEffect(() => {
     dispatch(fetchOrders())
+    dispatch(fetchRelatedComments())
   }, [dispatch])
+
+  const findAuthorName = (ID: number | undefined) => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
   return (<div className = 'page-container'>
     <div className = 'contents'>
@@ -46,41 +55,22 @@ export default function MyPage (): JSX.Element {
                       <Purchased order={userOrder} />
                     </ListGroup.Item>)
               }
-              {/* <ListGroup.Item>
-                <Purchased
-                  itemName='Melange twill shirt'
-                  itemPrice = {209}
-                  shippingStatus = "Shipping"
-                  purchaseDate = "2022/10/27"
-                  />
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Purchased
-                  itemName='BTS orange hoodle'
-                  itemPrice = {59}
-                  shippingStatus = "Complete"
-                  purchaseDate = "2022/10/27"
-                  />
-              </ListGroup.Item> */}
             </ListGroup>
 
             <br/>
             <h1 className="Header-row Header">Community</h1>
             <ListGroup>
-              <ListGroup.Item action>
-                <CommunityAlert
-                  newCommentAuthor='Bethany'
-                  newCommentPostedTime = {time}
-                  newCommentedPostId={1}
-                />
-              </ListGroup.Item>
-              <ListGroup.Item action>
-                <CommunityAlert
-                  newCommentAuthor='Adam'
-                  newCommentPostedTime = {time}
-                  newCommentedPostId={1}
-                />
-              </ListGroup.Item>
+              {
+                commentState.comments.map((comment) => {
+                  return <ListGroup.Item key={comment.id} action>
+                    <CommunityAlert
+                      newCommentAuthor={findAuthorName(comment.author)!}
+                      newCommentPostedTime = {comment.created_at}
+                      newCommentedPostId={comment.review}
+                    />
+                  </ListGroup.Item>
+                })
+              }
             </ListGroup>
           </Col>
         </Row>

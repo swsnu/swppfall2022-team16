@@ -513,7 +513,9 @@ def usercomments(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
-    user_comments = Comment.objects.filter(author=request.user)
+    user_comments = Comment.objects.filter(review__author=request.user)
+
+    print(user_comments)
 
     comment_json_list = [get_comment_json(comment) for comment in user_comments]
 
@@ -573,7 +575,7 @@ def get_review_json(review):
 
 
 def get_comment_json(comment):
-    return {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment.author.id}
+    return {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment.author.id, 'created_at': comment.created_at}
 
 
 def get_userorder_json(userorder):
