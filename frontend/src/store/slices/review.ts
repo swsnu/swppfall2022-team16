@@ -40,7 +40,7 @@ export const fetchReviews = createAsyncThunk(
 )
 
 export const fetchReview = createAsyncThunk(
-    "shopitem/fetchMainItem",
+    "review/fetchReview",
     async (id : number) => {
         const response = await axios.get<ReviewInfo>(`/api/review/${id}/`)
         return response.data
