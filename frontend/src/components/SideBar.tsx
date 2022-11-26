@@ -2,7 +2,6 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Stack from 'react-bootstrap/Stack'
-/*eslint-disable */
 
 export default function SideBar (): JSX.Element {
   return (

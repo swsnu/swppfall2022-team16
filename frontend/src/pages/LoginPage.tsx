@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 import '../css/loginpage.css'
 
 
-/*eslint-disable */
-/*eslint no-multiple-empty-lines: "error"*/
+/* eslint no-multiple-empty-lines: "error" */
 export default function LoginPage (): JSX.Element {
   return (
   <div className = 'page-container'>

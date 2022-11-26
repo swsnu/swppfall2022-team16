@@ -11,7 +11,6 @@ import Footer from '../components/Footer'
 import '../css/Footer.css'
 import '../css/communitypage.css'
 import { fetchTrendingPosts, selectReview } from '../store/slices/review'
-/*eslint-disable */
 
 export default function CommunityPage (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
@@ -48,7 +47,8 @@ export default function CommunityPage (): JSX.Element {
               <div className = 'white'>
 =======
          {
-          reviewState.trending_posts ? reviewState.trending_posts.map((review) => <div>
+          reviewState.trending_posts
+            ? reviewState.trending_posts.map((review) => <div>
               <Row className="Header-row" >
 >>>>>>> fb2111475ca1463b8ee11fd9ecc9997aec2a45e1
                 <Col>
@@ -76,7 +76,8 @@ export default function CommunityPage (): JSX.Element {
                   </Col>
                 </Row>
               </div>
-            </div>) : false
+            </div>)
+            : false
          }
     </div>
     </div>

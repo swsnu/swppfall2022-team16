@@ -11,14 +11,13 @@ import { Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { fetchOrders, selectUserOrder } from '../store/slices/userorder'
 import '../css/Footer.css'
-/*eslint-disable */
 
 export default function MyPage (): JSX.Element {
   const { id } = useParams()
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
 
-  let time = new Date();
+  const time = new Date()
 
   useEffect(() => {
     dispatch(fetchOrders())
@@ -33,11 +32,11 @@ export default function MyPage (): JSX.Element {
           <Col>
             <Card>
               <Card.Img variant="top" src="../mypagebackground.jpg" />
-              <Card.ImgOverlay style={{textAlign: 'center'}}>
+              <Card.ImgOverlay style={{ textAlign: 'center' }}>
                 <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
-                <Card.Title style={{fontSize: '30px', color: 'white'}}>Alice</Card.Title>
+                <Card.Title style={{ fontSize: '30px', color: 'white' }}>Alice</Card.Title>
               </Card.ImgOverlay>
-              <Card.Body style={{textAlign: 'center'}}>
+              <Card.Body style={{ textAlign: 'center' }}>
                 <Button variant="primary">Edit</Button>
               </Card.Body>
             </Card>
@@ -45,11 +44,11 @@ export default function MyPage (): JSX.Element {
             <ListGroup>
               {
                 userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id))
-                  .map((userOrder) => 
+                  .map((userOrder) =>
                     <ListGroup.Item key={userOrder.id}>
                       <Purchased order={userOrder} />
                     </ListGroup.Item>)
-              } 
+              }
               {/* <ListGroup.Item>
                 <Purchased
                   itemName='Melange twill shirt'

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { login } from '../store/slices/user'
-/*eslint-disable */
 
 export default function LoginForm (): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
@@ -12,13 +11,12 @@ export default function LoginForm (): JSX.Element {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
-  const loginbuttonHandler = async () => {
-    const result = await dispatch(login({ username : username, password: password }))
+  const loginbuttonHandler = async (): Promise<void> => {
+    const result = await dispatch(login({ username, password }))
     if (result.type === `${login.typePrefix}/fulfilled`) {
       navigate('/')
-    }
-    else {
-      alert("Email or password is wrong")
+    } else {
+      alert('Email or password is wrong')
     }
   }
 
@@ -63,7 +61,7 @@ export default function LoginForm (): JSX.Element {
         </Form.Group>
         <div className = 'spacebetween'></div>
         <div className = "d-grid gap-2">
-        <Button variant = 'grad' onClick = {() => loginbuttonHandler()}>Login</Button>
+        <Button variant = 'grad' onClick = {() => { loginbuttonHandler() }}>Login</Button>
         </div>
       </Form>
     </div>

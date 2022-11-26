@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from .models import  CustomUser, UserShop, ShopItem, ShopItemDetail, UserOrder, Review, Comment
+from PIL import Image
 
 import json
 
@@ -128,6 +129,10 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 401)
 
+        response = client.get('/api/purchase/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 401)
+
     # test empty data
         response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
@@ -140,7 +145,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 204)
     # add data
-        new_shopitem1 = ShopItem(seller=new_user, name='item1')
+        new_shopitem1 = ShopItem(seller=new_user, name='item1', price= 100)
         new_shopitem1.save()
 
         new_shopitem2 = ShopItem(seller=new_user, name='item2')
@@ -149,14 +154,23 @@ class BlogTestCase(TestCase):
         new_shopitem3 = ShopItem(seller=new_user2, name='itme3')
         new_shopitem3.save()
 
-        new_review = Review(title='I Love SWPP!',review_item=new_shopitem1 ,content='Believe it or not', author=new_user)
+        new_review = Review(title='I Love SWPP!',review_item=new_shopitem1 ,content='Believe it or not', author=new_user, rating=3)
         new_review.save()
         
-        new_review2 = Review(title='I Love SWPP!2',review_item=new_shopitem2, content='Believe it or not2', author=new_user2)
+        new_review2 = Review(title='I Love SWPP!2',review_item=new_shopitem2, content='Believe it or not2', author=new_user2, rating=1)
         new_review2.save()
         
-        new_review3 = Review(title='I Love SWPP!3',review_item=new_shopitem3, content='Believe it or not3', author=new_user)
+        new_review3 = Review(title='I Love SWPP!3',review_item=new_shopitem3, content='Believe it or not3', author=new_user, rating=4)
         new_review3.save()
+
+        new_review4 = Review(title='I Love SWPP!4',review_item=new_shopitem1, content='Believe it or not3', author=new_user, rating=2)
+        new_review4.save()
+
+        new_review5 = Review(title='I Love SWPP!5',review_item=new_shopitem2, content='Believe it or not3', author=new_user, rating=5)
+        new_review5.save()
+
+        new_review6 = Review(title='I Love SWPP!6',review_item=new_shopitem3, content='Believe it or not3', author=new_user, rating=3)
+        new_review6.save()
 
         response = client.get('/api/review/1/comment/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
@@ -177,6 +191,11 @@ class BlogTestCase(TestCase):
 
         new_shopitemdetail2 = ShopItemDetail(main_item=new_shopitem2)
         new_shopitemdetail2.save()
+
+    # test recommend
+        response = client.get('/api/recommend/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
 
     # test not author
         response = client.post('/api/signin/', json.dumps({'username': 'chris', 'password': 'chris'}),
@@ -339,9 +358,12 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        response = client.post('/api/review/', json.dumps({'title' : "test", 'content' : "test"}),
-            content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+        test_file = Image.new('RGB',(100, 100))
+        
+        data = {'title' : "test", 'content' : "test", 'image': test_file, 'review_item' : 1}
 
+        response = client.post('/api/review/', data, HTTP_X_CSRFTOKEN=csrftoken)
+        
         self.assertEqual(response.status_code, 201)
 
         new_review4 = Review.objects.get(id=4)
@@ -366,7 +388,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-        response = client.put('/api/review/4/', json.dumps({'title' : "test4", 'content' : "test4"}),
+        response = client.put('/api/review/7/', json.dumps({'title' : "test4", 'content' : "test4"}),
             content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)
@@ -375,7 +397,7 @@ class BlogTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        response = client.delete('/api/review/4/', HTTP_X_CSRFTOKEN=csrftoken)
+        response = client.delete('/api/review/7/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)
 
@@ -435,5 +457,73 @@ class BlogTestCase(TestCase):
         response = client.delete('/api/comment/3/', HTTP_X_CSRFTOKEN=csrftoken)
 
         self.assertEqual(response.status_code, 200)    
+
+    # test recommmned function
+        response = client.post('/api/recommend/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/recommend/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+    # test user comments
+        response = client.post('/api/usercomments/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/usercomments/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)
+
+    # test trending posts
+        response = client.post('/api/trendingposts/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/trendingposts/1/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)        
+
+        response = client.get('/api/trendingposts/100/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)   
+    # test purchase
+        response = client.post('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+
+        test_user = CustomUser.objects.get(id=3)
+        
+        test_usershop = UserShop.objects.get(user=test_user)
+
+        test_usershop.credit = 0
+        new_userorder = UserOrder(user=test_user, ordered_item=new_shopitem1, order_status=0, ordered_amount=10)
+        
+        new_userorder.save()
+        
+        test_usershop.save()
+
+        response = client.get('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)        
+
+        test_usershop.credit = 100000
+        
+        test_usershop.save()
+
+        response = client.get('/api/purchase/', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 200)           
+    # test search
+        response = client.get('/api/search/', content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
+
+        self.assertEqual(response.status_code, 405)
+        
+        data = json.dumps({'text' : "test", 'tags' : "test"})
+
+        response = client.post('/api/search/', data, content_type='application/json',HTTP_X_CSRFTOKEN=csrftoken)
+        
+        self.assertEqual(response.status_code, 200)
         pass
 
