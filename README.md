@@ -40,3 +40,23 @@ $ coverage run --source='./bridgeUS' manage.py test
 $ cd frontend
 $ yarn test --coverage --watchAll=false
 ```
+
+
+### deploy - backend
+
+```
+docker run --rm -it \
+    --ipc=host \
+    --name "practice11" \
+    -v ${PWD}:/home \
+    snuspl/swpp:practice11 \
+/bin/bash
+
+sudo docker build -t backend .
+
+sudo docker run  -d --rm  --name "backend" -p 8000:8000  backend:latest
+
+sudo docker build -t frontend .
+
+sudo docker run -d -p 3000:3000 --rm --name “frontend” frontend:latest
+```
