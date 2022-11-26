@@ -12,7 +12,7 @@ export interface UserOrderInfo {
   id: number
   user_id: number
   item_id: number
-  single_price: number | undefined
+  single_price: number 
   status: number
   color: string
   size: string
