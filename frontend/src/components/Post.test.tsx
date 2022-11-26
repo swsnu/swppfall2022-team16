@@ -3,6 +3,7 @@ import Post from "./Post";
 import { renderWithProviders, stubReviewState, stubShopItemState, stubUserState } from '../test-utils/mock';
 import { UserState } from "../store/slices/user";
 import { ShopItemState } from "../store/slices/shopitem";
+import { ReviewState } from "../store/slices/review";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
