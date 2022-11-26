@@ -134,7 +134,7 @@ export default function PaymentPage (): JSX.Element {
               <hr></hr>
               <h3>Total Receipt</h3>
               <div className = 'spacing2'></div>
-              <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {400}/>
+              <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {userShopState ? (userShopState.usershop ? userShopState.usershop.credit : 0) : 0}/>
               <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
             </Stack>
         </Col>

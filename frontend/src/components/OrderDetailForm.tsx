@@ -26,8 +26,8 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const userState = useSelector(selectUser)
   const [color, setColor] = useState<string>(props.colors[0])
-  const [quantity, setQuantity] = useState<string>('')
-  const [size, setSize] = useState<string>('')
+  const [quantity, setQuantity] = useState<string>(1)
+  const [size, setSize] = useState<string>('S')
 
   const rating = props.rating ?? 0
 
