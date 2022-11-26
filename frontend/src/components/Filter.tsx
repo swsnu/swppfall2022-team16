@@ -9,7 +9,7 @@ export interface theFilter {
 }
 
 export const filters = [
-  { category: 'artist', options: ['aespa', 'BTS'] },
+  { category: 'artist', options: ['aespa', 'BTS', '(g)i-dle', 'stray kids', 'blackpink', 'itzy', 'newjeans'] },
   { category: 'color', options: ['red', 'blue', 'black', 'white'] },
   { category: 'size', options: ['S', 'M', 'L', 'XL'] }
 ]

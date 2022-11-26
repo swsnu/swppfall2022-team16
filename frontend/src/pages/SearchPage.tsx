@@ -25,7 +25,7 @@ export default function SearchPage (): JSX.Element {
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchTopResult({ text, tags: [] }))
-    dispatch(fetchRecommendation(userState.currentLoggedIn?.id))
+    dispatch(fetchRecommendation(8))
   }, [dispatch])
   
 
@@ -35,7 +35,7 @@ export default function SearchPage (): JSX.Element {
   const tagHandler = (remove: string, add: string) => {
     console.log('Remove:' + remove)
     console.log('Add:' + add)
-    setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+    setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
   }
 
   return (<div className = 'page-container'>
