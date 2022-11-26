@@ -29,7 +29,7 @@ export default function ProductPage (): JSX.Element {
 
     })
   }, [dispatch])
-  
+
   const item = shopItemState.current_shopitem
   const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
@@ -54,10 +54,10 @@ export default function ProductPage (): JSX.Element {
                 itemID={item?.id}
                 itemName={item?.name}
                 sellerName={findAuthorName(item?.seller)}
-                colors={[]}
                 quantity = {10}
                 price = {item?.price}
                 recommendedSize = 'M'
+                colors = {['White', 'Black', 'Red']}
               />
         </Col>
       </Row>
