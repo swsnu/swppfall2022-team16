@@ -7,12 +7,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import '../css/mainpage.css'
+import userorder, { selectUserOrder } from '../store/slices/userorder'
+
 
 export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
   const [searchText, setSearchText] = useState('')
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
+  const userOrderState = useSelector(selectUserOrder)
 
   useEffect(() => {
     if (userState.currentLoggedIn != null) {
@@ -20,6 +23,9 @@ export default function TopBar (): JSX.Element {
     } else setloggedIn(false)
   })
 
+  
+
+  const items = userOrderState.cart
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
   const userName = userState.currentLoggedIn?.nickname
@@ -33,7 +39,6 @@ export default function TopBar (): JSX.Element {
     <>
      <style type="text/css">
         {`
-             
              .btn-grad {
               background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
               text-align: center;
@@ -50,8 +55,7 @@ export default function TopBar (): JSX.Element {
               background-position: right center; /* change the direction of the change here */
               color: #FFE5B4;
               text-decoration: none;
-            }
-           
+            }  
     `}
       </style>
     <Navbar sticky = "top" bg="light" variant="light">
@@ -87,6 +91,7 @@ export default function TopBar (): JSX.Element {
             
             <Stack direction = 'horizontal'>
               <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
+              {0}
               <div className = 'spacing3'></div>
               </Stack>
           {

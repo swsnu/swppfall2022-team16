@@ -45,7 +45,7 @@ export default function PaymentPage (): JSX.Element {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
 
-  const buyWithMyCreditHandler = () => {
+  const buyWithMyCreditHandler = async() => {
     const result = await dispatch(purchaseWithCredit())
     if (result.type === `${purchaseWithCredit.typePrefix}/fulfilled`) {
       navigate('/user/8')
