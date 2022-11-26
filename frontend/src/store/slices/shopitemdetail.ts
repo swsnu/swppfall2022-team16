@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { RootState } from '..'
 
 
 /* eslint no-multiple-empty-lines: "error" */
@@ -44,4 +45,6 @@ export const shopitemDetailSlice = createSlice({
 
 export const shopitemDetailActions = shopitemDetailSlice.actions
 
-export default shopitemDetailSlice.reducer
+export const shopitemDetailActions = shopitemDetailSlice.actions;
+export const selectShopItemDetail = (state: RootState) => state.shopitemdetail;
+export default shopitemDetailSlice.reducer;
