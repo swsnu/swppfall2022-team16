@@ -12,6 +12,11 @@
     margin-top : 10px;
 }
 
+.communityPosts {
+    width : 100vw;
+    height : auto;
+    background-color: white;
+}
 .showmore {
     text-align: center;
 }

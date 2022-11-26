@@ -5,8 +5,8 @@ export interface IProps {
   imageURL: string | undefined
   itemName: string | undefined
   sellerName: string | undefined
-  color: string
-  size: string
+  color: string | undefined
+  size: string | undefined
   quantity: number
 }
 

@@ -36,9 +36,6 @@ export default function MyPage (): JSX.Element {
                 <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
                 <Card.Title style={{ fontSize: '30px', color: 'white' }}>Alice</Card.Title>
               </Card.ImgOverlay>
-              <Card.Body style={{ textAlign: 'center' }}>
-                <Button variant="primary">Edit</Button>
-              </Card.Body>
             </Card>
             <h1 className="Header-row  Header">Purchased</h1>
             <ListGroup>

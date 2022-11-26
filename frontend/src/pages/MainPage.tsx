@@ -10,6 +10,8 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { fetchUsers } from '../store/slices/user'
 import { AiOutlineFilter } from 'react-icons/ai'
+import { selectReview } from '../store/slices/review'
+import Post from '../components/Post'
 import '../css/mainpage.css'
 import '../css/Footer.css'
 import '../css/Banner.css'
@@ -19,6 +21,8 @@ export default function MainPage (): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
   const [tags, setTags] = useState<string[]>([])
   const [showMoreCount, setShowMoreCount] = useState(4)
+  const reviewState = useSelector(selectReview)
+
 
   useEffect(() => {
     dispatch(fetchMainItems())
@@ -115,6 +119,30 @@ export default function MainPage (): JSX.Element {
         <img src = '/communitybanner.png' width = '100%'></img>
       </a>
     </div>
+    </div>
+    <div className = 'communityPosts'>
+    <Container>
+      <div className = 'spacing'></div>
+      <div className = 'secondpage'>
+      <Row className="Header-row">
+        <Col md={3}>
+          <Stack direction = 'horizontal' gap = {1}>
+            <h3 id = 'Trending'>Top Posts</h3>
+            <img src = '/trending-1.png' width = '25' height = '30'></img>
+          </Stack>
+        </Col>
+      </Row>
+      <div className = 'spacing2'></div>
+      <Row>
+      { reviewState.trending_posts.map((review) => <Col key={review.id}>
+          <Post id = {review.id} />
+          <br/>
+        </Col>).slice(0,4)
+        }
+      </Row>
+      <div className = 'spacing2'></div>
+      </div>
+    </Container>
     </div>
     </div>
     <Footer/>
