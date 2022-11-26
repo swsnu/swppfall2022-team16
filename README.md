@@ -56,7 +56,7 @@ source newenv/bin/activate
 
 sudo docker build -t backend .
 
-sudo docker run  -d --rm  --name "backend" -p 8000:8000  backend:latest
+sudo docker run -d -p 8000:8000 --rm  --name "backend" backend:latest
 
 sudo docker build -t frontend .
 
