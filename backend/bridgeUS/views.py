@@ -497,7 +497,7 @@ def purchase(request):
         needed_credit += pre_order.ordered_item.price * pre_order.ordered_amount
 
     if needed_credit > user_credit:
-        return JsonResponse({'message': 'not enough credit'}, status=200)
+        return JsonResponse({'message': 'not enough credit'}, status=400)
 
     user_credit -= needed_credit
 
@@ -540,6 +540,30 @@ def trendingposts(request, post_count):
     post_json_list = [get_review_json(review) for review in return_posts]
 
     return JsonResponse(post_json_list, safe=False, status=200)
+
+@ensure_csrf_cookie
+def addlikes(request, post_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    customUser = CustomUser.objects.get(id=request.user.id)
+
+    if customUser.liked_posts.__contains__(post_id):
+        return HttpResponse(status=400)
+
+    customUser.liked_posts.append(post_id)
+
+    customUser.save()
+
+    post = Review.objects.get(id=post_id)
+
+    post.likes = post.likes + 1
+
+    post.save()
+
 
 
 def get_review_json(review):

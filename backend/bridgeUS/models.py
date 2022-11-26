@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField  
 from taggit.managers import TaggableManager
 
 
@@ -8,6 +9,7 @@ class CustomUser(AbstractUser):
     height = models.IntegerField(null=True)
     weight = models.IntegerField(null=True)
     gender = models.TextField(null=True)
+    liked_posts = ArrayField(models.IntegerField(null=True), blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -21,5 +21,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('recommend/<int:recommend_count>/', views.recommend_clothes, name='recommend'),
     path('usercomments/', views.usercomments, name='usercomments'),
-    path('trendingposts/<int:post_count>/', views.trendingposts, name='trendingposts')
+    path('trendingposts/<int:post_count>/', views.trendingposts, name='trendingposts'),
+    path('addlikes/', views.addlikes, name='addlikes')
 ]
