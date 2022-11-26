@@ -85,6 +85,7 @@ export default function PaymentPage (): JSX.Element {
           <h1 className="Header">Checkout Your Order</h1>
         </Col>
       </Row>
+
       <Row className="Header-row">
         <Col>
           <Stack>
@@ -100,7 +101,10 @@ export default function PaymentPage (): JSX.Element {
                 /> 
                 ) 
             }
-            <Container fluid>
+          </Stack>
+        </Col>
+        <Col>
+          <Container fluid>
               <Row className='Header-row'>
                 <Col>
                   <Card style={{ width: '18rem' }} border={shippingOption === 'Fast' ? 'primary' : ''} onClick={() => setShippingOption('Fast')} data-testid='fast'>
@@ -124,13 +128,15 @@ export default function PaymentPage (): JSX.Element {
             </Container>
             <br/>
             <ShippingForm />
-          </Stack>
-        </Col>
-        <Col>
-          <Stack>
-            <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {400}/>
-            <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
-          </Stack>
+            <div className = 'spacing2'></div>
+            <br/>
+            <Stack>
+              <hr></hr>
+              <h3>Total Receipt</h3>
+              <div className = 'spacing2'></div>
+              <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {400}/>
+              <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
+            </Stack>
         </Col>
       </Row>
     </Container>

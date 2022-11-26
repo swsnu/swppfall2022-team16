@@ -33,7 +33,7 @@ export default function MainPage (): JSX.Element {
   const tagHandler = (remove: string, add: string) => {
     console.log('Remove:' + remove)
     console.log('Add:' + add)
-    setTags(tags.filter((val) => val !== remove).concat(add).filter((val) => val !== ''))
+    setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
   }
 
   const showMoreHandler = ()=>{
