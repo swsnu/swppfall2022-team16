@@ -35,22 +35,10 @@ export default function CommunityPage (): JSX.Element {
          <div className = 'theheader'>
           Community
          </div>
-<<<<<<< HEAD
-         <hr></hr>
-        <Row className="Header-row" >
-          <Col>
-            <h4 id = 'title'>Karina</h4>
-          </Col>
-        </Row>
-        <div className = 'postsection'>
-          <Row md={4}>
-              <div className = 'white'>
-=======
          {
           reviewState.trending_posts
             ? reviewState.trending_posts.map((review) => <div>
               <Row className="Header-row" >
->>>>>>> fb2111475ca1463b8ee11fd9ecc9997aec2a45e1
                 <Col>
                   <h4 id = 'title'>Karina</h4>
                 </Col>

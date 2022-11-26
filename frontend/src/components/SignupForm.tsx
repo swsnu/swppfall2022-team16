@@ -33,27 +33,8 @@ export default function SignupForm (): JSX.Element {
   const handleSignUpFormSubmit = () => {
     alertMessage = 'You must correct:\n\n'
 
-<<<<<<< HEAD
-    let nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null) ? true : false;
-    if(!nameValid)
-      alertMessage = alertMessage + "Name\n";
-  
-    let emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null) ? true : false;
-    if(!emailValid)
-      alertMessage = alertMessage + "Email\n";
- 
-    let heightValid = (height.match(/^[0-9]{3}$/) !== null) ? true : false;
-    if(!heightValid)
-      alertMessage = alertMessage + "Height\n";
-
-    let weightValid = (weight.match(/^[0-9]{2,3}$/) !== null) ? true : false;
-    if(!weightValid)
-      alertMessage = alertMessage + "Weight\n";
-  
-    return (nameValid && emailValid && heightValid && weightValid)
-=======
-    const NameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
-    if (!NameValid) { alertMessage = alertMessage + 'Name\n' }
+    const nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
+    if (!nameValid) { alertMessage = alertMessage + 'Name\n' }
 
     const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
     if (!emailValid) { alertMessage = alertMessage + 'Email\n' }
@@ -64,8 +45,7 @@ export default function SignupForm (): JSX.Element {
     const weightValid = (weight.match(/^[0-9]{2,3}$/) !== null)
     if (!weightValid) { alertMessage = alertMessage + 'Weight\n' }
 
-    return (NameValid && emailValid && heightValid && weightValid)
->>>>>>> 0074544a31ffad41c745a9eeff905c6b4c65f8f5
+    return (nameValid && emailValid && heightValid && weightValid)
   }
 
   return (
