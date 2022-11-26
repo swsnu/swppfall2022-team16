@@ -90,7 +90,7 @@ export default function MainPage (): JSX.Element {
       <Row>
         <div className = 'spacing2'></div>
         <div className = 'shopitems'>
-        <Row>
+        <Row md={4}>
           {  showMoreCount == 4 ? 
           (shopItemState.shopitems.map((shopItem) => <Col key={shopItem.id}>
             <ShopItem key={shopItem.id} shopItem={shopItem} />
