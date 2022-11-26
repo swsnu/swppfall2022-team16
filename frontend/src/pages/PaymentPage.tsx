@@ -12,7 +12,7 @@ import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
-import { fetchUserShop } from '../store/slices/usershop'
+import { fetchCart, selectUserOrder } from '../store/slices/userorder'
 
 export default function PaymentPage (): JSX.Element {
   const { id } = useParams()
@@ -22,13 +22,15 @@ export default function PaymentPage (): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
   const shopItemDetailState = useSelector(selectShopItemDetail)
+  const userOrderState = useSelector(selectUserOrder)
 
   useEffect(() => {
     dispatch(fetchMainItems())
     dispatch(fetchUsers())
-    dispatch(fetchUserShop())
+    dispatch(fetchCart())
   }, [dispatch])
 
+  const items = userOrderState.cart
   const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
   // for each item, itemDetail exists. Retrieve shopitemdetail through item id to get color and size of the product
   const itemDetail = shopItemDetailState.shopitem_details.find((shopitemdetail) => shopitemdetail.main_item === Number(id))
@@ -69,14 +71,16 @@ export default function PaymentPage (): JSX.Element {
       <Row className="Header-row">
         <Col>
           <Stack>
-            <OrderForm
-              imageURL={item?.image_url}
-              itemName={item?.name}
-              sellerName={findAuthorName(item?.seller)}
-              color= {itemDetail?.color}
-              size= {itemDetail?.size}
-              quantity = {1}
-            />
+            {
+              items.map((userorder) =>
+                <OrderForm
+                  key={userorder.id}
+                  itemID={userorder.item_id}
+                  color={userorder.color}
+                  size={userorder.size}
+                  quantity={userorder.ordered_amount}
+                />)
+            }
             <Container fluid>
               <Row className='Header-row'>
                 <Col>
