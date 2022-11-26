@@ -97,20 +97,19 @@ export const reviewSlice = createSlice({
       state.current_review = action.payload
     },
     deleteReview: (state, action: PayloadAction<{ targetId: Number }>) => {
-      const review = state.reviews.find(
-        (value) => { return value.id === action.payload.targetId }
-      )
-      
-      if (review !== undefined){
-          review.likes++
-      }
-    },
-    likePost: (state, action: PayloadAction<{ targetId: Number }>) => {
       state.reviews = state.reviews.filter(
         (value) => { return value.id !== action.payload.targetId }
       )
 
       state.current_review = null
+    },
+    likePost: (state, action: PayloadAction<{ targetId: Number }>) => {
+      const review = state.reviews.find(
+        (value) => { return value.id === action.payload.targetId }
+      )
+      
+      if (review !== undefined)
+          review.likes++
     }
   },
   extraReducers: (builder) => {
