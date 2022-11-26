@@ -462,9 +462,6 @@ def search(request):
     text = json.loads(body)['text']
     tags = json.loads(body)['tags']
 
-    print(f"text: ${text}")
-    print(f"tags: ${tags}")
-
     matched_items = ShopItem.objects
 
     if text is not None and text != "":
