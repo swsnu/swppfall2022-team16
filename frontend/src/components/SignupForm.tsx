@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react'
 import { Button, Form, Stack } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
@@ -19,7 +20,7 @@ export default function SignupForm (): JSX.Element {
 
   let alertMessage = ''
 
-  const signupbuttonHandler = async () => {
+  const signupbuttonHandler = async (): Promise<void> => {
     if (handleSignUpFormSubmit()) {
       const result = await dispatch(signup({ username: email, password, nickname: name, height: Number(height), weight: Number(weight), gender }))
       if (result.type === `${signup.typePrefix}/fulfilled`) {
@@ -30,19 +31,30 @@ export default function SignupForm (): JSX.Element {
     }
   }
 
-  const handleSignUpFormSubmit = () => {
+  const handleSignUpFormSubmit = (): boolean => {
     alertMessage = 'You must correct:\n\n'
 
     const nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
-    if (!nameValid) { alertMessage = alertMessage + 'Name\n' }
+
+    if (!nameValid) {
+      alertMessage = alertMessage + 'Name\n'
+    }
+
     const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
-    if (!emailValid) { alertMessage = alertMessage + 'Email\n' }
-    // @englisn.twoorthree
+    if (!emailValid) {
+      alertMessage = alertMessage + 'Email\n'
+    }
+
     const heightValid = (height.match(/^[0-9]{3}$/) !== null)
-    if (!heightValid) { alertMessage = alertMessage + 'Height\n' }
-    //number 3
+    if (!heightValid) {
+      alertMessage = alertMessage + 'Height\n'
+    }
+
     const weightValid = (weight.match(/^[0-9]{2,3}$/) !== null)
-    if (!weightValid) { alertMessage = alertMessage + 'Weight\n' }
+    if (!weightValid) {
+      alertMessage = alertMessage + 'Weight\n'
+    }
+
     return (nameValid && emailValid && heightValid && weightValid)
   }
 

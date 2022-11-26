@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
-import { postReview, selectReview } from '../store/slices/review'
+import { postReview } from '../store/slices/review'
 
 export interface IProps {
   shopItemId: number
@@ -22,9 +24,9 @@ export default function ReviewForm (props: IProps): JSX.Element {
 
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-  const reviewState = useSelector(selectReview)
+  // const reviewState = useSelector(selectReview)
 
-  const postReviewButtonHandler = async () => {
+  const postReviewButtonHandler = async (): Promise<void> => {
     console.log(title, description, props.shopItemId, rating)
     console.log(selectedImage)
     const formData = new FormData()
@@ -32,6 +34,7 @@ export default function ReviewForm (props: IProps): JSX.Element {
     formData.append('content', description)
     formData.append('review_item', props.shopItemId.toString())
     formData.append('rating', rating.toString())
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     formData.append('image', selectedImage!)
 
     const result = unwrapResult(await dispatch(postReview(formData)))

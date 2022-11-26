@@ -17,13 +17,6 @@ export interface OrderDetailProps {
 export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const navigate = useNavigate()
 
-  const quantityOptions = () => {
-    let i
-    for(i = 0; i < props.quantity; i++){
-      
-    }
-  }
-
   return (
     <Card style={{ width: '36rem' }}>
       <Card.Body>
@@ -39,7 +32,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               <span key={index}>
               <option>{color}</option>
               </span>
-            ))} 
+            ))}
           </Form.Select>
           <Stack direction = "horizontal" gap = {5}>
             <Form.Select aria-label = "Quantity">

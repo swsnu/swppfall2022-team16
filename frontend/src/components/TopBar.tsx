@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Nav, Stack } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
@@ -21,12 +22,17 @@ export default function TopBar (): JSX.Element {
   })
 
   const userId = userState.currentLoggedIn?.id
-  const path = '/user/' + userId
+  const path = '/user/' + String(userId)
   const userName = userState.currentLoggedIn?.nickname
   const dispatch = useDispatch<AppDispatch>()
-  const loggingout = async () => {
+  const loggingout = async (): Promise<void> => {
     setloggedIn(false)
-    dispatch(signout())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(signout())
+    }
+    fetchRequired().catch(() => {
+
+    })
     navigate('/')
   }
   return (

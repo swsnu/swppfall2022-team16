@@ -7,7 +7,7 @@ import { AppDispatch } from '../store'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { AiFillLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItems } from '../store/slices/shopitem'
 
 export interface IProps {
   id: number
@@ -19,21 +19,25 @@ export default function Post (props: IProps): JSX.Element {
   const navigate = useNavigate()
   const reviewState = useSelector(selectReview)
   const userState = useSelector(selectUser)
-  const itemState = useSelector(selectShopItem)
   const [numLike, setNumLike] = useState(1000) // have to get info from DB
 
   useEffect(() => {
-    dispatch(fetchReviews()).then(() => {
-      setNumLike(review.likes)
-    })
-    dispatch(fetchMainItems())
-    dispatch(fetchUsers())
-  }, [dispatch])
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchReviews()).then(() => {
+        setNumLike(review.likes)
+      })
+      await dispatch(fetchMainItems())
+      await dispatch(fetchUsers())
+    }
+    fetchRequired().catch(() => {
 
+    })
+  }, [dispatch])
   const likeButtonHandler = (): void => { setNumLike(numLike + 1) } // axios command necessary
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const review = reviewState.reviews.find((review) => review.id === props.id)!
 
-  const findAuthorName = (ID: number | undefined) => {
+  const findAuthorName = (ID: number | undefined): string | undefined => {
     return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
   }
   // console.debug(props.id)
