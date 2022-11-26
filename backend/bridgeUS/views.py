@@ -571,7 +571,7 @@ def get_shopitemdetail_json(detail):
 def get_shopitem_json(shopitem):
     return {'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '', 'name': shopitem.name,
             'seller': shopitem.seller.id, 'price': shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type,
-            'tags': list(shopitem.tags.names().values())}
+            'tags': list(shopitem.tags.names())}
 
 
 def get_user_json(user):

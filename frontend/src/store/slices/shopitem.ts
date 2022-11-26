@@ -17,6 +17,7 @@ export interface ShopItemInfo {
   rating: number
   star: number
   type: string
+  tags: string[]
 }
 
 export interface ShopItemState {

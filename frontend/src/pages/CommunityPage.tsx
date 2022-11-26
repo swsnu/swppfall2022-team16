@@ -36,10 +36,12 @@ export default function CommunityPage (): JSX.Element {
         Community
         </div>
         {
-          reviewState.trending_posts.map((review) => <div key={review.id}>
+          reviewState.trending_posts.map((review, idx) => {
+            const shopitem = shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!
+            return <div key={review.id}>
               <Row className="Header-row" >
                 <Col>
-                  <h4 id = 'title'>Karina</h4>
+                  <h4 id = 'title'>{`Top ${idx + 1} : ${shopitem.tags.join(', ')}`}</h4>
                 </Col>
               </Row>
               <div className = 'postsection'>
@@ -47,7 +49,7 @@ export default function CommunityPage (): JSX.Element {
                     <div className = 'white'>
                       <Col>
                         {
-                          <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === review.review_item)!} />
+                          <ShopItem shopItem={shopitem} />
                         }
                       </Col>
                     </div>
@@ -62,7 +64,8 @@ export default function CommunityPage (): JSX.Element {
                   </Col>
                 </Row>
               </div>
-            </div>)
+            </div>
+          })
         }
     </div>
     </div>
