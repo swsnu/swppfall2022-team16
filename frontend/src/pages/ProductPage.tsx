@@ -5,12 +5,12 @@ import OrderDetailForm from '../components/OrderDetailForm'
 import Review from '../components/Review'
 import TopBar from '../components/TopBar'
 import { AppDispatch } from '../store'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItem, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
-/*eslint-disable */
+import '../css/Footer.css'
 
 export default function ProductPage (): JSX.Element {
   const { id } = useParams()
@@ -20,19 +20,25 @@ export default function ProductPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchReviews())
-    dispatch(fetchUsers())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItem(Number(id)))
+      await dispatch(fetchReviews())
+      await dispatch(fetchUsers())
+    }
+    fetchRequired().catch(() => {
+
+    })
   }, [dispatch])
 
-  const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
+  const item = shopItemState.current_shopitem
   const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
-  const findAuthorName = (ID : number | undefined) => {
-    return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-};
+  const findAuthorName = (ID: number | undefined): string | undefined => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <Container>
       <Row className="Header-row">
@@ -40,17 +46,18 @@ export default function ProductPage (): JSX.Element {
           <Stack>
             <h1 className="Header">{item?.name}</h1>
             <h3>{findAuthorName(item?.seller)}</h3>
-            <Image rounded style={{width: '24rem', height: '32rem'}} src={item?.image_url} />
+            <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
           </Stack>
         </Col>
-        <Col style={{paddingTop: '144px'}}>
-          <OrderDetailForm 
+        <Col style={{ paddingTop: '144px' }}>
+          <OrderDetailForm
                 itemID={item?.id}
                 itemName={item?.name}
                 sellerName={findAuthorName(item?.seller)}
                 quantity = {10}
                 price = {item?.price}
                 recommendedSize = 'M'
+                colors = {['White', 'Black', 'Red']}
               />
         </Col>
       </Row>
@@ -61,11 +68,13 @@ export default function ProductPage (): JSX.Element {
       </Row>
       <Row md={4}>
         {
-          reviews.length > 0 ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
+          reviews.length > 0
+            ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
             : <Col>No reviews yet.</Col>
         }
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

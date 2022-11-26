@@ -1,3 +1,38 @@
 .mainpage{
     background-color: #ececec;
 }
+
+.recommend {
+    background-color: #ececec;
+}
+
+#Trending {
+    font-family : copperplate;
+    font-weight : bold;
+    margin-top : 10px;
+}
+
+.showmore {
+    text-align: center;
+}
+
+.spacing {
+    height : 50px;
+}
+
+.spacing2 {
+    height : 20px;
+}
+
+.spacing3 {
+    width : 10px;
+}
+
+.community {
+    position : relative;
+    width : 100vw;
+}
+
+.communitylogo {
+    margin-top : 2px
+}

@@ -15,7 +15,8 @@ describe('review reducer', () => {
   it('should use correct initial state', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual({
       reviews: [],
-      current_review: null
+      current_review: null,
+      trending_posts: [],
     })
   })
   it('should handle fetchReviews', async () => {
@@ -30,12 +31,12 @@ describe('review reducer', () => {
     axios.post = jest.fn().mockResolvedValueOnce({
       data: review
     })
-    await store.dispatch(postReview({
-      title: 'title',
-      content: 'content1',
-      review_item: 1,
-      rating: 1
-    }))
+    const formData = new FormData()
+    formData.append('title', 'title')
+    formData.append('content', 'content1')
+    formData.append('review_item', "1")
+    formData.append('rating', "1")
+    await store.dispatch(postReview(formData))
   })
   it('should handle putReview', async () => {
     store = getMockStore({ review: stubReviewState })

@@ -4,7 +4,7 @@ import { render, RenderOptions } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { AppStore, RootState } from '../store'
 import userReducer, { UserState } from '../store/slices/user'
-import userShopReducer from '../store/slices/usershop'
+import userShopReducer, { UserShopState } from '../store/slices/usershop'
 import shopitemReducer, { ShopItemState } from '../store/slices/shopitem'
 import shopitemDetailReducer, { ShopItemDetailState } from '../store/slices/shopitemdetail'
 import reviewReducer, { ReviewState } from '../store/slices/review'
@@ -39,12 +39,14 @@ export const stubShopItemState: ShopItemState = {
     { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
     { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
   ],
+  top_results: [],
+  recommendations: [],
   current_shopitem: null
 }
 
 export const stubUserOrderState: UserOrderState = {
   userOrders: [
-    { id: 1, user_id: 1, item_id: 1, status: 'shipping' }
+    { id: 1, user_id: 1, item_id: 1, status: 'shipping', color: 'red', size: 'S', ordered_amount: 1, purchased_at: new Date(), fast_shipping : true}
   ]
 }
 
@@ -53,12 +55,17 @@ export const stubReviewState: ReviewState = {
     { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' },
     { id: 2, title: 'title2', content: 'content2', author: 1, review_item: 1, rating: 4, likes: 1, image_url: 'url' }
   ],
-  current_review: null
+  current_review: null,
+  trending_posts: [
+    { id: 1, title: 'title', content: 'content', author: 1, review_item: 1, rating: 1, likes: 1, image_url: 'url' },
+    { id: 2, title: 'title2', content: 'content2', author: 1, review_item: 1, rating: 4, likes: 1, image_url: 'url' }
+  ]
 }
 
 export const stubNoReviewState: ReviewState = {
   reviews: [],
-  current_review: null
+  current_review: null,
+  trending_posts: []
 }
 
 export const stubUserState: UserState = {
@@ -93,6 +100,17 @@ export const stubShopItemDetailState: ShopItemDetailState = {
     { id: 2, main_item: 2, color: 'red', size: 'S', left_amount: 1 },
     { id: 3, main_item: 3, color: 'red', size: 'S', left_amount: 1 }
   ]
+}
+
+export const stubUserShopState: UserShopState = {
+  usershop: {
+    id: 1,
+    user_id: 1,
+    credit: 100,
+    cart: '',
+    favorite_clothes: '',
+    purchased_item: ''
+  }
 }
 
 // const persistedReducer = persistReducer(persistConfig, getMockStore)

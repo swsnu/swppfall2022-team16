@@ -1,6 +1,9 @@
 import { fireEvent, render, screen, waitFor} from "@testing-library/react";
 import Post from "./Post";
-import { renderWithProviders } from '../test-utils/mock';
+import { renderWithProviders, stubReviewState, stubShopItemState, stubUserState } from '../test-utils/mock';
+import { UserState } from "../store/slices/user";
+import { ShopItemState } from "../store/slices/shopitem";
+import { ReviewState } from "../store/slices/review";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -13,13 +16,21 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
+const renderPost = (reviewState: ReviewState, userState: UserState, itemState: ShopItemState) => {
+  renderWithProviders(
+    <Post id = {1}/>, { preloadedState: { review: reviewState, user: userState, shopitem: itemState }}
+  )
+}
+
+
 describe("<Post />", () => {
     it("should render without errors", async () => {
         mockDispatch.mockResolvedValueOnce({});
-        renderWithProviders(<Post id = {1}/>);
+        renderPost(stubReviewState, stubUserState, stubShopItemState)
         const postImage = screen.getByAltText("postimage");
         const likeButton = screen.getByRole("button");
-        screen.getByTestId("test");
+        screen.getByTestId("rating");
+        screen.getByTestId("author");
         await waitFor (() => fireEvent.click(likeButton));
         expect(mockNavigate).not.toHaveBeenCalled();
         screen.getByText("1001")

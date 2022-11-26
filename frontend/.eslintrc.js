@@ -25,7 +25,8 @@ module.exports = {
     'setupTests.ts',
     'mock.tsx',
     'reportWebVitals.ts',
-    '*.test.tsx'
+    '*.test.tsx',
+    'Constants.ts'
   ],
   rules: {
   }

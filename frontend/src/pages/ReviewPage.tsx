@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,8 +9,7 @@ import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
-/*eslint-disable */
-
+import '../css/Footer.css'
 
 export default function ReviewPage (): JSX.Element {
   const { id } = useParams()
@@ -17,10 +17,16 @@ export default function ReviewPage (): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+    }
+    fetchRequired().catch(() => {
+
+    })
   }, [dispatch])
 
-  return (<div>
+  return (<div className = 'page-container'>
+    <div className = 'contents'>
     <TopBar />
     <Container>
       <Row>
@@ -33,10 +39,11 @@ export default function ReviewPage (): JSX.Element {
           <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))!} />
         </Col>
         <Col>
-          <ReviewForm />
+          <ReviewForm shopItemId = {Number(id)}/>
         </Col>
       </Row>
     </Container>
+    </div>
     <Footer/>
   </div>)
 }

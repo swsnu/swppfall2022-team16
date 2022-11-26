@@ -6,7 +6,6 @@ import { ReviewInfo } from '../store/slices/review'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
-/*eslint-disable */
 
 export default function Review (props: { review: ReviewInfo }): JSX.Element {
   const [hover, setHover] = useState<boolean>(false)
@@ -15,27 +14,30 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
   const review = props.review
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    const fetches = async (): Promise<void> => {
+      await dispatch(fetchUsers())
+    }
+    fetches().catch(() => {})
   }, [dispatch])
 
-  const findAuthorName = (ID : number | undefined) => {
-          return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-      };
+  const findAuthorName = (ID: number | undefined): any => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
 
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate()
+
   return <div>
     <Card onClick = {() => navigate(`/community/${review.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-      <Card.Img alt = "review image" variant="top" src={review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover'}} />
+      <Card.Img alt = "review image" variant="top" src={review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
       <Card.Body>
         <Card.Title >{review.content}</Card.Title>
         <Card.Text >{findAuthorName(review.author)}</Card.Text>
         <Stack direction = 'horizontal'>
           {
-            Array.from({length: review.rating}, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
+            Array.from({ length: review.rating }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
           }
           {
-            Array.from({length: 5 - review.rating}, (_, i) => i).map((key) => <Icon.Star key={key} />)
+            Array.from({ length: 5 - review.rating }, (_, i) => i).map((key) => <Icon.Star key={key} />)
           }
         </Stack>
       </Card.Body>

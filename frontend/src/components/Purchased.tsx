@@ -5,9 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { UserOrderInfo } from '../store/slices/userorder'
-/*eslint-disable */
 
-export default function Purchased (props : {order: UserOrderInfo}): JSX.Element {
+export default function Purchased (props: { order: UserOrderInfo }): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
@@ -23,13 +22,13 @@ export default function Purchased (props : {order: UserOrderInfo}): JSX.Element 
     <div className = "Purchases">
       <Stack direction = "horizontal" gap ={3}>
         <h5>{item?.name}</h5>
-        <h3>{"$" + item?.price}</h3>
+        <h3>{'$' + String(item?.price)}</h3>
         <p>{props.order.status}</p>
         {/* <h3>{props.purchaseDate}</h3> */}
       </Stack>
-      <Button variant = "secondary" type = "submit" onClick = {() => {navigate(`/review/${props.order.item_id}`)}}>
+      <Button variant = "secondary" type = "submit" onClick = {() => { navigate(`/review/${props.order.item_id}`) }}>
         Write your Review
       </Button>
     </div>
-  );
+  )
 }

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Stack } from 'react-bootstrap'
+import { Stack, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
-import { CommentInfo, fetchComments, selectComment } from '../store/slices/comment'
+import { CommentInfo, deleteComment, fetchComments, putComment, selectComment } from '../store/slices/comment'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import '../css/postcomment.css'
 /*eslint-disable */
 
 export interface IProps {
@@ -11,60 +13,80 @@ export interface IProps {
 }
 
 export default function PostComments (props: IProps): JSX.Element {
-  const [contentOfComment, setContentOfComment] = useState<string>("");
-  const dispatch = useDispatch<AppDispatch>();
+  const [contentOfComment, setContentOfComment] = useState<string>('')
+  const dispatch = useDispatch<AppDispatch>()
   const commentState = useSelector(selectComment)
   const userState = useSelector(selectUser)
 
   useEffect(() => {
     dispatch(fetchComments(props.review_id))
     dispatch(fetchUsers())
-  }, [dispatch, props])
+  }, [dispatch])
 
-  // const commentEditButtonHandler = (comment: CommentInfo) => {  
-  //   let notice = window.prompt("Edit Comment", comment.content);
-  //   if(notice === null){
-  //       return;
-  //   }
-  //   else if(notice.length === 0){
-  //       alert("user cannot create empty comment");
-  //   }
-  //   else{
-  //       const EdittedComment = {...comment, content: notice};
-  //       // dispatch(editComment(EdittedComment));//axios function
-  //   }
-  // };
+  const editButtonHandler = (comment: CommentInfo) => {
+    const notice = window.prompt('Edit Comment', comment.content)
+    if (notice === null) {
 
-  // const commentDeleteButtonHandler = (comment: CommentInfo) => {
-  //     // dispatch(deleteComment(comment.id));//axios function
-  // };
+    } else if (notice.length === 0) {
+      alert('user cannot create empty comment')
+    } else {
+      const EdittedComment = { ...comment, content: notice }
+      dispatch(putComment(EdittedComment))
+    }
+  }
 
-  const findAuthorName = (ID : number | undefined) => {
-          return userState.users.find((user : User) => {return (user.id === ID);})?.nickname;
-      };
+  const deleteButtonHandler = (comment: CommentInfo) => {
+    dispatch(deleteComment(comment.id))
+  }
 
-  const CommentsforThisArticle = commentState.comments.filter((comment: CommentInfo) => {return (comment.review === props.review_id);}).sort((a, b) => a.id - b.id);
+  const findAuthorName = (ID: number | undefined) => {
+    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+  }
+
+  const CommentsforThisArticle = commentState.comments.filter((comment: CommentInfo) => { return (comment.review === props.review_id) }).sort((a, b) => a.id - b.id)
 
   let listedComments = CommentsforThisArticle.map((comment : CommentInfo) =>{
       return(
-          <div className="Comment" key={comment.id}>
-          <Stack direction = "horizontal" gap={3}>
-          <p className = "author" style={{fontWeight: 'bold'}}>[{findAuthorName(comment.author)}]</p>
+      <div className = 'commentbox'>
+      <Stack direction = 'horizontal'>
+      <div className = 'commentwrapper'>
+      <div className="Comment" key={comment.id}>
+        <Stack direction = "horizontal" gap={3}>
+          <p className = "author" style={{ fontWeight: 'bold' }}>[{findAuthorName(comment.author)}]</p>
           <p className = 'content'>{comment.content}</p>
-          </Stack>
-          {/* {
-            (comment.author == userState.currentLoggedIn?.id) ? 
-            (<div className = "button">
-              <button className = "edit-comment-button" id="edit-comment-button" onClick={() => commentEditButtonHandler(comment)}>
-                edit
-              </button>
-              <button className = "delete-comment-button" id="delete-comment-button" onClick={() => commentDeleteButtonHandler(comment)}>
-                delete
-              </button>
-            </div>) 
-            : (<div></div>)
-          } */}
-        </div>
+          {
+            (comment.author === userState.currentLoggedIn?.id)
+              ? (<div className = "button">
+              <Button data-testid = 'edit' className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+                <AiFillEdit/>
+              </Button>
+              <Button data-testid = 'delete' className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+                <AiFillDelete/>
+              </Button>
+            </div>)
+              : (<div></div>)
+          }
+        </Stack>
+      </div>
+      </div>
+       <div className = 'editbutton'>
+       {
+           (comment.author == userState.currentLoggedIn?.id) ? 
+           (
+             <Stack direction = 'horizontal' gap ={1}>
+             <Button className = "edit-comment-button" id="edit-comment-button" variant = "default" onClick={() => editButtonHandler(comment)}>
+               <AiFillEdit/>
+             </Button>
+             <Button className = "delete-comment-button" id="delete-comment-button" variant = "default" onClick={() => deleteButtonHandler(comment)}>
+               <AiFillDelete/>
+             </Button>
+             </Stack>
+           ) 
+           : (<div></div>)
+         }
+       </div>
+       </Stack>
+       </div>
       );
   });
 
@@ -73,5 +95,5 @@ export default function PostComments (props: IProps): JSX.Element {
       <h4>Comments</h4>
       {listedComments}
     </div>
-  );
+  )
 }

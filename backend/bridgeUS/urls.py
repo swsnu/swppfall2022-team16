@@ -16,5 +16,10 @@ urlpatterns = [
     path('review/', views.reviewlist, name='reviewlist'),
     path('review/<int:review_id>/', views.review, name='review'),
     path('review/<int:review_id>/comment/', views.reviewcomment, name='reviewcomment'),
-    path('comment/<int:comment_id>/', views.comment, name='comment')
+    path('comment/<int:comment_id>/', views.comment, name='comment'),
+    path('purchase/', views.purchase, name='purchase'),
+    path('search/', views.search, name='search'),
+    path('recommend/<int:recommend_count>/', views.recommend_clothes, name='recommend'),
+    path('usercomments/', views.usercomments, name='usercomments'),
+    path('trendingposts/<int:post_count>/', views.trendingposts, name='trendingposts')
 ]
