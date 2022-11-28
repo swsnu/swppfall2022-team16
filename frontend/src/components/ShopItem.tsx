@@ -7,27 +7,36 @@ import { ShopItemInfo } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 
 export default function ShopItem (props: { shopItem: ShopItemInfo | undefined }): JSX.Element {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const shopItem = props.shopItem
   const userState = useSelector(selectUser)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchUsers())
+      setLoaded(true)
+    }
+    fetchRequired().catch(() => {})
   }, [dispatch])
 
-  const navigate = useNavigate()
-  const findAuthorName = (ID: number | undefined) => {
-    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
-  }
+  if (loaded) {
+    const findAuthorName = (ID: number | undefined) => {
+      return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    }
 
-  return <div>
-    <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-      <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
-      <Card.Body>
-        <Card.Title >{shopItem?.name}</Card.Title>
-        <Card.Text data-testid = "test">{findAuthorName(shopItem?.seller)}</Card.Text>
-      </Card.Body>
-    </Card>
-  </div>
+    return <div>
+      <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+        <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Body>
+          <Card.Title >{shopItem?.name}</Card.Title>
+          <Card.Text data-testid = "test">{findAuthorName(shopItem?.seller)}</Card.Text>
+        </Card.Body>
+      </Card>
+    </div>
+  } else {
+    return <div></div>
+  }
 }

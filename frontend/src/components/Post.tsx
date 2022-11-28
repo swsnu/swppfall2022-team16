@@ -14,6 +14,7 @@ export interface IProps {
 }
 
 export default function Post (props: IProps): JSX.Element {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
@@ -23,69 +24,80 @@ export default function Post (props: IProps): JSX.Element {
   const [numLike, setNumLike] = useState(1000) // have to get info from DB
 
   useEffect(() => {
-    dispatch(fetchReviews()).then(() => {
-      setNumLike(review.likes)
-    })
-    dispatch(fetchMainItems())
-    dispatch(fetchUsers())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchReviews()).then(() => {
+        setNumLike(review.likes)
+      })
+      await dispatch(fetchMainItems())
+      await dispatch(fetchUsers())
+      setLoaded(true)
+    }
+    fetchRequired().catch(() => {})
   }, [dispatch])
 
-  const likeButtonHandler = async () => {
-    if (userState.currentLoggedIn === null)
-        return;
+  if (loaded) {
+    const review = reviewState.reviews.find((review) => review.id === props.id)
+
+    const findAuthorName = (ID: number | undefined) => {
+      return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    }
     
-    var alreadyLiked = false;
-    console.log(userState.currentLoggedIn.liked_posts)
-    if (userState.currentLoggedIn.liked_posts !== undefined){
-      var list = userState.currentLoggedIn.liked_posts.split(',');
-      for (var element in list){
-        var liked = parseInt(element);
-        if (liked == review.id){
-          alreadyLiked = true;
-          break;
+    const likeButtonHandler = async (): Promise<void> => {
+      if (userState.currentLoggedIn === null)
+        return
+
+      var alreadyLiked = false;
+      console.log(userState.currentLoggedIn.liked_posts)
+      if (userState.currentLoggedIn.liked_posts !== undefined) {
+        var list = userState.currentLoggedIn.liked_posts.split(',')
+        for (var element in list){
+          var liked = parseInt(element)
+          if (liked == review.id){
+            alreadyLiked = true
+            break
+          }
         }
       }
-    }
 
-    if (alreadyLiked)
+      if (alreadyLiked) {
         alert("You already liked the post.")
-    else await dispatch(likePost(review.id))
-  }
-  const review = reviewState.reviews.find((review) => review.id === props.id)
+      }
+      else await dispatch(likePost(review.id))
+    }
+    // console.debug(props.id)
+    // console.debug(itemState.shopitems)
 
-  const findAuthorName = (ID: number | undefined) => {
-    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    return <div>
+      <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+        <Card.Img alt = "postimage" variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Body>
+          <Stack direction = 'horizontal'>
+          <Stack direction = 'vertical'>
+            <Card.Text as= "h5" data-testid = "rating">
+              {
+                Array.from({ length: (review ? review.rating :  0) }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
+              }
+              {
+                Array.from({ length: 5 - (review ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
+              }
+            </Card.Text>
+            <Card.Text as= "h5" data-testid = "author">
+              @{findAuthorName(review?.author)}
+            </Card.Text>
+            </Stack>
+            <Stack direction = "horizontal">
+            <Button style={{ verticalAlign: 'middle' }} variant = "default" onClick={(e) => {
+              e.stopPropagation()
+              likeButtonHandler()
+            }}><AiFillLike/></Button>
+              {numLike}
+            </Stack>
+          </Stack>
+        </Card.Body>
+      </Card>
+    </div>
+  } else {
+    return <div></div>
   }
-  // console.debug(props.id)
-  // console.debug(itemState.shopitems)
 
-  return <div>
-    <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-      <Card.Img alt = "postimage" variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
-      <Card.Body>
-        <Stack direction = 'horizontal'>
-        <Stack direction = 'vertical'>
-          <Card.Text as= "h5" data-testid = "rating">
-            {
-              Array.from({ length: (review ? review.rating :  0) }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
-            }
-            {
-              Array.from({ length: 5 - (review ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
-            }
-          </Card.Text>
-          <Card.Text as= "h5" data-testid = "author">
-            @{findAuthorName(review?.author)}
-          </Card.Text>
-          </Stack>
-          <Stack direction = "horizontal">
-          <Button style={{ verticalAlign: 'middle' }} variant = "default" onClick={(e) => {
-            e.stopPropagation()
-            likeButtonHandler()
-          }}><AiFillLike/></Button>
-            {numLike}
-          </Stack>
-        </Stack>
-      </Card.Body>
-    </Card>
-  </div>
 }

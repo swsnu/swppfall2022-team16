@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Image, Row, Stack } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import OrderDetailForm from '../components/OrderDetailForm'
@@ -13,6 +13,7 @@ import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 
 export default function ProductPage (): JSX.Element {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
@@ -20,57 +21,65 @@ export default function ProductPage (): JSX.Element {
   const userState = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchMainItem(Number(id)))
-    dispatch(fetchReviews())
-    dispatch(fetchUsers())
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItem(Number(id)))
+      await dispatch(fetchReviews())
+      await dispatch(fetchUsers())
+      setLoaded(true)
+    }
+    fetchRequired().catch(() => {})
   }, [dispatch])
 
-  const item = shopItemState.current_shopitem
-  const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
+  if (loaded) {
+    const item = shopItemState.current_shopitem
+    const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
-  const findAuthorName = (ID: number | undefined) => {
-    return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    const findAuthorName = (ID: number | undefined) => {
+      return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    }
+
+    return (<div className = 'page-container'>
+      <div className = 'contents'>
+      <TopBar />
+      <Container>
+        <Row className="Header-row">
+          <Col>
+            <Stack>
+              <h1 className="Header">{item?.name}</h1>
+              <h3>{findAuthorName(item?.seller)}</h3>
+              <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
+            </Stack>
+          </Col>
+          <Col style={{ paddingTop: '144px' }}>
+            <OrderDetailForm
+                  itemID={item?.id}
+                  itemName={item?.name}
+                  sellerName={findAuthorName(item?.seller)}
+                  rating={item?.rating}
+                  colors={['White', 'Black', 'Brown']}
+                  quantity = {10}
+                  price = {item?.price}
+                  recommendedSize = 'M'
+                />
+          </Col>
+        </Row>
+        <Row className="Header-row">
+          <Col>
+            <h1 className="Header">What others are saying</h1>
+          </Col>
+        </Row>
+        <Row md={4}>
+          {
+            reviews.length > 0
+              ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
+              : <Col>No reviews yet.</Col>
+          }
+        </Row>
+      </Container>
+      </div>
+      <Footer/>
+    </div>)
+  } else {
+    return <div></div>
   }
-
-  return (<div className = 'page-container'>
-    <div className = 'contents'>
-    <TopBar />
-    <Container>
-      <Row className="Header-row">
-        <Col>
-          <Stack>
-            <h1 className="Header">{item?.name}</h1>
-            <h3>{findAuthorName(item?.seller)}</h3>
-            <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
-          </Stack>
-        </Col>
-        <Col style={{ paddingTop: '144px' }}>
-          <OrderDetailForm
-                itemID={item?.id}
-                itemName={item?.name}
-                sellerName={findAuthorName(item?.seller)}
-                rating={item?.rating}
-                colors={['White', 'Black', 'Brown']}
-                quantity = {10}
-                price = {item?.price}
-                recommendedSize = 'M'
-              />
-        </Col>
-      </Row>
-      <Row className="Header-row">
-        <Col>
-          <h1 className="Header">What others are saying</h1>
-        </Col>
-      </Row>
-      <Row md={4}>
-        {
-          reviews.length > 0
-            ? reviews.map((review) => <Col key={review.id}><Review review={review}/></Col>)
-            : <Col>No reviews yet.</Col>
-        }
-      </Row>
-    </Container>
-    </div>
-    <Footer/>
-  </div>)
 }

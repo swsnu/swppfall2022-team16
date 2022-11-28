@@ -15,6 +15,7 @@ import '../css/searchpage.css'
 import { selectUser } from '../store/slices/user'
 
 export default function SearchPage (): JSX.Element {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const { text } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
@@ -23,96 +24,103 @@ export default function SearchPage (): JSX.Element {
   const [showMoreCount, setShowMoreCount] = useState(4)
 
   useEffect(() => {
-    dispatch(fetchMainItems())
-    dispatch(fetchTopResult({ text, tags: [] }))
-    dispatch(fetchRecommendation(8))
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchMainItems())
+      await dispatch(fetchTopResult({ text, tags: [] }))
+      await dispatch(fetchRecommendation(8))
+      setLoaded(true)
+    }
+    fetchRequired().catch(() => {})
   }, [dispatch])
   
+  if (loaded) {
+    const showMoreHandler = ()=>{
+      setShowMoreCount(showMoreCount + 4)
+    }
+    const tagHandler = (remove: string, add: string) => {
+      console.log('Remove:' + remove)
+      console.log('Add:' + add)
+      setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
+    }
 
-  const showMoreHandler = ()=>{
-    setShowMoreCount(showMoreCount + 4)
-  }
-  const tagHandler = (remove: string, add: string) => {
-    console.log('Remove:' + remove)
-    console.log('Add:' + add)
-    setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
-  }
-
-  return (<div className = 'page-container'>
-     <style type="text/css">
-        {`
-             
-             .btn-showmore {
-              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
-              text-align: center;
-              transition: 0.5s;
-              background-size: 200% auto;
-              color: white;       
-              font-weight : bold;     
-              box-shadow: 0 0 20px #eee;
-              border-radius: 10px;
-            }
-  
-            .btn-showmore:hover {
-              background-position: right center; /* change the direction of the change here */
-              color: #FFE5B4;
-              text-decoration: none;
-            }
-           
-    `}
-      </style>
-    <div className = 'contents'>
-    <TopBar/>
-    <Container>
-      <Row className="Header-row">
-        <Col>
-          <h1 className="searchresult" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
-        </Col>
-      </Row>
-      <Row className="Header-row">
-        <Col md={3}>
-          <h3 id="Trending">Top Results</h3>
-        </Col>
-        <Col md={5}></Col>
-        {
-          filters.map(({ category, options }) => <Col key={category} md={1}>
-            <Filter key={category} category={category} options={options} handler={tagHandler}/>
-          </Col>)
-        }
-        <Col md={1}>
-          <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
-            <AiOutlineFilter />
-          </Button>
-        </Col>
-      </Row>
-      <Row md={4}>
-        { showMoreCount == 4 ?
-          shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
-            <ShopItem shopItem={shopItem} />
-            <br/>
-          </Col>).slice(0,4) : shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
-            <ShopItem shopItem={shopItem} />
-            <br/>
-          </Col>).slice(0,showMoreCount)
-        }
-      </Row>
-      <div className ='showmore'>
-      <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+    return (<div className = 'page-container'>
+      <style type="text/css">
+          {`
+              
+              .btn-showmore {
+                background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+                text-align: center;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;       
+                font-weight : bold;     
+                box-shadow: 0 0 20px #eee;
+                border-radius: 10px;
+              }
+    
+              .btn-showmore:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #FFE5B4;
+                text-decoration: none;
+              }
+            
+      `}
+        </style>
+      <div className = 'contents'>
+      <TopBar/>
+      <Container>
+        <Row className="Header-row">
+          <Col>
+            <h1 className="searchresult" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
+          </Col>
+        </Row>
+        <Row className="Header-row">
+          <Col md={3}>
+            <h3 id="Trending">Top Results</h3>
+          </Col>
+          <Col md={5}></Col>
+          {
+            filters.map(({ category, options }) => <Col key={category} md={1}>
+              <Filter key={category} category={category} options={options} handler={tagHandler}/>
+            </Col>)
+          }
+          <Col md={1}>
+            <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text, tags })) }}>
+              <AiOutlineFilter />
+            </Button>
+          </Col>
+        </Row>
+        <Row md={4}>
+          { showMoreCount == 4 ?
+            shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
+              <ShopItem shopItem={shopItem} />
+              <br/>
+            </Col>).slice(0,4) : shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
+              <ShopItem shopItem={shopItem} />
+              <br/>
+            </Col>).slice(0,showMoreCount)
+          }
+        </Row>
+        <div className ='showmore'>
+        <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+        </div>
+        <Row className="Header-row">
+          <Col>
+            <h1 className="Header">Recommendations</h1>
+          </Col>
+        </Row>
+        <Row md={4}>
+          {
+            shopItemState.recommendations?.map((shopItem) => <Col key={shopItem.id}>
+              <ShopItem shopItem={shopItem} />
+            </Col>)
+          }
+        </Row>
+      </Container>
       </div>
-      <Row className="Header-row">
-        <Col>
-          <h1 className="Header">Recommendations</h1>
-        </Col>
-      </Row>
-      <Row md={4}>
-        {
-          shopItemState.recommendations?.map((shopItem) => <Col key={shopItem.id}>
-            <ShopItem shopItem={shopItem} />
-          </Col>)
-        }
-      </Row>
-    </Container>
-    </div>
-    <Footer/>
-  </div>)
+      <Footer/>
+    </div>)
+  } else {
+    <div></div>
+  }
 }
