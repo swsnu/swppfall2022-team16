@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
 
@@ -55,6 +55,15 @@ export const addToCart = createAsyncThunk(
   }
 )
 
+export const deleteFromCart = createAsyncThunk(
+  'userorder/deleteFromCart',
+  async (item_id : Number, {dispatch}) =>{
+    await axios.delete(`/api/cart/${item_id}`)
+    dispatch(userOrderActions.deleteFromCart({ targetId : item_id }))
+  }
+)
+
+
 export const purchaseWithCredit = createAsyncThunk(
   'userorder/purchaseWithCredit',
   async () => {
@@ -66,7 +75,13 @@ export const purchaseWithCredit = createAsyncThunk(
 export const userOrderSlice = createSlice({
   name: 'userorder',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteFromCart: (state, action: PayloadAction<{ targetId : Number }>) => {
+      state.cart = state.cart.filter((value) => {
+        return value.item_id !== action.payload.targetId
+      })
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       state.userOrders = action.payload

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Stack, Table } from 'react-bootstrap'
+import { Image, Stack, Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../store'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import { deleteFromCart, fetchCart, selectUserOrder } from '../store/slices/userorder'
+
+import '../css/orderform.css'
 
 export interface IProps {
   itemID: number
@@ -18,15 +21,21 @@ export default function OrderForm (props: IProps): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const shopItemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
+  const userOrderState = useSelector(selectUserOrder)
+  let items = userOrderState.cart
+
 
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchMainItems())
       await dispatch(fetchUsers())
+      await dispatch(fetchCart())
       setLoaded(true)
     }
     fetchRequired().catch(() => {})
   }, [dispatch])
+
+
 
   if (loaded) {
     const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.itemID)!
@@ -37,6 +46,29 @@ export default function OrderForm (props: IProps): JSX.Element {
 
     return (
       <>
+      <style type="text/css">
+          {`
+                       
+         .btn-gradient {
+          background-image: linear-gradient(to right, #FF512F 0%, #DD2476  51%, #FF512F  100%);
+          text-align: center;
+          text-transform: uppercase;
+          transition: 0.5s;
+          background-size: 200% auto;
+          color: white;            
+          box-shadow: 0 0 20px #eee;
+          border-radius: 10px;
+          display: block;
+        }
+
+        .btn-gradient:hover {
+          background-position: right center; /* change the direction of the change here */
+          color: #fff;
+          text-decoration: none;
+        }
+       
+      `}
+        </style>
       <Stack direction="horizontal" gap={3}>
         <Image alt='itemimage' rounded style={{ width: 210, height: 280, objectFit: 'cover' }} src={item.image_url}/>
         <Stack direction="vertical" gap ={3}>
@@ -60,6 +92,13 @@ export default function OrderForm (props: IProps): JSX.Element {
               </tr>
             </tbody>
           </Table>
+          <div className = 'deleteitem'>
+            <Button variant = 'gradient' onClick = {() => {
+              dispatch(deleteFromCart(props.itemID!))
+            }}>
+            <img alt = 'shoppingcart' src = '/trash.png' width = '20' height = '20' className='trash'></img>
+            </Button>
+          </div>
         </Stack>
       </Stack>
       <br/>
