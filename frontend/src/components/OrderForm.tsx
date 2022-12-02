@@ -50,7 +50,7 @@ export default function OrderForm (props: IProps): JSX.Element {
           {`
                        
          .btn-gradient {
-          background-image: linear-gradient(to right, #FF512F 0%, #DD2476  51%, #FF512F  100%);
+          background-image: transparent;
           text-align: center;
           text-transform: uppercase;
           transition: 0.5s;
@@ -97,7 +97,7 @@ export default function OrderForm (props: IProps): JSX.Element {
               // 영인 여기서 이 버튼 누르면 카트에서 제품이 지워지게 하려고 함.
               dispatch(deleteFromCart(props.itemID!))
             }}>
-            <img alt = 'shoppingcart' src = '/trash.png' width = '20' height = '20' className='trash'></img>
+            <img alt = 'trashbin' src = '/trash.png' width = '20' height = '20' className='trash'></img>
             </Button>
           </div>
         </Stack>

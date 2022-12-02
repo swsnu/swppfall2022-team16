@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
+import '../css/paymentpage.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
 import { fetchCart, purchaseWithCredit, selectUserOrder } from '../store/slices/userorder'
 import usershop, { fetchUserShop, selectUserShop } from '../store/slices/usershop'
@@ -81,6 +82,31 @@ export default function PaymentPage (): JSX.Element {
                 color: blue;
                 text-decoration: none;
               }
+
+                       
+                 
+              .btn-gradients {
+                background-image: linear-gradient(to right, #ee9ca7 0%, #ffdde1  51%, #ee9ca7  100%);
+                margin: 10px;
+                padding: 15px 45px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;            
+                box-shadow: 0 0 20px #eee;
+                display: block;
+                font-weight : bold;
+              }
+    
+              .btn-gradients:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+              }
+             
+        }
+       
       `}
         </style>
         <div className = 'contents'>
@@ -94,7 +120,7 @@ export default function PaymentPage (): JSX.Element {
 
         <Row className="Header-row">
           <Col>
-            <Stack>
+            <Stack direction = 'vertical'>
               {
                 items.map((userorder) =>
                   <OrderForm
@@ -107,6 +133,11 @@ export default function PaymentPage (): JSX.Element {
                   /> 
                   ) 
               }
+              <div className = 'deleteWholeCart'>
+              <Button variant = 'gradients' >
+                Delete Cart
+                </Button>
+              </div>
             </Stack>
           </Col>
           <Col>

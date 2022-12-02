@@ -26,6 +26,7 @@ export default function Post (props: IProps): JSX.Element {
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchReviews()).then(() => {
+        //영인 이거 일단 10으로 둠. review.likes 하면 아예 렌더가 안 돼서 임시로 둠.
         setNumLike(10)
       })
       await dispatch(fetchMainItems())
