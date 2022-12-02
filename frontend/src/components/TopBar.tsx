@@ -29,7 +29,7 @@ export default function TopBar (): JSX.Element {
       await dispatch(fetchCart())
     }
     fetchRequired().catch(() => {})
-  }, [dispatch])
+  }, [dispatch, loggedIn])
 
   
 
@@ -97,7 +97,7 @@ export default function TopBar (): JSX.Element {
           </Form>
             <Stack direction = 'horizontal'>
               <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
-              {items.length}
+              {loggedIn ? items.length : 0}
               <div className = 'spacing3'></div>
               </Stack>
           {
