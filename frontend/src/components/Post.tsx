@@ -21,14 +21,10 @@ export default function Post (props: IProps): JSX.Element {
   const reviewState = useSelector(selectReview)
   const userState = useSelector(selectUser)
   const itemState = useSelector(selectShopItem)
-  const [numLike, setNumLike] = useState(1000) // have to get info from DB
 
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
-      await dispatch(fetchReviews()).then(() => {
-        //영인 이거 일단 10으로 둠. review.likes 하면 아예 렌더가 안 돼서 임시로 둠.
-        setNumLike(10)
-      })
+      await dispatch(fetchReviews())
       await dispatch(fetchMainItems())
       await dispatch(fetchUsers())
       setLoaded(true)
@@ -91,7 +87,7 @@ export default function Post (props: IProps): JSX.Element {
               e.stopPropagation()
               likeButtonHandler()
             }}><AiFillLike/></Button>
-              {numLike}
+              {review?.likes}
             </Stack>
           </Stack>
         </Card.Body>
