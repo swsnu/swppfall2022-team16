@@ -21,3 +21,8 @@
 .editbutton {
     left : 0;
 }
+
+.spacing {
+    width : auto;
+    height : 20px;
+}

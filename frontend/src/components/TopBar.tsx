@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import '../css/mainpage.css'
-import userorder, { selectUserOrder } from '../store/slices/userorder'
+import { fetchCart, selectUserOrder } from '../store/slices/userorder'
 
 
 export default function TopBar (): JSX.Element {
@@ -15,6 +15,7 @@ export default function TopBar (): JSX.Element {
   const [searchText, setSearchText] = useState('')
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
 
   useEffect(() => {
@@ -23,13 +24,19 @@ export default function TopBar (): JSX.Element {
     } else setloggedIn(false)
   })
 
+  useEffect(()=> {
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchCart())
+    }
+    fetchRequired().catch(() => {})
+  }, [dispatch])
+
   
 
-  const items = userOrderState.cart
+  let items = userOrderState.cart
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + userId
   const userName = userState.currentLoggedIn?.nickname
-  const dispatch = useDispatch<AppDispatch>()
   const loggingout = async () => {
     setloggedIn(false)
     dispatch(signout())
@@ -90,7 +97,7 @@ export default function TopBar (): JSX.Element {
           </Form>
             <Stack direction = 'horizontal'>
               <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
-              {0}
+              {items.length}
               <div className = 'spacing3'></div>
               </Stack>
           {

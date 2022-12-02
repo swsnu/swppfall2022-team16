@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { fetchReviews, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
+import '../css/ProductPage.css'
 
 export default function ProductPage (): JSX.Element {
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -43,15 +44,14 @@ export default function ProductPage (): JSX.Element {
       <TopBar />
       <Container>
         <Row className="Header-row">
-          <Col>
-            <Stack>
-              <h1 className="Header">{item?.name}</h1>
-              <h3>{findAuthorName(item?.seller)}</h3>
+          <Col style = {{paddingTop : '30px'}}>
               <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
-            </Stack>
           </Col>
-          <Col style={{ paddingTop: '144px' }}>
-            <OrderDetailForm
+          <Col style={{ paddingTop: '30px' }}>
+            <Stack direction = 'vertical'>
+              <h2 className="Header">{item?.name}</h2>
+              <h5>{findAuthorName(item?.seller)}</h5>
+              <OrderDetailForm
                   itemID={item?.id}
                   itemName={item?.name}
                   sellerName={findAuthorName(item?.seller)}
@@ -61,11 +61,18 @@ export default function ProductPage (): JSX.Element {
                   price = {item?.price}
                   recommendedSize = 'M'
                 />
+            </Stack>
           </Col>
         </Row>
+      </Container>
+      <div className = 'pageSeparator'></div>
+      <div className = 'nextPage'>
+        <Container>
+        <div className = 'spacingForSegment'></div>
         <Row className="Header-row">
           <Col>
-            <h1 className="Header">What others are saying</h1>
+            <h3 className="Header">What others are saying</h3>
+            <div className = 'spacingBetween'></div>
           </Col>
         </Row>
         <Row md={4}>
@@ -75,8 +82,9 @@ export default function ProductPage (): JSX.Element {
               : <Col>No reviews yet.</Col>
           }
         </Row>
-      </Container>
-      </div>
+        </Container>
+        </div>
+        </div>
       <Footer/>
     </div>)
   } else {

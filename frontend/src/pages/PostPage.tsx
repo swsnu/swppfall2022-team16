@@ -11,6 +11,7 @@ import { fetchMainItem, selectShopItem, ShopItemInfo } from '../store/slices/sho
 import { fetchReview, selectReview } from '../store/slices/review'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
+import '../css/PostPage.css'
 import { postComment } from '../store/slices/comment'
 import { unwrapResult } from '@reduxjs/toolkit'
 
@@ -52,16 +53,40 @@ export default function PostPage (): JSX.Element {
     return (
     <div className = 'page-container'>
         <div className = 'contents'>
+        <style type="text/css">
+          {`
+              
+              .btn-showmore {
+                background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+                text-align: center;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;       
+                font-weight : bold;     
+                box-shadow: 0 0 20px #eee;
+                border-radius: 10px;
+              }
+    
+              .btn-showmore:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #FFE5B4;
+                text-decoration: none;
+              }
+      `}
+        </style>
       <TopBar />
+      <div className = 'spacing'></div>
       <Container>
         <Row>
           <Col>
             <h1>{itemState.current_shopitem?.name}</h1>
             <p>{findAuthorName(itemState.current_shopitem?.seller)}</p>
             <Post id={Number(id)} />
-            <Button onClick={() => navigate(`/product/${reviewState.current_review?.review_item}`)}>Purchase the Look</Button>
+            <div className = 'spacing'></div>
+            <Button variant = 'showmore' onClick={() => navigate(`/product/${reviewState.current_review?.review_item}`)}>Purchase the Look</Button>
           </Col>
           <Col>
+          <div className = 'spacing2'></div>
             <PostComments review_id={Number(id)} />
             <InputGroup>
             <Form.Control type='commment' onChange = {(e) => setComment(e.target.value)} value = {comment} />

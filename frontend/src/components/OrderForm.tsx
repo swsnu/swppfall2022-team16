@@ -40,8 +40,8 @@ export default function OrderForm (props: IProps): JSX.Element {
       <Stack direction="horizontal" gap={3}>
         <Image alt='itemimage' rounded style={{ width: 210, height: 280, objectFit: 'cover' }} src={item.image_url}/>
         <Stack direction="vertical" gap ={3}>
-          <h2>{item.name}</h2>
-          <h4>{findAuthorName(item.seller)}</h4>
+          <h5>{item.name}</h5>
+          <h6>{findAuthorName(item.seller)}</h6>
           <Table>
             <thead>
               <tr>

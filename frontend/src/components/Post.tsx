@@ -26,7 +26,7 @@ export default function Post (props: IProps): JSX.Element {
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchReviews()).then(() => {
-        setNumLike(review.likes)
+        setNumLike(10)
       })
       await dispatch(fetchMainItems())
       await dispatch(fetchUsers())

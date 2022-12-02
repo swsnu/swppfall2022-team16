@@ -21,7 +21,7 @@ export interface ReviewInfo {
 }
 
 export interface ReviewState {
-  reviews: ReviewInfo[]
+  reviews: ReviewInfo[] 
   current_review: ReviewInfo | null
   trending_posts: ReviewInfo[]
 }

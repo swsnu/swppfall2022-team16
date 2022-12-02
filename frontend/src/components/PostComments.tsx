@@ -6,6 +6,7 @@ import { CommentInfo, deleteComment, fetchComments, putComment, selectComment } 
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import '../css/postcomment.css'
+
 /*eslint-disable */
 
 export interface IProps {
@@ -85,6 +86,7 @@ export default function PostComments (props: IProps): JSX.Element {
     return (
       <div className = "Comment">
         <h4>Comments</h4>
+        <div className = 'spacing'></div>
         {listedComments}
       </div>
     )

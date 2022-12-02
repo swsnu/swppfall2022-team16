@@ -112,7 +112,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             </Form.Select>
           </Stack>
         </Form>
-        <div className = 'spacing2'></div>
+        <div className = 'spacingbet'></div>
         <Stack direction = 'horizontal' gap = {1}>
         <Button variant='cart' onClick = { () => { dispatch(addToCart({
           id: 0,

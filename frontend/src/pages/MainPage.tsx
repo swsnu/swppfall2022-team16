@@ -99,7 +99,7 @@ export default function MainPage (): JSX.Element {
           </Col>
         </Row>
         <Row>
-          <div className = 'spacing2'></div>
+          <div className = 'spacingbetweenword'></div>
           <div className = 'shopitems'>
           <Row md={4}>
             {  showMoreCount == 4 ? 
@@ -117,7 +117,7 @@ export default function MainPage (): JSX.Element {
         <div className ='showmore'>
         <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
         </div>
-        <div className = 'spacing2'></div>
+        <div className = 'spacingbetweensection'></div>
         </div>
       </Container>
       <div className = 'spacing'></div>
@@ -139,7 +139,7 @@ export default function MainPage (): JSX.Element {
             </Stack>
           </Col>
         </Row>
-        <div className = 'spacing2'></div>
+        <div className = 'spacingbetweenword'></div>
         <Row>
         {
           reviewState.trending_posts.map((review) => <Col key={review.id}>
@@ -148,7 +148,7 @@ export default function MainPage (): JSX.Element {
           </Col>).slice(0, 4)
         }
         </Row>
-        <div className = 'spacing2'></div>
+        <div className = 'spacingbetweensection'></div>
         </div>
       </Container>
       </div>
