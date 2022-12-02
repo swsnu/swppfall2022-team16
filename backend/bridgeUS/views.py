@@ -131,6 +131,18 @@ def cart(request):
 
         return JsonResponse(cart_all_list, safe=False, status=200)
 
+def cartitem(request, order_id):
+    if request.method != 'DELETE':
+        return HttpResponseNotAllowed(['DELETE'])
+    
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    order = UserOrder.objects.get(id = order_id)
+
+    order.delete()
+
+    return HttpResponse(status=204)
 
 @ensure_csrf_cookie
 def userlist(request):

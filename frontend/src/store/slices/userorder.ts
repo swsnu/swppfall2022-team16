@@ -55,12 +55,11 @@ export const addToCart = createAsyncThunk(
   }
 )
 
-// 영인 이것 좀 봐주삼
 export const deleteFromCart = createAsyncThunk(
   'userorder/deleteFromCart',
-  async (item_id : Number, {dispatch}) =>{
-    const response = await axios.delete(`/api/cart/${item_id}`)
-    dispatch(userOrderActions.deleteFromCart({ targetId : item_id }))
+  async (orderID: number, { dispatch }) => {
+    const response = await axios.delete(`/api/cart/${orderID}/`)
+    dispatch(userOrderActions.deleteFromCart({ targetId: orderID }))
     return response.data
   }
 )
@@ -78,10 +77,9 @@ export const userOrderSlice = createSlice({
   name: 'userorder',
   initialState,
   reducers: {
-    // 영인 이것도 감사... ㅎㅎ
-    deleteFromCart: (state, action: PayloadAction<{ targetId : Number }>) => {
+    deleteFromCart: (state, action: PayloadAction<{ targetId: number }>) => {
       state.cart = state.cart.filter((value) => {
-        return value.item_id !== action.payload.targetId
+        return value.id !== action.payload.targetId
       })
     }
   },

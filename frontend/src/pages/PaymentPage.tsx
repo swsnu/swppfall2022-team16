@@ -125,17 +125,18 @@ export default function PaymentPage (): JSX.Element {
                 items.map((userorder) =>
                   <OrderForm
                     key={userorder.id}
+                    orderID={userorder.id}
                     itemID={userorder.item_id}
                     color={userorder.color}
                     size={userorder.size}
                     quantity={userorder.ordered_amount}
                     price = {userorder.single_price}
-                  /> 
-                  ) 
+                  />
+                )
               }
               <div className = 'deleteWholeCart'>
-              <Button variant = 'gradients' >
-                Delete Cart
+                <Button variant = 'gradients' >
+                  Delete Cart
                 </Button>
               </div>
             </Stack>
