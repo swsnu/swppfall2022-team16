@@ -94,6 +94,7 @@ export default function OrderForm (props: IProps): JSX.Element {
           </Table>
           <div className = 'deleteitem'>
             <Button variant = 'gradient' onClick = {() => {
+              // 영인 여기서 이 버튼 누르면 카트에서 제품이 지워지게 하려고 함.
               dispatch(deleteFromCart(props.itemID!))
             }}>
             <img alt = 'shoppingcart' src = '/trash.png' width = '20' height = '20' className='trash'></img>
