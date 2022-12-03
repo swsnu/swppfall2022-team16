@@ -62,5 +62,5 @@ sudo docker run -d -p 8000:8000 --rm  --name "backend" backend:latest
 
 sudo docker build -t frontend .
 
-sudo docker run -d -p 3000:3000 --rm --name “frontend” frontend:latest
+sudo docker run -d -p 3000:3000 --rm --name "frontend" frontend:latest
 ```
