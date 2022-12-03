@@ -2,7 +2,8 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=swsnu_swppfall2022-team16&metric=alert_status)](https://sonarcloud.io/dashboard?id=swsnu_swppfall2022-team16)
 
-[![Coverage Status](https://coveralls.io/repos/github/swsnu/swppfall2022-team16/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/swsnu/swppfall2022-team16?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/swsnu/swppfall2022-team16/badge.svg?branch=main)](https://coveralls.io/github/swsnu/swppfall2022-team16?branch=main)
+
 # swppfall2022-team16
 
 ## How to run the application
@@ -56,7 +57,8 @@ source django-env/bin/activate
 
 sudo docker build -t backend .
 
-sudo docker run  -d --rm --name "backend" -p 8000:8000  backend:latest
+sudo docker run -d -p 8000:8000 --rm  --name "backend" backend:latest
+
 
 sudo docker build -t frontend .
 
