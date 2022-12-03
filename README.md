@@ -64,3 +64,8 @@ sudo docker build -t frontend .
 
 sudo docker run -d -p 3000:3000 --rm --name "frontend" frontend:latest
 ```
+
+### test frontend
+```
+sudo docker run -it -p 3000:3000 --rm --name "frontend" frontend:latest
+```
