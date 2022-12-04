@@ -86,7 +86,7 @@ export default function MainPage (): JSX.Element {
               <img src = '/trending-1.png' width = '25' height = '30'></img>
             </Stack>
           </Col>
-          <Col md={5}></Col>
+          <Col md={6}></Col>
           {
             filters.map(({ category, options }) => <Col key={category} md={1}>
               <Filter key={category} category={category} options={options} handler={tagHandler}/>

@@ -78,7 +78,7 @@ export default function SearchPage (): JSX.Element {
           <Col md={3}>
             <h3 id="Trending">Top Results</h3>
           </Col>
-          <Col md={5}></Col>
+          <Col md={6}></Col>
           {
             filters.map(({ category, options }) => <Col key={category} md={1}>
               <Filter key={category} category={category} options={options} handler={tagHandler}/>
