@@ -55,7 +55,7 @@ export default function MyPage (): JSX.Element {
               <h1 className="Header-row  Header">Purchased</h1>
               <ListGroup>
                 {
-                  userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id))
+                  userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id) && userOrder.status !== 0)
                     .map((userOrder) =>
                       <ListGroup.Item key={userOrder.id}>
                         <Purchased order={userOrder} />
