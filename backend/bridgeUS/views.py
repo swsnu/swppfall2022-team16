@@ -512,7 +512,8 @@ def search(request):
         matched_items = matched_items.filter(name__icontains=text)
 
     if tags is not None and len(tags) > 0:
-        matched_items = matched_items.filter(tags__name__in=tags)
+        for tag in tags:
+            matched_items = matched_items.filter(tags__name__in=[tag])
 
     ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
 
