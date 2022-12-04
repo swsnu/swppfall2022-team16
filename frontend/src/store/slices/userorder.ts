@@ -67,8 +67,9 @@ export const deleteFromCart = createAsyncThunk(
 
 export const purchaseWithCredit = createAsyncThunk(
   'userorder/purchaseWithCredit',
-  async () => {
-    const response = await axios.get('/api/purchase/')
+  async (shippingFee: number) => {
+    console.log(`shippingFee: ${shippingFee}`)
+    const response = await axios.get(`/api/purchase/${shippingFee}`)
     return response.data
   }
 )

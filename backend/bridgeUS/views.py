@@ -521,7 +521,7 @@ def search(request):
 
 
 @ensure_csrf_cookie
-def purchase(request):
+def purchase(request, shipping_fee):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
@@ -536,7 +536,7 @@ def purchase(request):
 
     user_credit = user_shop.credit
 
-    needed_credit = 0
+    needed_credit = shipping_fee
 
     for pre_order in pre_orders:
         needed_credit += pre_order.ordered_item.price * pre_order.ordered_amount
