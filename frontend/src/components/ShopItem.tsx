@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card } from 'react-bootstrap'
+import { Card, Placeholder } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
@@ -37,6 +37,18 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
       </Card>
     </div>
   } else {
-    return <div></div>
+    return <div>
+      <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+        <Card.Img variant="top" src='/bridgeUsLogo.png' alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Body>
+          <Placeholder as={Card.Title} animation='glow'>
+            <Placeholder xs={6} />
+          </Placeholder>
+          <Placeholder as={Card.Text} data-testid='test' animation='glow'>
+            <Placeholder xs={4} /> <Placeholder xs={6} />
+          </Placeholder>
+        </Card.Body>
+      </Card>
+    </div>
   }
 }
