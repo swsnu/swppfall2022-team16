@@ -49,7 +49,7 @@ export default function Post (props: IProps): JSX.Element {
         var list = userState.currentLoggedIn.liked_posts.split(',')
         for (var element in list){
           var liked = parseInt(element)
-          if (liked == review.id){
+          if (liked == review!.id){
             alreadyLiked = true
             break
           }
@@ -59,7 +59,7 @@ export default function Post (props: IProps): JSX.Element {
       if (alreadyLiked) {
         alert("You already liked the post.")
       }
-      else await dispatch(likePost(review.id))
+      else await dispatch(likePost(review!.id))
     }
     // console.debug(props.id)
     // console.debug(itemState.shopitems)

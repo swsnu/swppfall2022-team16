@@ -121,6 +121,6 @@ export default function SearchPage (): JSX.Element {
       <Footer/>
     </div>)
   } else {
-    <div></div>
+    return <div></div>
   }
 }
