@@ -12,7 +12,7 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-describe("<Filter />", () => {
+describe("<OrderDetailForm />", () => {
     it("should render without errors", async () => {
         render(<OrderDetailForm 
         itemID = {1}

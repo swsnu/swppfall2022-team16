@@ -27,7 +27,8 @@ module.exports = {
     'reportWebVitals.ts',
     '**/*.test.tsx',
     '**/*.tsx',
-    '**/*.ts'
+    '**/*.ts',
+    'Constants.ts'
   ],
   rules: {
   }

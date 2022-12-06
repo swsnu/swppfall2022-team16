@@ -71,6 +71,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       state.currentLoggedIn = state.users.find(
         (value) => {
           return value.id === action.payload.id
@@ -79,7 +80,7 @@ export const userSlice = createSlice({
     })
     builder.addCase(signup.fulfilled, (state, action) => {
       state.users = action.payload.userlist
-
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       state.currentLoggedIn = state.users.find(
         (value) => {
           return value.id === action.payload.id
@@ -96,6 +97,6 @@ export const userSlice = createSlice({
 })
 
 export const userActions = userSlice.actions
-export const selectUser = (state: RootState) => state.user
+export const selectUser = (state: RootState): UserState => state.user
 
 export default userSlice.reducer

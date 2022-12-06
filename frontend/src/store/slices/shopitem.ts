@@ -127,13 +127,14 @@ export const shopitemSlice = createSlice({
       // state.top_results = []
     })
     builder.addCase(fetchRecommendation.fulfilled, (state, action) => {
-      state.recommendations = action.payload
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      state.recommendations = action.payload!
       // state.recommendations = []
     })
   }
 })
 
 export const shopitemActions = shopitemSlice.actions
-export const selectShopItem = (state: RootState) => state.shopitem
+export const selectShopItem = (state: RootState): ShopItemState => state.shopitem
 
 export default shopitemSlice.reducer

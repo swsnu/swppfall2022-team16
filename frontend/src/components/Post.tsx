@@ -7,7 +7,7 @@ import { AppDispatch } from '../store'
 import { fetchReviews, likePost, selectReview } from '../store/slices/review'
 import { AiFillLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
-import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
+import { fetchMainItems } from '../store/slices/shopitem'
 
 export interface IProps {
   id: number

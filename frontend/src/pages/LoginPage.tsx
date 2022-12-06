@@ -21,7 +21,7 @@ export default function LoginPage (): JSX.Element {
           <Col>
             <LoginForm />
             <div className = 'spacebetweenlogin'></div>
-            <div>If you don't have your id, you can <Link to='/signup'>signup</Link> here.</div>
+            <div>No id?, you can <Link to='/signup'>signup</Link> here.</div>
           </Col>
         </Row>
       </Container>

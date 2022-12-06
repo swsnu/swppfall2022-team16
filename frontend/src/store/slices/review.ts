@@ -130,6 +130,6 @@ export const reviewSlice = createSlice({
 })
 
 export const reviewActions = reviewSlice.actions
-export const selectReview = (state: RootState) => state.review
+export const selectReview = (state: RootState): ReviewState => state.review
 
 export default reviewSlice.reducer

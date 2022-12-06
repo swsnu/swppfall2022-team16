@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form } from 'react-bootstrap'
 import '../css/shippingform.css'
 
 export default function ShippingForm (): JSX.Element {
-  const [addr, setAddr] = useState('')
-  const [buildingNum, setBuildingNum] = useState('')
-  const [stateZip, setStateZip] = useState('')
-  const [country, setCountry] = useState('')
-  const [city, setCity] = useState('')
+  // const [addr, setAddr] = useState('')
+  // const [buildingNum, setBuildingNum] = useState('')
+  // const [stateZip, setStateZip] = useState('')
+  // const [country, setCountry] = useState('')
+  // const [city, setCity] = useState('')
 
   return (
     <div className='ShippingForm'>

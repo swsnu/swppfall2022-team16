@@ -2,7 +2,8 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=swsnu_swppfall2022-team16&metric=alert_status)](https://sonarcloud.io/dashboard?id=swsnu_swppfall2022-team16)
 
-[![Coverage Status](https://coveralls.io/repos/github/swsnu/swppfall2022-team16/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/swsnu/swppfall2022-team16?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/swsnu/swppfall2022-team16/badge.svg?branch=main)](https://coveralls.io/github/swsnu/swppfall2022-team16?branch=main)
+
 # swppfall2022-team16
 
 ## How to run the application
@@ -39,4 +40,32 @@ $ coverage run --source='./bridgeUS' manage.py test
 ```
 $ cd frontend
 $ yarn test --coverage --watchAll=false
+```
+
+
+### deploy - backend
+
+```
+docker run --rm -it \
+    --ipc=host \
+    --name "practice11" \
+    -v ${PWD}:/home \
+    snuspl/swpp:practice11 \
+/bin/bash
+
+source django-env/bin/activate
+
+sudo docker build -t backend .
+
+sudo docker run -d -p 8000:8000 --rm  --name "backend" backend:latest
+
+
+sudo docker build -t frontend .
+
+sudo docker run -d -p 3000:3000 --rm --name "frontend" frontend:latest
+```
+
+### test frontend
+```
+sudo docker run -it -p 3000:3000 --rm --name "frontend" frontend:latest
 ```
