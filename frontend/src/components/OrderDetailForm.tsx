@@ -1,13 +1,20 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../store'
+import { addToCart } from '../store/slices/userorder'
+import { selectUser } from '../store/slices/user'
+import '../css/orderdetailform.css'
 
 export interface OrderDetailProps {
   itemID?: number | undefined
   itemName: string | undefined
   sellerName: string | undefined
+  rating: number | undefined
   colors: string[]
   quantity: number
   price: number | undefined
@@ -16,26 +23,80 @@ export interface OrderDetailProps {
 
 export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+  const userState = useSelector(selectUser)
+  const [color, setColor] = useState<string>(props.colors[0])
+  const [quantity, setQuantity] = useState<string>('1')
+  const [size, setSize] = useState<string>('S')
+
+  const rating = props.rating ?? 0
 
   return (
+    <>
+    <style type="text/css">
+        {`
+             
+             .btn-grad {
+              background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+              text-align: center;
+              transition: 0.5s;
+              background-size: 200% auto;
+              color: white;       
+              font-weight : bold;     
+              box-shadow: 0 0 20px #eee;
+              border-radius: 10px;
+              display: block;
+            }
+  
+            .btn-grad:hover {
+              background-position: right center; /* change the direction of the change here */
+              color: #FFE5B4;
+              text-decoration: none;
+            }
+           
+    `}
+    {`
+             
+                      
+         .btn-cart {
+          background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%);
+          text-align: center;
+          text-transform: uppercase;
+          transition: 0.5s;
+          background-size: 200% auto;
+          color: white;            
+          box-shadow: 0 0 20px #eee;
+          border-radius: 10px;
+          font-weight : bold;     
+          display: block;
+        }
+
+        .btn-cart:hover {
+          background-position: right center; /* change the direction of the change here */
+          color: #fff;
+          text-decoration: none;
+        }
+       
+           
+    `}
+      </style>
     <Card style={{ width: '36rem' }}>
       <Card.Body>
-        <Card.Title>★★★★☆</Card.Title>
+        <Card.Title>{'★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating))}</Card.Title>
         <Card.Text>
           <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
             { '$' + (props.price !== undefined ? props.price.toString() : '0') }
           </span>
         </Card.Text>
         <Form>
-          <Form.Select aria-label = "Color">
+          <Form.Select aria-label = "Color" onChange={(e) => setColor(e.target.value)}>
             {props.colors.map((color, index) => (
-              <span key={index}>
-              <option>{color}</option>
-              </span>
+              <option key = {index}>{color}</option>
             ))}
           </Form.Select>
+          <br/>
           <Stack direction = "horizontal" gap = {5}>
-            <Form.Select aria-label = "Quantity">
+            <Form.Select aria-label = "Quantity" onChange={(e) => setQuantity(e.target.value)}>
               <option>Quantity</option>
               <option value = "1">1</option>
               <option value = "2">2</option>
@@ -43,20 +104,46 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               <option value = "4">4</option>
               <option value = "5">5</option>
             </Form.Select>
-            <Form.Select aria-label = "Size">
+            <Form.Select aria-label = "Size" onChange={(e) => setSize(e.target.value)}>
               <option>Size</option>
-              <option value = "1">S</option>
-              <option value = "2">M</option>
-              <option value = "3">L</option>
+              <option value = "S">S</option>
+              <option value = "M">M</option>
+              <option value = "L">L</option>
             </Form.Select>
-            <Form.Text style={{ width: '20rem' }}>
-              { 'recommended size: ' + props.recommendedSize }
-            </Form.Text>
           </Stack>
         </Form>
-        <Button variant='primary'>Add to Cart</Button>
-        <Button variant='secondary' onClick = { () => { navigate('/payment/' + (props.itemID !== undefined ? props.itemID.toString() : '0')) } }>Buy Now</Button>
+        <div className = 'spacingbet'></div>
+        <Stack direction = 'horizontal' gap = {1}>
+        <Button variant='cart' onClick = { () => { dispatch(addToCart({
+          id: 0,
+          user_id: userState.currentLoggedIn!.id,
+          item_id: props.itemID!,
+          single_price: props.price!,
+          status: 0,
+          color: color,
+          size: size,
+          ordered_amount: Number(quantity),
+          purchased_at: new Date(),
+          fast_shipping: true
+        })) } }>Add to Cart</Button>
+        <Button variant='grad' onClick = { () => {
+          dispatch(addToCart({
+            id: 0,
+            user_id: userState.currentLoggedIn!.id,
+            item_id: props.itemID!,
+            single_price: props.price!,
+            status: 0,
+            color: color,
+            size: size,
+            ordered_amount: Number(quantity),
+            purchased_at: new Date(),
+            fast_shipping: true
+          }))
+          navigate('/payment')
+        } }>Buy Now</Button>
+        </Stack>
       </Card.Body>
     </Card>
+    </>
   )
 }

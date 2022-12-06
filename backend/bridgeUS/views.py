@@ -78,27 +78,71 @@ def signout(request):
 
 
 @ensure_csrf_cookie
-def usershop(request, user_id):
+def usershop(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
-    if not CustomUser.objects.filter(id=user_id).exists():
-        return HttpResponse(status=404)
-
-    user = CustomUser.objects.filter(id=user_id).first()
-
-    if not UserShop.objects.filter(user=user).exists():
-        return HttpResponse(status=404)
-
-    usershop = UserShop.objects.filter(user=user).first()
+    usershop = UserShop.objects.filter(user=request.user).first()
 
     response_dict = get_usershop_json(usershop)
 
     return JsonResponse(response_dict, safe=False, status=200)
 
+@ensure_csrf_cookie
+def cart(request):
+    if request.method != 'GET' and request.method != 'POST':
+        return HttpResponseNotAllowed(['GET'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    if request.method == 'GET':    
+        cart = UserOrder.objects.filter(user=request.user, order_status=int(constants.OrderStatus.PRE_ORDER))
+
+        cart_all_list = [get_userorder_json(order) for order in cart]
+
+        return JsonResponse(cart_all_list, safe=False, status=200)
+    else: # 'POST'
+        body = request.body.decode()
+        userorder_user = request.user
+        userorder_item = json.loads(body)['item_id']
+        userorder_status = json.loads(body)['status']
+        userorder_single_price = json.loads(body)['single_price']
+        userorder_color = json.loads(body)['color']
+        userorder_size = json.loads(body)['size']
+        userorder_amount = json.loads(body)['ordered_amount']
+        userorder_shipping = json.loads(body)['fast_shipping']
+        userorder = UserOrder(user = userorder_user,
+                  ordered_item_id = userorder_item,
+                  single_price = userorder_single_price,
+                  color = userorder_color,
+                  size = userorder_size,
+                  fast_shipping = userorder_shipping,
+                  ordered_amount = userorder_amount,
+                  order_status = userorder_status)
+        userorder.save()
+
+        cart = UserOrder.objects.filter(user=request.user, order_status=int(constants.OrderStatus.PRE_ORDER))
+
+        cart_all_list = [get_userorder_json(order) for order in cart]
+
+        return JsonResponse(cart_all_list, safe=False, status=200)
+
+def cartitem(request, order_id):
+    if request.method != 'DELETE':
+        return HttpResponseNotAllowed(['DELETE'])
+    
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    
+    order = UserOrder.objects.get(id = order_id)
+
+    order.delete()
+
+    return HttpResponse(status=204)
 
 @ensure_csrf_cookie
 def userlist(request):
@@ -289,25 +333,28 @@ def reviewlist(request):
 
         return JsonResponse(review_all_list, safe=False, status=200)
     else:
-        print(request.headers)
-        print(request.FILES.getlist)
         body = request.POST
         review_title = body.get('title')
         review_content = body.get('content')
         review_item = body.get('review_item')
         review_rating = body.get('rating')
         review_image = request.FILES.getlist('image')[0] if len(request.FILES.getlist('image')) > 0 else None
-        print(review_title, review_content, review_item)
 
         review_shopItem = ShopItem.objects.get(id=review_item)
-
-        print(review_shopItem)
 
         review_author = request.user
 
         review = Review(title=review_title, content=review_content, author=review_author, review_item=review_shopItem,
                         rating=review_rating, image=review_image)
 
+        current_total_rate = review_shopItem.raters * review_shopItem.rating 
+        changed_rating = (float(review_rating) + current_total_rate) / (review_shopItem.raters + 1)
+
+        review_shopItem.raters = review_shopItem.raters + 1
+        review_shopItem.rating = changed_rating
+
+        review_shopItem.save()
+        
         review.save()
 
         response_dict = get_review_json(review)
@@ -436,7 +483,7 @@ def recommend_clothes(request, recommend_count):
     recommended_clothes = []
 
     if request.user.is_authenticated and len(UserOrder.objects.filter(user=request.user)) > 0:
-        recommended_clothes = find_similar_shopItems(UserOrder.objects.get(user=request.user).ordered_item.id,
+        recommended_clothes = find_similar_shopItems(UserOrder.objects.filter(user=request.user).last().ordered_item.id,
                                                      recommend_count, rating_dataframe)
     else:
         trending_review = Review.objects.all().order_by('likes')
@@ -459,16 +506,14 @@ def search(request):
     text = json.loads(body)['text']
     tags = json.loads(body)['tags']
 
-    print(f"text: ${text}")
-    print(f"tags: ${tags}")
-
     matched_items = ShopItem.objects
 
     if text is not None and text != "":
         matched_items = matched_items.filter(name__icontains=text)
 
     if tags is not None and len(tags) > 0:
-        matched_items = matched_items.filter(tags__name__in=tags)
+        for tag in tags:
+            matched_items = matched_items.filter(tags__name__in=[tag])
 
     ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
 
@@ -476,7 +521,7 @@ def search(request):
 
 
 @ensure_csrf_cookie
-def purchase(request):
+def purchase(request, shipping_fee):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
@@ -491,15 +536,17 @@ def purchase(request):
 
     user_credit = user_shop.credit
 
-    needed_credit = 0
+    needed_credit = shipping_fee
 
     for pre_order in pre_orders:
         needed_credit += pre_order.ordered_item.price * pre_order.ordered_amount
 
     if needed_credit > user_credit:
-        return JsonResponse({'message': 'not enough credit'}, status=200)
+        return JsonResponse({'message': 'not enough credit'}, status=400)
 
     user_credit -= needed_credit
+    user_shop.credit = user_credit
+    user_shop.save()
 
     for pre_order in pre_orders:
         pre_order.order_status = int(constants.OrderStatus.PRE_SHIPPING)
@@ -513,7 +560,9 @@ def usercomments(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
-    user_comments = Comment.objects.filter(author=request.user)
+    user_comments = Comment.objects.filter(review__author=request.user)
+
+    print(user_comments)
 
     comment_json_list = [get_comment_json(comment) for comment in user_comments]
 
@@ -531,7 +580,6 @@ def trendingposts(request, post_count):
         return_count = Review.objects.all().count()
 
     trending_posts = Review.objects.all().order_by('-likes')
-    print(trending_posts)
 
     return_posts = []
 
@@ -542,6 +590,37 @@ def trendingposts(request, post_count):
 
     return JsonResponse(post_json_list, safe=False, status=200)
 
+@ensure_csrf_cookie
+def addlikes(request, post_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    customUser = CustomUser.objects.get(id=request.user.id)
+
+    liked_posts_list = []
+
+    if len(customUser.liked_posts) > 0:
+        liked_posts_list = [int(num) for num in customUser.liked_posts.split(',')]
+    
+    if liked_posts_list.__contains__(int(post_id)):
+        return HttpResponse(status=400)
+
+    liked_posts_list.append(int(post_id))
+
+    customUser.liked_posts = ','.join(str(item) for item in liked_posts_list)
+
+    customUser.save()
+
+    post = Review.objects.get(id=post_id)
+
+    post.likes = post.likes + 1
+
+    post.save()
+
+    return JsonResponse(get_user_json(customUser), safe=False, status=200)
 
 def get_review_json(review):
     return {'id': review.id, 'rating': review.rating, 'review_item': review.review_item.id, 'title': review.title,
@@ -550,11 +629,11 @@ def get_review_json(review):
 
 
 def get_comment_json(comment):
-    return {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment.author.id}
+    return {'id': comment.id, 'review': comment.review.id, 'content': comment.content, 'author': comment.author.id, 'created_at': comment.created_at}
 
 
 def get_userorder_json(userorder):
-    return {'id': userorder.id, 'user_id': userorder.user.id, 'item_id': userorder.ordered_item.id,
+    return {'id': userorder.id, 'user_id': userorder.user.id, 'item_id': userorder.ordered_item.id, 'single_price': userorder.single_price,
             'status': userorder.order_status, 'color': userorder.color, 'ordered_amount': userorder.ordered_amount,
             'size': userorder.size, 'purchased_at': userorder.created_at}
 
@@ -572,9 +651,9 @@ def get_shopitemdetail_json(detail):
 def get_shopitem_json(shopitem):
     return {'id': shopitem.id, 'image_url': shopitem.image.url if shopitem.image else '', 'name': shopitem.name,
             'seller': shopitem.seller.id, 'price': shopitem.price, 'rating': shopitem.rating, 'type': shopitem.type,
-            'tags': list(shopitem.tags.names().values())}
+            'tags': list(shopitem.tags.names())}
 
 
 def get_user_json(user):
     return {'id': user.id, 'username': user.username, 'nickname': user.nickname, 'gender': user.gender,
-            'height': user.height, 'weight': user.weight}
+            'height': user.height, 'weight': user.weight, 'liked_posts': user.liked_posts}

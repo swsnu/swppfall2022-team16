@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopBar from '../components/TopBar'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -11,89 +11,80 @@ import { Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { fetchOrders, selectUserOrder } from '../store/slices/userorder'
 import '../css/Footer.css'
+import { fetchRelatedComments, selectComment } from '../store/slices/comment'
+import { selectUser, User } from '../store/slices/user'
 
 export default function MyPage (): JSX.Element {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
+  const commentState = useSelector(selectComment)
+  const userState = useSelector(selectUser)
 
   const time = new Date()
 
   useEffect(() => {
-    const fetches = async (): Promise<void> => {
+    const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchOrders())
+      await dispatch(fetchRelatedComments())
+      setLoaded(true)
     }
-    fetches().catch(() => {
-
-    })
+    fetchRequired().catch(() => {})
   }, [dispatch])
 
-  return (<div className = 'page-container'>
-    <div className = 'contents'>
-    <TopBar />
-    <br/>
-      <Container>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Img variant="top" src="../mypagebackground.jpg" />
-              <Card.ImgOverlay style={{ textAlign: 'center' }}>
-                <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
-                <Card.Title style={{ fontSize: '30px', color: 'white' }}>Alice</Card.Title>
-              </Card.ImgOverlay>
-              <Card.Body style={{ textAlign: 'center' }}>
-                <Button variant="primary">Edit</Button>
-              </Card.Body>
-            </Card>
-            <h1 className="Header-row  Header">Purchased</h1>
-            <ListGroup>
-              {
-                userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id))
-                  .map((userOrder) =>
-                    <ListGroup.Item key={userOrder.id}>
-                      <Purchased order={userOrder} />
-                    </ListGroup.Item>)
-              }
-              {/* <ListGroup.Item>
-                <Purchased
-                  itemName='Melange twill shirt'
-                  itemPrice = {209}
-                  shippingStatus = "Shipping"
-                  purchaseDate = "2022/10/27"
-                  />
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Purchased
-                  itemName='BTS orange hoodle'
-                  itemPrice = {59}
-                  shippingStatus = "Complete"
-                  purchaseDate = "2022/10/27"
-                  />
-              </ListGroup.Item> */}
-            </ListGroup>
+  if (loaded) {
+    const findAuthorName = (ID: number | undefined) => {
+      return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
+    }
 
-            <br/>
-            <h1 className="Header-row Header">Community</h1>
-            <ListGroup>
-              <ListGroup.Item action>
-                <CommunityAlert
-                  newCommentAuthor='Bethany'
-                  newCommentPostedTime = {time}
-                  newCommentedPostId={1}
-                />
-              </ListGroup.Item>
-              <ListGroup.Item action>
-                <CommunityAlert
-                  newCommentAuthor='Adam'
-                  newCommentPostedTime = {time}
-                  newCommentedPostId={1}
-                />
-              </ListGroup.Item>
-            </ListGroup>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <Footer/>
-  </div>)
+    return (<div className = 'page-container'>
+      <div className = 'contents'>
+      <TopBar />
+      <br/>
+        <Container>
+          <Row>
+            <Col>
+              <Card>
+                <Card.Img variant="top" src="../mypagebackground.jpg" />
+                <Card.ImgOverlay style={{ textAlign: 'center' }}>
+                  <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
+                  <Card.Title style={{ fontSize: '30px', color: 'white' }}>{findAuthorName(Number(id))}</Card.Title>
+                </Card.ImgOverlay>
+              </Card>
+              <h1 className="Header-row  Header">Purchased</h1>
+              <ListGroup>
+                {
+                  userOrderState.userOrders.filter((userOrder) => userOrder.user_id === Number(id) && userOrder.status !== 0)
+                    .map((userOrder) =>
+                      <ListGroup.Item key={userOrder.id}>
+                        <Purchased order={userOrder} />
+                      </ListGroup.Item>)
+                }
+              </ListGroup>
+
+              <br/>
+              <h1 className="Header-row Header">Community</h1>
+              <ListGroup>
+                {
+                  commentState.comments.map((comment) => {
+                    return <ListGroup.Item key={comment.id} action>
+                      <CommunityAlert
+                        newCommentAuthor={findAuthorName(comment.author)!}
+                        newCommentPostedTime = {comment.created_at}
+                        newCommentedPostId={comment.review}
+                      />
+                    </ListGroup.Item>
+                  })
+                }
+              </ListGroup>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      <Footer/>
+    </div>)
+  } else {
+    return <div></div>
+  }
 }

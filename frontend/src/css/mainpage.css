@@ -12,6 +12,11 @@
     margin-top : 10px;
 }
 
+.communityPosts {
+    width : 100vw;
+    height : auto;
+    background-color: white;
+}
 .showmore {
     text-align: center;
 }
@@ -20,8 +25,13 @@
     height : 50px;
 }
 
-.spacing2 {
-    height : 20px;
+.spacingbetweensection {
+    width : auto;
+    height : 10px;
+}
+
+.spacingbetweenword {
+    height : 30px;
 }
 
 .spacing3 {

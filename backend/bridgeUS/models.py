@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     height = models.IntegerField(null=True)
     weight = models.IntegerField(null=True)
     gender = models.TextField(null=True)
+    liked_posts = models.TextField(null=True, default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -36,7 +37,8 @@ class ShopItem(models.Model):
     name = models.TextField(null=True)
     image = models.ImageField(upload_to='images/', null=True)
     price = models.FloatField(null=True, default=0)
-    rating = models.FloatField(null=True)
+    rating = models.FloatField(null=True, default=0)
+    raters = models.IntegerField(null=True, default=0)
     type = models.TextField(null=True)
     tags = TaggableManager()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,6 +72,8 @@ class UserOrder(models.Model):
 
     color = models.TextField(null=True)
     size = models.TextField(null=True)
+
+    single_price = models.IntegerField(null=True)
 
     fast_shipping = models.BooleanField(default=False)
 

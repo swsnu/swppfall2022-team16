@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor} from "@testing-library/react";
 import Post from "./Post";
 import { renderWithProviders, stubReviewState, stubShopItemState, stubUserState } from '../test-utils/mock';
+import { ReviewState } from '../store/slices/review'
 import { UserState } from "../store/slices/user";
 import { ShopItemState } from "../store/slices/shopitem";
 import { ReviewState } from "../store/slices/review";

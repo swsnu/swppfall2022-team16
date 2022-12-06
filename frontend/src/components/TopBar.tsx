@@ -8,12 +8,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import '../css/mainpage.css'
+import { fetchCart, selectUserOrder } from '../store/slices/userorder'
+
 
 export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
   const [searchText, setSearchText] = useState('')
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+  const userOrderState = useSelector(selectUserOrder)
 
   useEffect(() => {
     if (userState.currentLoggedIn != null) {
@@ -21,11 +25,20 @@ export default function TopBar (): JSX.Element {
     } else setloggedIn(false)
   })
 
+  useEffect(()=> {
+    const fetchRequired = async (): Promise<void> => {
+      await dispatch(fetchCart())
+    }
+    fetchRequired().catch(() => {})
+  }, [dispatch, loggedIn])
+
+  
+
+  let items = userOrderState.cart
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + String(userId)
   const userName = userState.currentLoggedIn?.nickname
-  const dispatch = useDispatch<AppDispatch>()
-  const loggingout = async (): Promise<void> => {
+  const loggingout = async () => {
     setloggedIn(false)
     const fetchRequired = async (): Promise<void> => {
       await dispatch(signout())
@@ -39,7 +52,6 @@ export default function TopBar (): JSX.Element {
     <>
      <style type="text/css">
         {`
-             
              .btn-grad {
               background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
               text-align: center;
@@ -56,8 +68,7 @@ export default function TopBar (): JSX.Element {
               background-position: right center; /* change the direction of the change here */
               color: #FFE5B4;
               text-decoration: none;
-            }
-           
+            }  
     `}
       </style>
     <Navbar sticky = "top" bg="light" variant="light">
@@ -72,7 +83,7 @@ export default function TopBar (): JSX.Element {
             <Nav.Link href = '/community'>
             <Stack direction = 'horizontal'>
               <img alt = 'community' src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
-              <div className = 'spacing3'></div>
+              <div className = 'sp    acing3'></div>
               </Stack>
             </Nav.Link>
           <Form className="d-flex">
@@ -90,6 +101,11 @@ export default function TopBar (): JSX.Element {
               }}
             />
           </Form>
+            <Stack direction = 'horizontal'>
+              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
+              {loggedIn ? items.length : 0}
+              <div className = 'spacing3'></div>
+              </Stack>
           {
             loggedIn
               ? <Stack direction = 'horizontal'>

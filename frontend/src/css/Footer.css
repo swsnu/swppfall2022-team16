@@ -1,7 +1,7 @@
 .footer{
     margin-top: 200px;
     padding-top : 15px;
-    background-color: #222222;
+    background-color: #e4e4e4;
     color : grey;
     position: absolute;
     bottom : 0;
@@ -23,4 +23,9 @@
 .spaces {
   width : 50px;
   height : auto;
+}
+
+.spacing2 {
+  width : auto;
+  height : 50px;
 }

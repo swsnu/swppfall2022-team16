@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RootState } from '..'
 
@@ -12,7 +12,8 @@ export interface UserOrderInfo {
   id: number
   user_id: number
   item_id: number
-  status: string
+  single_price: number 
+  status: number
   color: string
   size: string
   ordered_amount: number
@@ -22,10 +23,12 @@ export interface UserOrderInfo {
 
 export interface UserOrderState {
   userOrders: UserOrderInfo[]
+  cart: UserOrderInfo[]
 }
 
 const initialState: UserOrderState = {
-  userOrders: []
+  userOrders: [],
+  cart: []
 }
 
 export const fetchOrders = createAsyncThunk(
@@ -36,13 +39,60 @@ export const fetchOrders = createAsyncThunk(
   }
 )
 
+export const fetchCart = createAsyncThunk(
+  'userorder/fetchCart',
+  async () => {
+    const response = await axios.get<UserOrderInfo[]>('/api/cart/')
+    return response.data
+  }
+)
+
+export const addToCart = createAsyncThunk(
+  'userorder/addToCart',
+  async (order: UserOrderInfo) => {
+    const response = await axios.post('/api/cart/', order)
+    return response.data
+  }
+)
+
+export const deleteFromCart = createAsyncThunk(
+  'userorder/deleteFromCart',
+  async (orderID: number, { dispatch }) => {
+    const response = await axios.delete(`/api/cart/${orderID}/`)
+    dispatch(userOrderActions.deleteFromCart({ targetId: orderID }))
+    return response.data
+  }
+)
+
+
+export const purchaseWithCredit = createAsyncThunk(
+  'userorder/purchaseWithCredit',
+  async (shippingFee: number) => {
+    console.log(`shippingFee: ${shippingFee}`)
+    const response = await axios.get(`/api/purchase/${shippingFee}`)
+    return response.data
+  }
+)
+
 export const userOrderSlice = createSlice({
   name: 'userorder',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteFromCart: (state, action: PayloadAction<{ targetId: number }>) => {
+      state.cart = state.cart.filter((value) => {
+        return value.id !== action.payload.targetId
+      })
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       state.userOrders = action.payload
+    })
+    builder.addCase(fetchCart.fulfilled, (state, action) => {
+      state.cart = action.payload
+    })
+    builder.addCase(addToCart.fulfilled, (state, action) => {
+      state.cart = action.payload
     })
   }
 })

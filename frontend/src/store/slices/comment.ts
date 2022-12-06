@@ -13,6 +13,7 @@ export interface CommentInfo {
   review: number
   content: string
   author: number
+  created_at: Date
 }
 
 export interface CommentState {
@@ -27,6 +28,14 @@ export const fetchComments = createAsyncThunk(
   'comment/fetchComments',
   async (reviewId: number) => {
     const response = await axios.get<CommentInfo[]>(`/api/review/${reviewId}/comment/`)
+    return response.data
+  }
+)
+
+export const fetchRelatedComments = createAsyncThunk(
+  'comment/fetchRelatedComments',
+  async () => {
+    const response = await axios.get<CommentInfo[]>('/api/usercomments/')
     return response.data
   }
 )
@@ -78,6 +87,9 @@ export const commentSlice = createSlice({
       const reviewId = action.meta.arg
       state.comments = state.comments.filter((comment) => comment.review !== reviewId)
         .concat(action.payload)
+    })
+    builder.addCase(fetchRelatedComments.fulfilled, (state, action) => {
+      state.comments = action.payload
     })
   }
 })
