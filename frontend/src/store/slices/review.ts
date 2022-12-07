@@ -51,7 +51,7 @@ export const fetchReview = createAsyncThunk(
 export const fetchTrendingPosts = createAsyncThunk(
   'review/trendingPosts',
   async () => {
-    const response = await axios.get<ReviewInfo[]>('/api/trendingposts/3/')
+    const response = await axios.get<ReviewInfo[]>('/api/trendingposts/4/')
     return response.data
   }
 )
