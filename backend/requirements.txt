@@ -91,6 +91,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
 Pygments==2.13.0
+PyMySQL==1.0.2
 pylint==2.15.5
 pylint-django==2.5.3
 pylint-plugin-utils==0.7
