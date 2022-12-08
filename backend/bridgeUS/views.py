@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth import logout, authenticate, login
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 
 import json
@@ -92,10 +93,8 @@ def usershop(request):
     return JsonResponse(response_dict, safe=False, status=200)
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'POST'])
 def cart(request):
-    if request.method != 'GET' and request.method != 'POST':
-        return HttpResponseNotAllowed(['GET'])
-
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     
