@@ -15,6 +15,7 @@ from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Revi
 
 
 @ensure_csrf_cookie
+@require_http_methods(['POST'])
 def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -50,6 +51,7 @@ def token(request):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['POST'])
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -265,6 +267,7 @@ def shopitemdetail_list(request, item_id):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'PUT'])
 def shopitemdetail(request, detail_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -304,6 +307,7 @@ def shopitemdetail(request, detail_id):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET'])
 def userorderlist(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -317,6 +321,7 @@ def userorderlist(request):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'POST'])
 def reviewlist(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -362,6 +367,7 @@ def reviewlist(request):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'PUT', 'DELETE'])
 def review(request, review_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -399,6 +405,7 @@ def review(request, review_id):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'POST'])
 def reviewcomment(request, review_id):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -434,6 +441,7 @@ def reviewcomment(request, review_id):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET', 'PUT', 'DELETE'])
 def comment(request, comment_id):
     if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
         return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
@@ -468,6 +476,7 @@ def comment(request, comment_id):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET'])
 def recommend_clothes(request, recommend_count):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -496,6 +505,7 @@ def recommend_clothes(request, recommend_count):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['POST'])
 def search(request):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -520,6 +530,7 @@ def search(request):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET'])
 def purchase(request, shipping_fee):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -555,6 +566,7 @@ def purchase(request, shipping_fee):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET'])
 def usercomments(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -569,6 +581,7 @@ def usercomments(request):
 
 
 @ensure_csrf_cookie
+@require_http_methods(['GET'])
 def trendingposts(request, post_count):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
@@ -590,6 +603,7 @@ def trendingposts(request, post_count):
     return JsonResponse(post_json_list, safe=False, status=200)
 
 @ensure_csrf_cookie
+@require_http_methods(['POST'])
 def addlikes(request, post_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
