@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'ec2-3-34-50-70.ap-northeast-2.compute.amazonaws.com', '3.34.50.70', '43.200.41.93']
 
+CSRF_TRUSTED_ORIGINS = ['https://bridgeus.shop']
 
 # Application definition
 

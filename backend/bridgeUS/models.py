@@ -20,7 +20,7 @@ class UserShop(models.Model):
         on_delete=models.CASCADE,
     )
 
-    credit = models.FloatField(null=True, default=0)
+    credit = models.FloatField(null=True, default=10000)
     cart = models.JSONField(null=True)
     purchased_item = models.JSONField(null=True)
 
