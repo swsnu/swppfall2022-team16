@@ -5,15 +5,26 @@ import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { ShopItemInfo } from '../store/slices/shopitem'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
+import '../css/shopitem.css'
 
 export default function ShopItem (props: { shopItem: ShopItemInfo | undefined }): JSX.Element {
   const [loaded, setLoaded] = useState<boolean>(false)
   const [hover, setHover] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
   const shopItem = props.shopItem
+  let itemTitle = shopItem?.name
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
 
+  const cutTitle = () => {
+    if (itemTitle == undefined) {
+      return ' '
+    }
+    else {
+      return itemTitle = itemTitle.substring(0, 23) + "..."
+    }
+  }
+  
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchUsers())
@@ -31,7 +42,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
       <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
         <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
-          <Card.Title >{shopItem?.name}</Card.Title>
+          <Card.Title bsPrefix='shopitemtitle' >{cutTitle()}</Card.Title>
           <Card.Text data-testid = "test">{findAuthorName(shopItem?.seller)}</Card.Text>
         </Card.Body>
       </Card>
