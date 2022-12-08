@@ -22,6 +22,7 @@ const renderPaymentPage = (shopItemState: ShopItemState, userState: UserState) =
   )
 }
 
+
 describe('<PaymentPage />', () => {
   it('should render without error', () => {
     renderPaymentPage(stubShopItemState, stubUserState)
