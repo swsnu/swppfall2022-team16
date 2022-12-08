@@ -1,5 +1,8 @@
 import { fireEvent, render, screen, waitFor} from "@testing-library/react";
+import { renderWithProviders} from "../test-utils/mock";
 import OrderDetailForm from "./OrderDetailForm";
+import { UserOrderState } from "../store/slices/userorder";
+
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -11,6 +14,20 @@ jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: () => mockDispatch,
 }));
+
+const renderOrderDetailForm = (userOrderState : UserOrderState) => {
+  renderWithProviders(
+    <OrderDetailForm  itemID = {undefined}
+    itemName = "BridgeUs"
+    sellerName= "team16"
+    colors={['red']}
+    rating = {3}
+    quantity = {5}
+    price = {undefined}
+    recommendedSize = "M"
+    />, { preloadedState: { userorder : userOrderState } }
+  )
+}
 
 describe("<OrderDetailForm />", () => {
     it("should render without errors", async () => {

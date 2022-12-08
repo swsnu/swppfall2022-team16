@@ -44,14 +44,14 @@ const renderPostPage = () => {
 }
 
 describe('<PostPage />', () => {
-  it('should render without errors', () => {
+  it('should render without errors', async() => {
     mockDispatch.mockResolvedValue({
       type: 'review/fetchReview/fulfilled',
       payload: stubReviewState.reviews[0]
     })
     renderPostPage()
 
-    expect(screen.getAllByTestId('spyTopBar')).toHaveLength(1)
+    expect(await screen.findAllByTestId('spyTopBar')).toHaveLength(1)
     expect(screen.getAllByTestId('spyPost')).toHaveLength(1)
     expect(screen.getAllByTestId('spyPostComments')).toHaveLength(1)
     expect(screen.getAllByTestId('spyFooter')).toHaveLength(1)

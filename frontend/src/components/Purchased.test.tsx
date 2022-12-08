@@ -16,7 +16,7 @@ jest.mock("react-redux", () => ({
 
 
 describe("<Purchased />", () => {
-    it("should render without errors", () => {
+    it("should render without errors", async() => {
         renderWithProviders(
             <Purchased order = {{
             id: 1,
@@ -30,8 +30,8 @@ describe("<Purchased />", () => {
             fast_shipping : true,
         }}/>);
 
-        screen.getByText("shipping");
-        const reviewButton = screen.getByText("Write your Review");
+        await screen.findByText("shipping");
+        const reviewButton = screen.getByRole("button");
         fireEvent.click(reviewButton);
         expect(mockNavigate).toHaveBeenCalled();
     })
