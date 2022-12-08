@@ -18,6 +18,7 @@ export default function TopBar (): JSX.Element {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
+  let alertMessage = 'Invalid search keyword'
 
   useEffect(() => {
     if (userState.currentLoggedIn != null) {
@@ -95,8 +96,11 @@ export default function TopBar (): JSX.Element {
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && (searchText != '.' && searchText != '..')) {
                   navigate(`/search/${searchText}`)
+                }else if (e.key === 'Enter' && (searchText == '.' || searchText == '..')) {
+                  setSearchText(" ")
+                  return window.alert(alertMessage)
                 }
               }}
             />
