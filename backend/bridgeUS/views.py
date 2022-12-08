@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 import json
 import pandas as pd
 
-from bridgeUS import constants
+import constants
 
 from ml.cloth_recommendation import find_similar_shopItems
 
@@ -17,29 +17,26 @@ from bridgeUS.models import CustomUser, UserShop, ShopItem, ShopItemDetail, Revi
 @ensure_csrf_cookie
 @require_http_methods(['POST'])
 def signup(request):
-    if request.method == 'POST':
-        req_data = json.loads(request.body.decode())
+    req_data = json.loads(request.body.decode())
 
-        username = req_data['username']
-        nickname = req_data['nickname']
-        password = req_data['password']
+    username = req_data['username']
+    nickname = req_data['nickname']
+    password = req_data['password']
 
-        created_user = CustomUser.objects.create_user(username=username, nickname=nickname, password=password)
+    created_user = CustomUser.objects.create_user(username=username, nickname=nickname, password=password)
 
-        # create default usershopmodel
-        usershop = UserShop(user=created_user)
+    # create default usershopmodel
+    usershop = UserShop(user=created_user)
 
-        usershop.save()
+    usershop.save()
 
-        user = authenticate(request, username=username, password=password)
+    user = authenticate(request, username=username, password=password)
 
-        login(request, user)
+    login(request, user)
 
-        user_all_list = [get_user_json(user) for user in CustomUser.objects.all()]
+    user_all_list = [get_user_json(user) for user in CustomUser.objects.all()]
 
-        return JsonResponse({'userlist': user_all_list, 'id': user.id}, status=201)
-    else:
-        return HttpResponseNotAllowed(['POST'])
+    return JsonResponse({'userlist': user_all_list, 'id': user.id}, status=201)
 
 
 @ensure_csrf_cookie
@@ -53,20 +50,16 @@ def token(request):
 @ensure_csrf_cookie
 @require_http_methods(['POST'])
 def signin(request):
-    if request.method == 'POST':
-        req_data = json.loads(request.body.decode())
-        username = req_data['username']
-        password = req_data['password']
-        user = authenticate(request, username=username, password=password)
+    req_data = json.loads(request.body.decode())
+    username = req_data['username']
+    password = req_data['password']
+    user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'id': user.id}, status=200)
-        else:
-            return HttpResponse(status=401)
+    if user is not None:
+        login(request, user)
+        return JsonResponse({'id': user.id}, status=200)
     else:
-        return HttpResponseNotAllowed(['POST'])
-
+        return HttpResponse(status=401)
 
 @ensure_csrf_cookie
 def signout(request):
@@ -78,7 +71,6 @@ def signout(request):
 
     logout(request)
     return HttpResponse(status=204)
-
 
 @ensure_csrf_cookie
 def usershop(request):
@@ -133,11 +125,11 @@ def cart(request):
         return JsonResponse(cart_all_list, safe=False, status=200)
 
 def cartitem(request, order_id):
-    if request.method != 'DELETE':
-        return HttpResponseNotAllowed(['DELETE'])
-    
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
+    
+    if request.method != 'DELETE':
+        return HttpResponseNotAllowed(['DELETE'])
     
     order = UserOrder.objects.get(id = order_id)
 
@@ -267,11 +259,8 @@ def shopitemdetail_list(request, item_id):
 
 
 @ensure_csrf_cookie
-@require_http_methods(['GET', 'PUT'])
+@require_http_methods(['GET', 'PUT', 'DELETE'])
 def shopitemdetail(request, detail_id):
-    if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
-        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
-
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -309,9 +298,6 @@ def shopitemdetail(request, detail_id):
 @ensure_csrf_cookie
 @require_http_methods(['GET'])
 def userorderlist(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
-
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -323,9 +309,6 @@ def userorderlist(request):
 @ensure_csrf_cookie
 @require_http_methods(['GET', 'POST'])
 def reviewlist(request):
-    if request.method != 'GET' and request.method != 'POST':
-        return HttpResponseNotAllowed(['GET', 'POST'])
-
     if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -369,9 +352,6 @@ def reviewlist(request):
 @ensure_csrf_cookie
 @require_http_methods(['GET', 'PUT', 'DELETE'])
 def review(request, review_id):
-    if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
-        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
-
     if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -407,9 +387,6 @@ def review(request, review_id):
 @ensure_csrf_cookie
 @require_http_methods(['GET', 'POST'])
 def reviewcomment(request, review_id):
-    if request.method != 'GET' and request.method != 'POST':
-        return HttpResponseNotAllowed(['GET', 'POST'])
-
     if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -443,9 +420,6 @@ def reviewcomment(request, review_id):
 @ensure_csrf_cookie
 @require_http_methods(['GET', 'PUT', 'DELETE'])
 def comment(request, comment_id):
-    if request.method != 'GET' and request.method != 'PUT' and request.method != 'DELETE':
-        return HttpResponseNotAllowed(['GET', 'PUT', 'DELETE'])
-
     if request.method != 'GET' and not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -478,9 +452,6 @@ def comment(request, comment_id):
 @ensure_csrf_cookie
 @require_http_methods(['GET'])
 def recommend_clothes(request, recommend_count):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
-
     data = []
 
     for review in Review.objects.all():
@@ -507,9 +478,6 @@ def recommend_clothes(request, recommend_count):
 @ensure_csrf_cookie
 @require_http_methods(['POST'])
 def search(request):
-    if request.method != 'POST':
-        return HttpResponseNotAllowed(['POST'])
-
     body = request.body.decode()
 
     text = json.loads(body)['text']
@@ -532,9 +500,6 @@ def search(request):
 @ensure_csrf_cookie
 @require_http_methods(['GET'])
 def purchase(request, shipping_fee):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
-
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 
@@ -568,9 +533,6 @@ def purchase(request, shipping_fee):
 @ensure_csrf_cookie
 @require_http_methods(['GET'])
 def usercomments(request):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
-
     user_comments = Comment.objects.filter(review__author=request.user)
 
     print(user_comments)
@@ -583,9 +545,6 @@ def usercomments(request):
 @ensure_csrf_cookie
 @require_http_methods(['GET'])
 def trendingposts(request, post_count):
-    if request.method != 'GET':
-        return HttpResponseNotAllowed(['GET'])
-
     return_count = post_count
 
     if post_count > Review.objects.all().count():
@@ -605,9 +564,6 @@ def trendingposts(request, post_count):
 @ensure_csrf_cookie
 @require_http_methods(['POST'])
 def addlikes(request, post_id):
-    if request.method != 'POST':
-        return HttpResponseNotAllowed(['POST'])
-
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
 

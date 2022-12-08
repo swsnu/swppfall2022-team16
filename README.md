@@ -33,6 +33,7 @@ $ yarn start
 ```
 $ cd backend
 $ coverage run --source='./bridgeUS' manage.py test
+$ coverage report -m
 ```
 
 ### Frontend
