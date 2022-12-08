@@ -84,7 +84,7 @@ export default function TopBar (): JSX.Element {
             <Nav.Link href = '/community'>
             <Stack direction = 'horizontal'>
               <img alt = 'community' src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
-              <div className = 'sp    acing3'></div>
+              <div className = 'spacing3'></div>
               </Stack>
             </Nav.Link>
           <Form className="d-flex">
@@ -105,11 +105,13 @@ export default function TopBar (): JSX.Element {
               }}
             />
           </Form>
+          <Nav.Link href = '/payment'>
             <Stack direction = 'horizontal'>
-              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
+              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' ></img>
               {loggedIn ? items.length : 0}
               <div className = 'spacing3'></div>
               </Stack>
+            </Nav.Link>
           {
             loggedIn
               ? <Stack direction = 'horizontal'>
