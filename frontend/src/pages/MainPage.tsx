@@ -89,7 +89,7 @@ export default function MainPage (): JSX.Element {
           <Col md={6}></Col>
           {
             filters.map(({ category, options }) => <Col key={category} md={1}>
-              <Filter key={category} category={category} options={options} handler={tagHandler}/>
+              <Filter key={category} data-testid={`tag_${category}`} category={category} options={options} handler={tagHandler}/>
             </Col>)
           }
           <Col md={1}>
