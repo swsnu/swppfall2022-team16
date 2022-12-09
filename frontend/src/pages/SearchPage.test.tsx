@@ -29,7 +29,10 @@ const renderSearchPage = (shopItemState: ShopItemState) => {
 }
 
 describe('<SearchPage />', () => {
-  it('should render without error', () => {
+  it('should render without error', async () => {
     renderSearchPage(stubShopItemState)
+    await screen.findByText('Top Results')
+    const showMoreButton = await screen.findByText('Show More')
+    fireEvent.click(showMoreButton)
   })
 })

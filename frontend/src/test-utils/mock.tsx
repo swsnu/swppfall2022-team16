@@ -40,8 +40,11 @@ export const stubShopItemState: ShopItemState = {
     { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] }
   ],
   top_results: [],
-  recommendations: [],
-  current_shopitem: null
+  recommendations: [
+    { id: 2, name: 'name2', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] },
+    { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] }
+  ],
+  current_shopitem: { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] }
 }
 
 export const stubUserOrderState: UserOrderState = {
