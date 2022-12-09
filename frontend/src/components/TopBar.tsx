@@ -18,6 +18,7 @@ export default function TopBar (): JSX.Element {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
+  let alertMessage = 'Invalid search keyword'
 
   useEffect(() => {
     if (userState.currentLoggedIn != null) {
@@ -83,7 +84,7 @@ export default function TopBar (): JSX.Element {
             <Nav.Link href = '/community'>
             <Stack direction = 'horizontal'>
               <img alt = 'community' src = '/community.png' width = '20' height = '20' className='communitylogo'></img>
-              <div className = 'sp    acing3'></div>
+              <div className = 'spacing3'></div>
               </Stack>
             </Nav.Link>
           <Form className="d-flex">
@@ -95,17 +96,22 @@ export default function TopBar (): JSX.Element {
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && (searchText != '.' && searchText != '..')) {
                   navigate(`/search/${searchText}`)
+                }else if (e.key === 'Enter' && (searchText == '.' || searchText == '..')) {
+                  setSearchText(" ")
+                  return window.alert(alertMessage)
                 }
               }}
             />
           </Form>
+          <Nav.Link href = '/payment'>
             <Stack direction = 'horizontal'>
-              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' onClick = {() => navigate('/payment')} ></img>
+              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' ></img>
               {loggedIn ? items.length : 0}
               <div className = 'spacing3'></div>
               </Stack>
+            </Nav.Link>
           {
             loggedIn
               ? <Stack direction = 'horizontal'>

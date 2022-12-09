@@ -38,10 +38,10 @@ const renderReviewPage = (shopItemState: ShopItemState) => {
 }
 
 describe('<ReviewPage />', () => {
-  it('should render without errors', () => {
+  it('should render without errors', async() => {
     renderReviewPage(stubShopItemState)
     expect(mockDispatch).toHaveBeenCalled()
-    expect(screen.getAllByTestId('spyTopBar')).toHaveLength(1)
+    expect(await screen.findAllByTestId('spyTopBar')).toHaveLength(1)
     expect(screen.getAllByTestId('spyShopItem')).toHaveLength(1)
     expect(screen.getAllByTestId('spyReviewForm')).toHaveLength(1)
     expect(screen.getAllByTestId('spyFooter')).toHaveLength(1)

@@ -115,7 +115,11 @@ export default function MainPage (): JSX.Element {
           </div>
         </Row>
         <div className ='showmore'>
-        <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+          {
+            //change 8 below to however we want
+            showMoreCount == 8 ? <></> :
+            <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+          }
         </div>
         <div className = 'spacingbetweensection'></div>
         </div>
