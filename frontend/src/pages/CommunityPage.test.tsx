@@ -1,3 +1,4 @@
+import { screen } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { ReviewState } from "../store/slices/review"
 import { ShopItemState } from "../store/slices/shopitem"
@@ -15,7 +16,8 @@ const renderCommunityPage = (shopItemState: ShopItemState, reviewState: ReviewSt
 }
 
 describe('<CommunityPage />', () => {
-  it('should render without error', () => {
+  it('should render without error', async () => {
     renderCommunityPage(stubShopItemState, stubReviewState)
+    await screen.findByText('Community')
   })
 })

@@ -34,10 +34,10 @@ export const getMockStore = (preloadedState?: PreloadedState<RootState>): Toolki
 
 export const stubShopItemState: ShopItemState = {
   shopitems: [
-    { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
-    { id: 2, name: 'name2', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
-    { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' },
-    { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type' }
+    { id: 1, name: 'name', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] },
+    { id: 2, name: 'name2', seller: 1, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] },
+    { id: 3, name: 'name3', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] },
+    { id: 4, name: 'name4', seller: 2, image_url: 'url', price: 1, rating: 1, star: 1, type: 'type', tags: ['a', 'b'] }
   ],
   top_results: [],
   recommendations: [],
@@ -46,7 +46,10 @@ export const stubShopItemState: ShopItemState = {
 
 export const stubUserOrderState: UserOrderState = {
   userOrders: [
-    { id: 1, user_id: 1, item_id: 1, status: 'shipping', color: 'red', size: 'S', ordered_amount: 1, purchased_at: new Date(), fast_shipping : true}
+    { id: 1, user_id: 1, item_id: 1, status: 1, color: 'red', size: 'S', ordered_amount: 1, purchased_at: new Date(), fast_shipping : true, single_price: 100 }
+  ],
+  cart: [
+    { id: 2, user_id: 1, item_id: 1, status: 0, color: 'red', size: 'S', ordered_amount: 1, purchased_at: new Date(), fast_shipping : true, single_price: 100 }
   ]
 }
 
@@ -70,27 +73,27 @@ export const stubNoReviewState: ReviewState = {
 
 export const stubUserState: UserState = {
   users: [
-    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
-    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
-    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' }
+    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' },
+    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' },
+    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' }
   ],
   currentLoggedIn: null
 }
 
 export const stubLoginUserState: UserState = {
   users: [
-    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' },
-    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male' },
-    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male' }
+    { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' },
+    { id: 2, username: 'username2', nickname: 'nickname2', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' },
+    { id: 3, username: 'username3', nickname: 'nickname3', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' }
   ],
-  currentLoggedIn: { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male' }
+  currentLoggedIn: { id: 1, username: 'username1', nickname: 'nickname1', height: 1, weight: 1, gender: 'male', liked_posts: '1,2' }
 }
 
 export const stubCommentState: CommentState = {
   comments: [
-    { id: 1, review: 1, content: 'content1', author: 1 },
-    { id: 2, review: 1, content: 'content2', author: 2 },
-    { id: 3, review: 2, content: 'content3', author: 2 },
+    { id: 1, review: 1, content: 'content1', author: 1, created_at: new Date() },
+    { id: 2, review: 1, content: 'content2', author: 2, created_at: new Date() },
+    { id: 3, review: 2, content: 'content3', author: 2, created_at: new Date() },
   ]
 }
 
