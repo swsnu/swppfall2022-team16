@@ -38,7 +38,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
-    return <div>
+    return <div data-testid='card-with-data'>
       <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
         <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
@@ -48,7 +48,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
       </Card>
     </div>
   } else {
-    return <div>
+    return <div data-testid='card-with-placeholder'>
       <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
         <Card.Img variant="top" src='/bridgeUsLogo.png' alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
