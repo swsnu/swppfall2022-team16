@@ -27,16 +27,15 @@ describe("<Post />", () => {
     it("should render without errors", async () => {
         mockDispatch.mockResolvedValueOnce({});
         renderPost(stubReviewState, stubUserState, stubShopItemState)
-        const postImage = screen.getByAltText("postimage");
-        const likeButton = screen.getByRole("button");
-        screen.getByTestId("rating");
-        screen.getByTestId("author");
+        const postImage = await screen.findByAltText("postimage");
+        const likeButton = await screen.findByRole("button");
+        await screen.findByTestId("rating");
+        await screen.findByTestId("author");
         await waitFor (() => fireEvent.click(likeButton));
         expect(mockNavigate).not.toHaveBeenCalled();
-        screen.getByText("1001")
-        fireEvent.mouseOver(postImage);
-        fireEvent.mouseOut(postImage);
-        fireEvent.click(postImage);
+        await waitFor (() => fireEvent.mouseOver(postImage));
+        await waitFor (() =>fireEvent.mouseOut(postImage));
+        await waitFor (() =>fireEvent.click(postImage));
         expect(mockNavigate).toHaveBeenCalled();
         })
 });
