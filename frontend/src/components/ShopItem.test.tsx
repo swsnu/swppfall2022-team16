@@ -29,7 +29,6 @@ describe("<Post />", () => {
         const postImage = screen.getByAltText("Product Image");
         fireEvent.mouseOver(postImage);
         fireEvent.mouseOut(postImage);
-        screen.getByText("BridgeUs");
         screen.getByTestId("test");
         })
 });
