@@ -159,7 +159,9 @@ disable=abstract-method,
         invalid-name,
         reimported,
         missing-module-docstring,
-        django-not-configured
+        django-not-configured,
+        trailing-whitespace,
+        unnecessary-dunder-call
 
 [REPORTS]
 
