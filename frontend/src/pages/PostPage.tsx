@@ -24,6 +24,7 @@ export default function PostPage (): JSX.Element {
   const reviewState = useSelector(selectReview)
   const itemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
+  let alertMessage = 'Comment is empty'
 
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
@@ -41,9 +42,15 @@ export default function PostPage (): JSX.Element {
     }
 
     const commentButtonHandler = (): void => {
-      const data = { review_id: Number(id), content: comment }
-      dispatch(postComment(data))
-      setComment('')
+      if (comment.length >= 1) {
+        const data = { review_id: Number(id), content: comment }
+        dispatch(postComment(data))
+        setComment('')
+      }
+      else {
+        return window.alert(alertMessage)
+      }
+     
     }
 
     const review = reviewState.reviews.find((review) => review.id === Number(id))!

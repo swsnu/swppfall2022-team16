@@ -1,7 +1,7 @@
 import { AnyAction, configureStore, EnhancedStore, ThunkMiddleware } from "@reduxjs/toolkit"
 import axios from "axios"
 import { getMockStore, stubCommentState, stubNoReviewState, stubReviewState } from "../../test-utils/mock"
-import reducer, { deleteReview, fetchReviews, postReview, putReview, ReviewState } from "./review"
+import reducer, { deleteReview, fetchReview, fetchReviews, fetchTrendingPosts, likePost, postReview, putReview, ReviewState } from "./review"
 
 describe('review reducer', () => {
   let store: EnhancedStore<
@@ -25,6 +25,20 @@ describe('review reducer', () => {
       data: reviews
     })
     await store.dispatch(fetchReviews())
+  })
+  it('should handle fetchReview', async () => {
+    const reviews = stubReviewState
+    axios.get = jest.fn().mockResolvedValueOnce({
+      data: reviews.reviews[0]
+    })
+    await store.dispatch(fetchReview(1))
+  })
+  it('should handle fetchTrendingPosts', async () => {
+    const reviews = stubReviewState
+    axios.get = jest.fn().mockResolvedValueOnce({
+      data: reviews.trending_posts
+    })
+    await store.dispatch(fetchTrendingPosts())
   })
   it('should handle postReview', async () => {
     const review = stubReviewState.reviews[0]
@@ -50,5 +64,19 @@ describe('review reducer', () => {
     store = getMockStore({ review: stubReviewState })
     axios.delete = jest.fn().mockResolvedValueOnce({})
     await store.dispatch(deleteReview(1))
+  })
+  it('should handle likePost', async () => {
+    store = getMockStore({ review: stubReviewState })
+    axios.post = jest.fn().mockResolvedValueOnce({
+      liked_posts: '1,2'
+    })
+    await store.dispatch(likePost(1))
+  })
+  it('should handle likePost with error', async () => {
+    store = getMockStore({ review: stubReviewState })
+    axios.post = jest.fn().mockResolvedValueOnce({
+      liked_posts: '1,2'
+    })
+    await store.dispatch(likePost(3))
   })
 })

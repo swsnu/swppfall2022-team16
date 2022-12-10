@@ -22,22 +22,23 @@ const renderPaymentPage = (shopItemState: ShopItemState, userState: UserState) =
   )
 }
 
+
 describe('<PaymentPage />', () => {
-  it('should render without error', () => {
+  it('should render without error', async() => {
     renderPaymentPage(stubShopItemState, stubUserState)
-    screen.getByTestId('spyPaymentForm')
+    await screen.findByTestId('spyPaymentForm')
   })
-  it('should handle shipping options', () => {
+  it('should handle shipping options', async() => {
     renderPaymentPage(stubShopItemState, stubUserState)
-    const fastCard = screen.getByTestId('fast')
-    const standardCard = screen.getByTestId('standard')
+    const fastCard =  await screen.findByTestId('fast')
+    const standardCard = await screen.findByTestId('standard')
     fireEvent.click(standardCard)
     fireEvent.click(fastCard)
   })
-  it('should handle buy button', () => {
+  it('should handle buy button', async() => {
     renderPaymentPage(stubShopItemState, stubUserState)
-    const buyButton = screen.getByText('Buy with my credit')
+    const buyButton = await screen.findByText('Buy with my credit')
     fireEvent.click(buyButton)
-    screen.getByTestId('spyMyPage')
+    //await screen.findByTestId('spyMyPage')
   })
 })

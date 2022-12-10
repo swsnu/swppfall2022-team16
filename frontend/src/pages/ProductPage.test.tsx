@@ -36,10 +36,12 @@ const renderProductPage = (shopItemState: ShopItemState, reviewState: ReviewStat
 }
 
 describe('<ProductPage />', () => {
-  it('should render without error', () => {
+  it('should render without error', async () => {
     renderProductPage(stubShopItemState, stubReviewState, stubUserState)
+    await screen.findByText('name')
   })
-  it('should handle the case when there are no reviews', () => {
+  it('should handle the case when there are no reviews', async () => {
     renderProductPage(stubShopItemState, stubNoReviewState, stubUserState)
+    await screen.findByText('name')
   })
 })

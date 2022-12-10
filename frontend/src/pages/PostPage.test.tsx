@@ -44,37 +44,38 @@ const renderPostPage = () => {
 }
 
 describe('<PostPage />', () => {
-  it('should render without errors', () => {
+  it('should render without errors', async() => {
     mockDispatch.mockResolvedValue({
       type: 'review/fetchReview/fulfilled',
       payload: stubReviewState.reviews[0]
     })
     renderPostPage()
 
-    expect(screen.getAllByTestId('spyTopBar')).toHaveLength(1)
+    expect(await screen.findAllByTestId('spyTopBar')).toHaveLength(1)
     expect(screen.getAllByTestId('spyPost')).toHaveLength(1)
     expect(screen.getAllByTestId('spyPostComments')).toHaveLength(1)
     expect(screen.getAllByTestId('spyFooter')).toHaveLength(1)
   })
-  it('should handle Purchase the look button', () => {
+  it('should handle Purchase the look button', async () => {
     mockDispatch.mockResolvedValue({
       type: 'review/fetchReview/fulfilled',
       payload: stubReviewState.reviews[0]
     })
     renderPostPage()
-
-    fireEvent.click(screen.getByText('Purchase the Look'))
+    
+    const ptlbutton = await screen.findByText('Purchase the Look')
+    fireEvent.click(ptlbutton)
     // expect(mockNavigate).toHaveBeenCalled()
   })
-  it('should handle posting new comment', () => {
+  it('should handle posting new comment', async () => {
     mockDispatch.mockResolvedValue({
       type: 'review/fetchReview/fulfilled',
       payload: stubReviewState.reviews[0]
     })
     renderPostPage()
 
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'comment' } })
-    fireEvent.click(screen.getByText('Comment'))
+    fireEvent.change(await screen.findByRole('textbox'), { target: { value: 'comment' } })
+    fireEvent.click(await screen.findByText('Comment'))
   })
   it('should handle failing to get fetching', () => {
     mockDispatch.mockResolvedValueOnce({})

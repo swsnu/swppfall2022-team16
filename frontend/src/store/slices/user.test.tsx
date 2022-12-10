@@ -1,7 +1,7 @@
 import { AnyAction, configureStore, EnhancedStore, ThunkMiddleware } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { getMockStore, stubUserState } from '../../test-utils/mock'
-import reducer, { fetchUsers, login, signout, signup, UserState } from './user'
+import { getMockStore, stubLoginUserState, stubUserState } from '../../test-utils/mock'
+import reducer, { fetchUsers, login, signout, signup, userActions, UserState } from './user'
 
 describe('user reducer', () => {
   let store: EnhancedStore<{ user: UserState }, AnyAction, [ThunkMiddleware<{ user: UserState }, AnyAction, undefined>]>
@@ -54,5 +54,9 @@ describe('user reducer', () => {
   it('should handle signout', async () => {
     axios.get = jest.fn().mockResolvedValueOnce({})
     await store.dispatch(signout())
+  })
+  it('should handle likePost', async () => {
+    reducer(stubUserState, userActions.likePost({ liked_posts: '1,2' }))
+    reducer(stubLoginUserState, userActions.likePost({ liked_posts: '1,2' }))
   })
 })

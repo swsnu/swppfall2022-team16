@@ -18,7 +18,7 @@ describe('<Review />', () => {
   it('should render without errors', async () => {
     mockDispatch.mockResolvedValueOnce({})
     renderWithProviders(<Review review={stubReviewState.reviews[0]} />)
-    const reviewImage = screen.getByAltText('review image')
+    const reviewImage = await screen.findByAltText('review image')
     expect(mockNavigate).not.toHaveBeenCalled()
     fireEvent.mouseOver(reviewImage)
     fireEvent.mouseOut(reviewImage)

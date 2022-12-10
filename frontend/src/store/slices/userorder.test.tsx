@@ -14,6 +14,7 @@ describe('userorder reducer', () => {
   })
   it('should use correct initial state', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual({
+      cart: [],
       userOrders: []
     })
   })

@@ -16,13 +16,13 @@ jest.mock("react-redux", () => ({
 
 
 describe("<Purchased />", () => {
-    it("should render without errors", () => {
+    it("should render without errors", async() => {
         renderWithProviders(
             <Purchased order = {{
             id: 1,
             user_id: 1,
             item_id: 1,
-            status: "shipping",
+            status: 0,
             color: 'red',
             size: 'S',
             ordered_amount: 1,
@@ -30,8 +30,8 @@ describe("<Purchased />", () => {
             fast_shipping : true,
         }}/>);
 
-        screen.getByText("shipping");
-        const reviewButton = screen.getByText("Write your Review");
+        await screen.findByText("In cart");
+        const reviewButton = screen.getByRole("button");
         fireEvent.click(reviewButton);
         expect(mockNavigate).toHaveBeenCalled();
     })

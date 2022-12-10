@@ -89,7 +89,7 @@ export default function MainPage (): JSX.Element {
           <Col md={6}></Col>
           {
             filters.map(({ category, options }) => <Col key={category} md={1}>
-              <Filter key={category} category={category} options={options} handler={tagHandler}/>
+              <Filter key={category} data-testid={`tag_${category}`} category={category} options={options} handler={tagHandler}/>
             </Col>)
           }
           <Col md={1}>
@@ -115,7 +115,11 @@ export default function MainPage (): JSX.Element {
           </div>
         </Row>
         <div className ='showmore'>
-        <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+          {
+            //change 8 below to however we want
+            showMoreCount == 8 ? <></> :
+            <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+          }
         </div>
         <div className = 'spacingbetweensection'></div>
         </div>

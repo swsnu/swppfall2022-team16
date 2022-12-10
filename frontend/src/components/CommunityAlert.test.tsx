@@ -21,6 +21,6 @@ describe("<Community Alert />", () => {
         const stackLink = screen.getByText("team16 commented on your post");
         fireEvent.click(stackLink);
         expect(mockNavigate).toHaveBeenCalled();
-        screen.getByText("0 hours ago");
+        screen.getByText("0 days ago");
         })
 });
