@@ -46,10 +46,10 @@ export default function MyPage (): JSX.Element {
           <Row>
             <Col>
               <Card>
-                <Card.Img variant="top" src="../mypagebackground.jpg" />
+                <Card.Img variant="top" src="../mypagebackground.jpg" style={{ width: 'auto', height: '24rem', objectFit: 'cover' }} />
                 <Card.ImgOverlay style={{ textAlign: 'center' }}>
                   <Image className = "profilepicture" src = '../mypageprofile.png' height = {150} width = {150} style={{ alignSelf: 'center', marginTop: '72px' }}></Image>
-                  <Card.Title style={{ fontSize: '30px', color: 'white' }}>{findAuthorName(Number(id))}</Card.Title>
+                  <Card.Title style={{ fontSize: '30px', color: 'black' }}>{findAuthorName(Number(id))}</Card.Title>
                 </Card.ImgOverlay>
               </Card>
               <h1 className="Header-row  Header">Purchased</h1>
