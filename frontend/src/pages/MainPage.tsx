@@ -92,7 +92,7 @@ export default function MainPage (): JSX.Element {
             </Col>)
           }
           <Col md={1}>
-            <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text: '', tags })) }}>
+            <Button data-testid='apply-filter' style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text: '', tags })) }}>
               <AiOutlineFilter />
             </Button>
           </Col>
@@ -119,7 +119,7 @@ export default function MainPage (): JSX.Element {
             // change 8 below to however we want
             showMoreCount === 8
               ? <></>
-              : <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
+              : <Button data-testid='show-more' variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
           }
         </div>
         <div className = 'spacingbetweensection'></div>
