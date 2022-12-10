@@ -32,12 +32,12 @@ export default function SearchPage (): JSX.Element {
     }
     fetchRequired().catch(() => {})
   }, [dispatch])
-  
+
   if (loaded) {
-    const showMoreHandler = ()=>{
+    const showMoreHandler = (): void => {
       setShowMoreCount(showMoreCount + 4)
     }
-    const tagHandler = (remove: string, add: string) => {
+    const tagHandler = (remove: string, add: string): void => {
       console.log('Remove:' + remove)
       console.log('Add:' + add)
       setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
@@ -71,7 +71,7 @@ export default function SearchPage (): JSX.Element {
       <Container>
         <Row className="Header-row">
           <Col>
-            <h1 className="searchresult" style={{ color: 'deeppink' }}>Search result for '{text}'</h1>
+            <h1 className="searchresult" style={{ color: 'deeppink' }}>Search result for &apos;{text}&apos;</h1>
           </Col>
         </Row>
         <Row className="Header-row">
@@ -91,18 +91,19 @@ export default function SearchPage (): JSX.Element {
           </Col>
         </Row>
         <Row md={4}>
-          { showMoreCount == 4 ?
-            shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
+          { showMoreCount === 4
+            ? shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
               <ShopItem shopItem={shopItem} />
               <br/>
-            </Col>).slice(0,4) : shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
+            </Col>).slice(0, 4)
+            : shopItemState.top_results?.map((shopItem) => <Col key={shopItem.id}>
               <ShopItem shopItem={shopItem} />
               <br/>
-            </Col>).slice(0,showMoreCount)
+            </Col>).slice(0, showMoreCount)
           }
         </Row>
         <div className ='showmore'>
-        <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+        <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
         </div>
         <Row className="Header-row">
           <Col>

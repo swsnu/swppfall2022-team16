@@ -34,7 +34,7 @@ export default function MyPage (): JSX.Element {
   }, [dispatch])
 
   if (loaded) {
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 

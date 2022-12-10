@@ -26,10 +26,12 @@ module.exports = {
     '**/mock.tsx',
     'reportWebVitals.ts',
     '**/*.test.tsx',
-    '**/*.tsx',
-    '**/*.ts',
     'Constants.ts'
   ],
   rules: {
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off'
   }
 }

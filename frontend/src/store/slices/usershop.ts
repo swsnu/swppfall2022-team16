@@ -46,5 +46,5 @@ export const userShopSlice = createSlice({
 })
 
 export const userShopActions = userShopSlice.actions
-export const selectUserShop = (state : RootState) => state.usershop
+export const selectUserShop = (state: RootState): UserShopState => state.usershop
 export default userShopSlice.reducer

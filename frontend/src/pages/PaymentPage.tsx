@@ -42,17 +42,17 @@ export default function PaymentPage (): JSX.Element {
   if (loaded) {
     const items = userOrderState.cart
     let subtotal = 0
-    for (let i =0; i< items.length; i++){
+    for (let i = 0; i < items.length; i++) {
       subtotal = subtotal + (items[i].ordered_amount * items[i].single_price)
     }
     const item = shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))
     // for each item, itemDetail exists. Retrieve shopitemdetail through item id to get color and size of the product
     const itemDetail = shopItemDetailState.shopitem_details.find((shopitemdetail) => shopitemdetail.main_item === Number(id))
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
-    const buyWithMyCreditHandler = async () => {
+    const buyWithMyCreditHandler = async (): Promise<void> => {
       console.log(`shippingOption: ${shippingOption}`)
       const result = await dispatch(purchaseWithCredit(shippingOption === 'Fast' ? 10 : 5))
       if (result.type === `${purchaseWithCredit.typePrefix}/fulfilled`) {
@@ -173,8 +173,8 @@ export default function PaymentPage (): JSX.Element {
                 <hr></hr>
                 <h3>Total Receipt</h3>
                 <div className = 'spacing2'></div>
-                <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {userShopState ? (userShopState.usershop ? userShopState.usershop.credit : 0) : 0}/>
-                <Button variant = 'grad' onClick={() => buyWithMyCreditHandler()}>Buy with my credit</Button>
+                <PaymentForm shippingFee={shippingOption === 'Fast' ? 10 : 5} totalCost = {subtotal} credit = {(userShopState.usershop != null) ? userShopState.usershop.credit : 0}/>
+                <Button variant = 'grad' onClick={() => { buyWithMyCreditHandler() }}>Buy with my credit</Button>
               </Stack>
           </Col>
         </Row>

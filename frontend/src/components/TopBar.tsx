@@ -10,7 +10,6 @@ import { AppDispatch } from '../store'
 import '../css/mainpage.css'
 import { fetchCart, selectUserOrder } from '../store/slices/userorder'
 
-
 export default function TopBar (): JSX.Element {
   const [loggedIn, setloggedIn] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -18,7 +17,7 @@ export default function TopBar (): JSX.Element {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
-  let alertMessage = 'Invalid search keyword'
+  const alertMessage = 'Invalid search keyword'
 
   useEffect(() => {
     if (userState.currentLoggedIn != null) {
@@ -26,20 +25,18 @@ export default function TopBar (): JSX.Element {
     } else setloggedIn(false)
   })
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchCart())
     }
     fetchRequired().catch(() => {})
   }, [dispatch, loggedIn])
 
-  
-
-  let items = userOrderState.cart
+  const items = userOrderState.cart
   const userId = userState.currentLoggedIn?.id
   const path = '/user/' + String(userId)
   const userName = userState.currentLoggedIn?.nickname
-  const loggingout = async () => {
+  const loggingout = async (): Promise<void> => {
     setloggedIn(false)
     const fetchRequired = async (): Promise<void> => {
       await dispatch(signout())
@@ -96,10 +93,10 @@ export default function TopBar (): JSX.Element {
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
               onKeyDown={e => {
-                if (e.key === 'Enter' && (searchText != '.' && searchText != '..')) {
+                if (e.key === 'Enter' && (searchText !== '.' && searchText !== '..')) {
                   navigate(`/search/${searchText}`)
-                }else if (e.key === 'Enter' && (searchText == '.' || searchText == '..')) {
-                  setSearchText(" ")
+                } else if (e.key === 'Enter' && (searchText === '.' || searchText === '..')) {
+                  setSearchText(' ')
                   return window.alert(alertMessage)
                 }
               }}

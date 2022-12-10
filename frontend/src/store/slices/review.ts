@@ -21,7 +21,7 @@ export interface ReviewInfo {
 }
 
 export interface ReviewState {
-  reviews: ReviewInfo[] 
+  reviews: ReviewInfo[]
   current_review: ReviewInfo | null
   trending_posts: ReviewInfo[]
 }
@@ -77,10 +77,10 @@ export const deleteReview = createAsyncThunk(
   })
 
 export const likePost = createAsyncThunk(
-    'review/likePost', async (post_id: number, { dispatch }) => {
-      const response = await axios.post(`/api/addlikes/${post_id}/`)
-      dispatch(reviewActions.likePost({ targetId: post_id }))
-      dispatch(userActions.likePost(response.data.liked_posts))
+  'review/likePost', async (postID: number, { dispatch }) => {
+    const response = await axios.post(`/api/addlikes/${postID}/`)
+    dispatch(reviewActions.likePost({ targetId: postID }))
+    dispatch(userActions.likePost(response.data.liked_posts))
   })
 
 export const reviewSlice = createSlice({
@@ -107,9 +107,8 @@ export const reviewSlice = createSlice({
       const review = state.reviews.find(
         (value) => { return value.id === action.payload.targetId }
       )
-      
-      if (review !== undefined)
-          review.likes++
+
+      if (review !== undefined) { review.likes++ }
     }
   },
   extraReducers: (builder) => {

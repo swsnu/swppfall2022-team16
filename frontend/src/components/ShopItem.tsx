@@ -16,15 +16,15 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
   const userState = useSelector(selectUser)
   const navigate = useNavigate()
 
-  const cutTitle = () => {
-    if (itemTitle == undefined) {
+  const cutTitle = (): string => {
+    if (itemTitle === undefined) {
       return ' '
-    }
-    else {
-      return itemTitle = itemTitle.substring(0, 23) + "..."
+    } else {
+      itemTitle = itemTitle.substring(0, 23) + '...'
+      return itemTitle
     }
   }
-  
+
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchUsers())
@@ -34,12 +34,12 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
   }, [dispatch])
 
   if (loaded) {
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
     return <div data-testid='card-with-data'>
-      <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem?.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onClick = {() => navigate(`/product/${shopItem!.id}`)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
         <Card.Img variant="top" src={shopItem?.image_url} alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
           <Card.Title bsPrefix='shopitemtitle' >{cutTitle()}</Card.Title>

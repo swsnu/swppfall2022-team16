@@ -24,7 +24,7 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
   }, [dispatch])
 
   if (loaded) {
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
