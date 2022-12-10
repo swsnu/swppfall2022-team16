@@ -18,6 +18,12 @@ jest.mock('../components/Footer', () => () => (
   <div data-testid='spyFooter'></div>
 ))
 
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch
+}))
+
 const renderSearchPage = (shopItemState: ShopItemState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/search/text']}>

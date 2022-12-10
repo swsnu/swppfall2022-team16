@@ -43,7 +43,7 @@ export default function Post (props: IProps): JSX.Element {
       if (userState.currentLoggedIn === null) { return }
 
       let alreadyLiked = false
-      console.log(userState.currentLoggedIn.liked_posts)
+      // console.log(userState.currentLoggedIn.liked_posts)
       if (userState.currentLoggedIn.liked_posts !== undefined) {
         const list = userState.currentLoggedIn.liked_posts.split(',')
         list.forEach((element) => {

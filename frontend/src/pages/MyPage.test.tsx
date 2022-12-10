@@ -6,6 +6,12 @@ import { UserOrderState } from "../store/slices/userorder"
 import { renderWithProviders, stubCommentState, stubUserOrderState, stubUserState } from "../test-utils/mock"
 import MyPage from "./MyPage"
 
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch
+}))
+
 const renderMyPage = (userOrderState: UserOrderState, commentState: CommentState, userState: UserState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/user/1']}>

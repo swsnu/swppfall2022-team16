@@ -25,6 +25,12 @@ jest.mock('../components/Footer', () => () => (
   <div data-testid='spyFooter'></div>
 ))
 
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch
+}))
+
 const renderProductPage = (shopItemState: ShopItemState, reviewState: ReviewState, userState: UserState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/product/1']}>

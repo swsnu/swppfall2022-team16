@@ -38,8 +38,8 @@ export default function SearchPage (): JSX.Element {
       setShowMoreCount(showMoreCount + 4)
     }
     const tagHandler = (remove: string, add: string): void => {
-      console.log('Remove:' + remove)
-      console.log('Add:' + add)
+      // console.log('Remove:' + remove)
+      // console.log('Add:' + add)
       setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
     }
 

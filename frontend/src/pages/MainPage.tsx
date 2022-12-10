@@ -37,8 +37,8 @@ export default function MainPage (): JSX.Element {
 
   if (loaded) {
     const tagHandler = (remove: string, add: string): void => {
-      console.log('Remove:' + remove)
-      console.log('Add:' + add)
+      // console.log('Remove:' + remove)
+      // console.log('Add:' + add)
       setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
     }
 

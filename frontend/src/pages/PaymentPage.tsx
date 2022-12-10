@@ -53,7 +53,7 @@ export default function PaymentPage (): JSX.Element {
     }
 
     const buyWithMyCreditHandler = async (): Promise<void> => {
-      console.log(`shippingOption: ${shippingOption}`)
+      // console.log(`shippingOption: ${shippingOption}`)
       const result = await dispatch(purchaseWithCredit(shippingOption === 'Fast' ? 10 : 5))
       if (result.type === `${purchaseWithCredit.typePrefix}/fulfilled`) {
         navigate('/user/8')

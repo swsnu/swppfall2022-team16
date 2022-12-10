@@ -59,7 +59,7 @@ export const fetchTrendingPosts = createAsyncThunk(
 export const postReview = createAsyncThunk(
   'review/postReview', async (
     review: FormData, { dispatch }) => {
-    console.log(review)
+    // console.log(review)
     const response = await axios.post('/api/review/', review)
     return response.data
   })

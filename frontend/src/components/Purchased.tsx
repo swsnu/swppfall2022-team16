@@ -23,7 +23,7 @@ export default function Purchased (props: { order: UserOrderInfo }): JSX.Element
 
   if (loaded) {
     const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.order.item_id)
-    console.log(props.order.item_id)
+    // console.log(props.order.item_id)
 
     const statusString = ['In cart', 'Processing', 'In Delivery', 'Delivery Complete']
 
