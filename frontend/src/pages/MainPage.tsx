@@ -24,11 +24,10 @@ export default function MainPage (): JSX.Element {
   const [showMoreCount, setShowMoreCount] = useState(4)
   const reviewState = useSelector(selectReview)
 
-
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchMainItems())
-      await dispatch(fetchTopResult({text: '', tags: []}))
+      await dispatch(fetchTopResult({ text: '', tags: [] }))
       await dispatch(fetchUsers())
       await dispatch(fetchTrendingPosts())
       setLoaded(true)
@@ -38,8 +37,8 @@ export default function MainPage (): JSX.Element {
 
   if (loaded) {
     const tagHandler = (remove: string, add: string): void => {
-      console.log('Remove:' + remove)
-      console.log('Add:' + add)
+      // console.log('Remove:' + remove)
+      // console.log('Add:' + add)
       setTags(tags.filter((val) => val !== remove.toLowerCase()).concat(add.toLowerCase()).filter((val) => val !== ''))
     }
 
@@ -93,7 +92,7 @@ export default function MainPage (): JSX.Element {
             </Col>)
           }
           <Col md={1}>
-            <Button style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text: '', tags })) }}>
+            <Button data-testid='apply-filter' style={{ backgroundColor: 'transparent', color: 'black', borderColor: 'black' }} onClick={() => { dispatch(fetchTopResult({ text: '', tags })) }}>
               <AiOutlineFilter />
             </Button>
           </Col>
@@ -102,23 +101,25 @@ export default function MainPage (): JSX.Element {
           <div className = 'spacingbetweenword'></div>
           <div className = 'shopitems'>
           <Row md={4}>
-            {  showMoreCount == 4 ? 
-            (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
+            { showMoreCount === 4
+              ? (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
               <ShopItem key={shopItem.id} shopItem={shopItem} />
               <br/>
-            </Col>).slice(0,4)) : (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
+            </Col>).slice(0, 4))
+              : (shopItemState.top_results.map((shopItem) => <Col key={shopItem.id}>
               <ShopItem key={shopItem.id} shopItem={shopItem} />
               <br/>
-            </Col>).slice(0,showMoreCount))  
+            </Col>).slice(0, showMoreCount))
           }
           </Row>
           </div>
         </Row>
         <div className ='showmore'>
           {
-            //change 8 below to however we want
-            showMoreCount == 8 ? <></> :
-            <Button variant = 'showmore' onClick={()=> {showMoreHandler()}}>Show More</Button>
+            // change 8 below to however we want
+            showMoreCount === 8
+              ? <></>
+              : <Button data-testid='show-more' variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
           }
         </div>
         <div className = 'spacingbetweensection'></div>

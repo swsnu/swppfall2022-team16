@@ -12,7 +12,7 @@ export interface UserOrderInfo {
   id: number
   user_id: number
   item_id: number
-  single_price: number 
+  single_price: number
   status: number
   color: string
   size: string
@@ -68,7 +68,7 @@ export const deleteFromCart = createAsyncThunk(
 export const purchaseWithCredit = createAsyncThunk(
   'userorder/purchaseWithCredit',
   async (shippingFee: number) => {
-    console.log(`shippingFee: ${shippingFee}`)
+    // console.log(`shippingFee: ${shippingFee}`)
     const response = await axios.get(`/api/purchase/${shippingFee}`)
     return response.data
   }

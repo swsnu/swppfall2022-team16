@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Form, Stack } from 'react-bootstrap'
@@ -114,18 +114,20 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
         </Form>
         <div className = 'spacingbet'></div>
         <Stack direction = 'horizontal' gap = {1}>
-        <Button variant='cart' onClick = { () => { dispatch(addToCart({
-          id: 0,
-          user_id: userState.currentLoggedIn!.id,
-          item_id: props.itemID!,
-          single_price: props.price!,
-          status: 0,
-          color: color,
-          size: size,
-          ordered_amount: Number(quantity),
-          purchased_at: new Date(),
-          fast_shipping: true
-        })) } }>Add to Cart</Button>
+        <Button variant='cart' onClick = { () => {
+          dispatch(addToCart({
+            id: 0,
+            user_id: userState.currentLoggedIn!.id,
+            item_id: props.itemID!,
+            single_price: props.price!,
+            status: 0,
+            color,
+            size,
+            ordered_amount: Number(quantity),
+            purchased_at: new Date(),
+            fast_shipping: true
+          }))
+        } }>Add to Cart</Button>
         <Button variant='grad' onClick = { () => {
           dispatch(addToCart({
             id: 0,
@@ -133,8 +135,8 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             item_id: props.itemID!,
             single_price: props.price!,
             status: 0,
-            color: color,
-            size: size,
+            color,
+            size,
             ordered_amount: Number(quantity),
             purchased_at: new Date(),
             fast_shipping: true

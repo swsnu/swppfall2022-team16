@@ -14,7 +14,7 @@ export default function Purchased (props: { order: UserOrderInfo }): JSX.Element
   const shopItemState = useSelector(selectShopItem)
 
   useEffect(() => {
-    const fetchRequired = async () => {
+    const fetchRequired = async (): Promise<void> => {
       await dispatch(fetchMainItems())
       setLoaded(true)
     }
@@ -23,15 +23,15 @@ export default function Purchased (props: { order: UserOrderInfo }): JSX.Element
 
   if (loaded) {
     const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.order.item_id)
-    console.log(props.order.item_id)
-  
+    // console.log(props.order.item_id)
+
     const statusString = ['In cart', 'Processing', 'In Delivery', 'Delivery Complete']
-  
+
     return (
       <div className = "Purchases">
         <Stack direction = "horizontal" gap ={3}>
           <h5>{item?.name}</h5>
-          <h3>{'$' + item?.price}</h3>
+          <h3>{`$${item?.price}`}</h3>
           <p>{statusString[props.order.status]}</p>
           {/* <h3>{props.purchaseDate}</h3> */}
         </Stack>

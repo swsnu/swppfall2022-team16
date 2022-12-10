@@ -11,6 +11,12 @@ jest.mock('../components/PaymentForm', () => () => (
   <div data-testid='spyPaymentForm'></div>
 ))
 
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch
+}))
+
 const renderPaymentPage = (shopItemState: ShopItemState, userState: UserState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/payment/1']}>
@@ -36,6 +42,9 @@ describe('<PaymentPage />', () => {
     fireEvent.click(fastCard)
   })
   it('should handle buy button', async() => {
+    mockDispatch.mockResolvedValue({
+      type: 'userorder/purchaseWithCredit/fulfilled'
+    })
     renderPaymentPage(stubShopItemState, stubUserState)
     const buyButton = await screen.findByText('Buy with my credit')
     fireEvent.click(buyButton)

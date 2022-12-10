@@ -35,31 +35,28 @@ export default function Post (props: IProps): JSX.Element {
   if (loaded) {
     const review = reviewState.reviews.find((review) => review.id === props.id)
 
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
-    
-    const likeButtonHandler = async (): Promise<void> => {
-      if (userState.currentLoggedIn === null)
-        return
 
-      var alreadyLiked = false;
-      console.log(userState.currentLoggedIn.liked_posts)
+    const likeButtonHandler = async (): Promise<void> => {
+      if (userState.currentLoggedIn === null) { return }
+
+      let alreadyLiked = false
+      // console.log(userState.currentLoggedIn.liked_posts)
       if (userState.currentLoggedIn.liked_posts !== undefined) {
-        var list = userState.currentLoggedIn.liked_posts.split(',')
-        for (var element in list){
-          var liked = parseInt(element)
-          if (liked == review!.id){
+        const list = userState.currentLoggedIn.liked_posts.split(',')
+        list.forEach((element) => {
+          const liked = parseInt(element)
+          if (liked === review!.id) {
             alreadyLiked = true
-            break
           }
-        }
+        })
       }
 
       if (alreadyLiked) {
-        alert("You already liked the post.")
-      }
-      else await dispatch(likePost(review!.id))
+        alert('You already liked the post.')
+      } else await dispatch(likePost(review!.id))
     }
     // console.debug(props.id)
     // console.debug(itemState.shopitems)
@@ -72,10 +69,10 @@ export default function Post (props: IProps): JSX.Element {
           <Stack direction = 'vertical'>
             <Card.Text as= "h5" data-testid = "rating">
               {
-                Array.from({ length: (review ? review.rating :  0) }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
+                Array.from({ length: ((review != null) ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.StarFill key={key} />)
               }
               {
-                Array.from({ length: 5 - (review ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
+                Array.from({ length: 5 - ((review != null) ? review.rating : 0) }, (_, i) => i).map((key) => <Icon.Star key={key} />)
               }
             </Card.Text>
             <Card.Text as= "h5" data-testid = "author">
@@ -96,5 +93,4 @@ export default function Post (props: IProps): JSX.Element {
   } else {
     return <div></div>
   }
-
 }

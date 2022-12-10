@@ -36,7 +36,7 @@ export default function ReviewPage (): JSX.Element {
         </Row>
         <Row>
           <Col>
-            <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))!} />
+            <ShopItem shopItem={shopItemState.shopitems.find((shopitem) => shopitem.id === Number(id))} />
           </Col>
           <Col>
             <ReviewForm shopItemId = {Number(id)}/>

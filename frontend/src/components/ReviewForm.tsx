@@ -27,8 +27,8 @@ export default function ReviewForm (props: IProps): JSX.Element {
   // const reviewState = useSelector(selectReview)
 
   const postReviewButtonHandler = async (): Promise<void> => {
-    console.log(title, description, props.shopItemId, rating)
-    console.log(selectedImage)
+    // console.log(title, description, props.shopItemId, rating)
+    // console.log(selectedImage)
     const formData = new FormData()
     formData.append('title', title)
     formData.append('content', description)

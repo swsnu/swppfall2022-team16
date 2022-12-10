@@ -23,8 +23,6 @@ export default function OrderForm (props: IProps): JSX.Element {
   const shopItemState = useSelector(selectShopItem)
   const userState = useSelector(selectUser)
   const userOrderState = useSelector(selectUserOrder)
-  let items = userOrderState.cart
-
 
   useEffect(() => {
     const fetchRequired = async (): Promise<void> => {
@@ -36,12 +34,10 @@ export default function OrderForm (props: IProps): JSX.Element {
     fetchRequired().catch(() => {})
   }, [dispatch])
 
-
-
   if (loaded) {
     const item = shopItemState.shopitems.find((shopitem) => shopitem.id === props.itemID)!
 
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
@@ -95,7 +91,7 @@ export default function OrderForm (props: IProps): JSX.Element {
           </Table>
           <div className = 'deleteitem'>
             <Button variant = 'gradient' onClick = {() => {
-              dispatch(deleteFromCart(props.orderID))
+              dispatch(deleteFromCart(props.orderID)).catch(() => {})
             }}>
             <img alt = 'trashbin' src = '/trash.png' width = '20' height = '20' className='trash'></img>
             </Button>

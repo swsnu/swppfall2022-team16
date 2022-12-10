@@ -5,6 +5,12 @@ import { ShopItemState } from "../store/slices/shopitem"
 import { renderWithProviders, stubReviewState, stubShopItemState } from "../test-utils/mock"
 import CommunityPage from "./CommunityPage"
 
+const mockDispatch = jest.fn()
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch
+}))
+
 const renderCommunityPage = (shopItemState: ShopItemState, reviewState: ReviewState) => {
   renderWithProviders(
     <MemoryRouter initialEntries={['/community']}>

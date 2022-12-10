@@ -35,7 +35,7 @@ export default function ProductPage (): JSX.Element {
     const item = shopItemState.current_shopitem
     const reviews = reviewState.reviews.filter((review) => review.review_item === Number(id))
 
-    const findAuthorName = (ID: number | undefined) => {
+    const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
@@ -44,7 +44,7 @@ export default function ProductPage (): JSX.Element {
       <TopBar />
       <Container>
         <Row className="Header-row">
-          <Col style = {{paddingTop : '30px'}}>
+          <Col style = {{ paddingTop: '30px' }}>
               <Image rounded style={{ width: '24rem', height: '32rem' }} src={item?.image_url} />
           </Col>
           <Col style={{ paddingTop: '30px' }}>

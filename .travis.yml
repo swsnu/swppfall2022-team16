@@ -24,7 +24,7 @@ jobs:
         - gem install coveralls-lcov
       script:
         - ./node_modules/.bin/eslint src
-        - yarn test --coverage --watchAll=false
+        - yarn test -u --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../backend
         - pylint bridgeUS/views.py bridgeUS/models.py --load-plugins pylint_django         

@@ -1,7 +1,7 @@
 import { AnyAction, configureStore, EnhancedStore, ThunkMiddleware } from "@reduxjs/toolkit"
 import axios from "axios"
 import { getMockStore, stubCommentState, stubNoReviewState, stubReviewState, stubShopItemDetailState, stubShopItemState, stubUserOrderState } from "../../test-utils/mock"
-import reducer, { fetchOrders, UserOrderState } from "./userorder"
+import reducer, { addToCart, deleteFromCart, fetchCart, fetchOrders, purchaseWithCredit, UserOrderState } from "./userorder"
 
 describe('userorder reducer', () => {
   let store: EnhancedStore<
@@ -24,5 +24,33 @@ describe('userorder reducer', () => {
       data: userOrders
     })
     await store.dispatch(fetchOrders())
+  })
+  it('should handle fetchCart', async () => {
+    const userOrders = stubUserOrderState
+    axios.get = jest.fn().mockResolvedValueOnce({
+      data: userOrders
+    })
+    await store.dispatch(fetchCart())
+  })
+  it('should handle addToCart', async () => {
+    const userOrders = stubUserOrderState
+    axios.post = jest.fn().mockResolvedValueOnce({
+      data: userOrders
+    })
+    await store.dispatch(addToCart(userOrders.userOrders[0]))
+  })
+  it('should handle deleteFromCart', async () => {
+    const userOrders = stubUserOrderState
+    axios.delete = jest.fn().mockResolvedValueOnce({
+      data: userOrders
+    })
+    await store.dispatch(deleteFromCart(2))
+  })
+  it('should handle purchaseWithCredit', async () => {
+    const userOrders = stubUserOrderState
+    axios.get = jest.fn().mockResolvedValueOnce({
+      data: userOrders
+    })
+    await store.dispatch(purchaseWithCredit(5))
   })
 })
