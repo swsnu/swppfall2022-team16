@@ -64,9 +64,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    likePost: (state, action: PayloadAction<{ liked_posts: string }>) => {
+    likePost: (state, action: PayloadAction<User>) => {
       if (state.currentLoggedIn !== null) {
-        state.currentLoggedIn.liked_posts = action.payload.liked_posts
+        state.currentLoggedIn = action.payload
       }
     }
   },
@@ -90,6 +90,9 @@ export const userSlice = createSlice({
     })
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload
+      if (state.currentLoggedIn !== null) {
+        state.currentLoggedIn = state.users.find((user) => user.id === state.currentLoggedIn!.id) ?? null
+      }
     })
     builder.addCase(signout.fulfilled, (state, action) => {
       state.currentLoggedIn = null

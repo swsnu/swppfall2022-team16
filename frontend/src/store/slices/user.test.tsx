@@ -56,7 +56,7 @@ describe('user reducer', () => {
     await store.dispatch(signout())
   })
   it('should handle likePost', async () => {
-    reducer(stubUserState, userActions.likePost({ liked_posts: '1,2' }))
-    reducer(stubLoginUserState, userActions.likePost({ liked_posts: '1,2' }))
+    reducer(stubUserState, userActions.likePost({ ...stubUserState.users[0], liked_posts: '1,2' }))
+    reducer(stubLoginUserState, userActions.likePost({ ...stubLoginUserState.currentLoggedIn!, liked_posts: '1,2' }))
   })
 })

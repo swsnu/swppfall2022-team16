@@ -80,7 +80,7 @@ export const likePost = createAsyncThunk(
   'review/likePost', async (postID: number, { dispatch }) => {
     const response = await axios.post(`/api/addlikes/${postID}/`)
     dispatch(reviewActions.likePost({ targetId: postID }))
-    dispatch(userActions.likePost(response.data.liked_posts))
+    dispatch(userActions.likePost(response.data))
   })
 
 export const reviewSlice = createSlice({

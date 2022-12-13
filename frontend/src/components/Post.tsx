@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import * as Icon from 'react-bootstrap-icons'
 import { AppDispatch } from '../store'
 import { fetchReviews, likePost, selectReview } from '../store/slices/review'
-import { AiFillLike } from 'react-icons/ai'
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
 
@@ -39,20 +39,26 @@ export default function Post (props: IProps): JSX.Element {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
-    const likeButtonHandler = async (): Promise<void> => {
-      if (userState.currentLoggedIn === null) { return }
+    const alreadyLiked = userState.currentLoggedIn?.liked_posts?.split(',')?.includes(review!.id.toString()) ?? true
 
-      let alreadyLiked = false
-      // console.log(userState.currentLoggedIn.liked_posts)
-      if (userState.currentLoggedIn.liked_posts !== undefined) {
-        const list = userState.currentLoggedIn.liked_posts.split(',')
-        list.forEach((element) => {
-          const liked = parseInt(element)
-          if (liked === review!.id) {
-            alreadyLiked = true
-          }
-        })
+    const likeButtonHandler = async (): Promise<void> => {
+      if (userState.currentLoggedIn === null) {
+        window.alert('Guest can\'t give likes')
+        return
       }
+
+      // let alreadyLiked = false
+      // // console.log(userState.currentLoggedIn.liked_posts)
+      // if (userState.currentLoggedIn.liked_posts !== undefined) {
+      //   const list = userState.currentLoggedIn.liked_posts.split(',')
+      //   list.forEach((element) => {
+      //     const liked = parseInt(element)
+      //     if (liked === review!.id) {
+      //       alreadyLiked = true
+      //     }
+      //   })
+      //   console.log(list)
+      // }
 
       if (alreadyLiked) {
         alert('You already liked the post.')
@@ -80,10 +86,13 @@ export default function Post (props: IProps): JSX.Element {
             </Card.Text>
             </Stack>
             <Stack direction = "horizontal">
-            <Button style={{ verticalAlign: 'middle' }} variant = "default" onClick={(e) => {
-              e.stopPropagation()
-              likeButtonHandler()
-            }}><AiFillLike/></Button>
+              <Button style={{ verticalAlign: 'middle' }} variant = "default" onClick={(e) => {
+                e.stopPropagation()
+                likeButtonHandler()
+              }}>
+                {
+                  alreadyLiked ? <AiFillLike/> : <AiOutlineLike/>
+                }</Button>
               {review?.likes}
             </Stack>
           </Stack>
