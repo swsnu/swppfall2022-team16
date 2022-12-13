@@ -102,9 +102,15 @@ export default function SearchPage (): JSX.Element {
             </Col>).slice(0, showMoreCount)
           }
         </Row>
-        <div className ='showmore'>
-        <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
-        </div>
+        {
+          shopItemState.top_results?.length > 0 
+          ? <div className ='showmore'>
+            <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
+            </div>
+            : <div>
+              <h1 className="Header">There is no result.</h1>  
+              </div>
+        }
         <Row className="Header-row">
           <Col>
             <h1 className="Header">Recommendations</h1>
