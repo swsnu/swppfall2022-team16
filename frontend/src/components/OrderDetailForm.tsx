@@ -115,36 +115,46 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
         <div className = 'spacingbet'></div>
         <Stack direction = 'horizontal' gap = {1}>
         <Button variant='cart' onClick = { () => {
-          dispatch(addToCart({
-            id: 0,
-            user_id: userState.currentLoggedIn!.id,
-            item_id: props.itemID!,
-            single_price: props.price!,
-            status: 0,
-            color,
-            size,
-            ordered_amount: Number(quantity),
-            purchased_at: new Date(),
-            fast_shipping: true
-          })).unwrap()
-            .then((result) => {
-              window.alert('Added to your cart!')
-            })
+          if (userState.currentLoggedIn === null) {
+            window.alert('Please login to buy it :)')
+            navigate('/login')
+          } else {
+            dispatch(addToCart({
+              id: 0,
+              user_id: userState.currentLoggedIn.id,
+              item_id: props.itemID!,
+              single_price: props.price!,
+              status: 0,
+              color,
+              size,
+              ordered_amount: Number(quantity),
+              purchased_at: new Date(),
+              fast_shipping: true
+            })).unwrap()
+              .then((result) => {
+                window.alert('Added to your cart!')
+              })
+          }
         } }>Add to Cart</Button>
         <Button variant='grad' onClick = { () => {
-          dispatch(addToCart({
-            id: 0,
-            user_id: userState.currentLoggedIn!.id,
-            item_id: props.itemID!,
-            single_price: props.price!,
-            status: 0,
-            color,
-            size,
-            ordered_amount: Number(quantity),
-            purchased_at: new Date(),
-            fast_shipping: true
-          }))
-          navigate('/payment')
+          if (userState.currentLoggedIn === null) {
+            window.alert('Please login to buy it :)')
+            navigate('/login')
+          } else {
+            dispatch(addToCart({
+              id: 0,
+              user_id: userState.currentLoggedIn.id,
+              item_id: props.itemID!,
+              single_price: props.price!,
+              status: 0,
+              color,
+              size,
+              ordered_amount: Number(quantity),
+              purchased_at: new Date(),
+              fast_shipping: true
+            }))
+            navigate('/payment')
+          }
         } }>Buy Now</Button>
         </Stack>
       </Card.Body>

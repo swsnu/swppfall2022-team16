@@ -102,13 +102,16 @@ export default function TopBar (): JSX.Element {
               onChange={e => setSearchText(e.target.value)}
             />
           </Form>
-          <Nav.Link href = '/payment'>
-            <Stack direction = 'horizontal'>
-              <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' ></img>
-              {loggedIn ? (items.length > 0 ? <Badge pill bg='danger'>{items.length}</Badge> : items.length) : 0}
-              <div className = 'spacing3'></div>
-              </Stack>
-            </Nav.Link>
+          {
+            loggedIn &&
+              <Nav.Link href = '/payment'>
+                <Stack direction = 'horizontal'>
+                  <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' ></img>
+                  {loggedIn ? (items.length > 0 ? <Badge pill bg='danger'>{items.length}</Badge> : items.length) : 0}
+                  <div className = 'spacing3'></div>
+                </Stack>
+              </Nav.Link>
+          }
           {
             loggedIn
               ? <Stack direction = 'horizontal'>
