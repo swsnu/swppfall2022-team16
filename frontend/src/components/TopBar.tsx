@@ -84,7 +84,15 @@ export default function TopBar (): JSX.Element {
               <div className = 'spacing3'></div>
               </Stack>
             </Nav.Link>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={(event) => {
+            if ((searchText !== '' && searchText !== '.' && searchText !== '..')) {
+              navigate(`/search/${searchText}`)
+            } else if ((searchText === '' || searchText === '.' || searchText === '..')) {
+              setSearchText('')
+              window.alert(alertMessage)
+            }
+            event.preventDefault()
+          }}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -92,14 +100,6 @@ export default function TopBar (): JSX.Element {
               aria-label="Search"
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && (searchText !== '.' && searchText !== '..')) {
-                  navigate(`/search/${searchText}`)
-                } else if (e.key === 'Enter' && (searchText === '.' || searchText === '..')) {
-                  setSearchText(' ')
-                  return window.alert(alertMessage)
-                }
-              }}
             />
           </Form>
           <Nav.Link href = '/payment'>
