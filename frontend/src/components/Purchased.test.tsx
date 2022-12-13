@@ -28,6 +28,7 @@ describe("<Purchased />", () => {
             ordered_amount: 1,
             purchased_at: new Date(),
             fast_shipping : true,
+            single_price: 100
         }}/>);
 
         await screen.findByText("In cart");

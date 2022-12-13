@@ -24,7 +24,8 @@ const stubInitialUserState: UserState = {
     nickname: 'user1',
     height: 177,
     weight: 64,
-    gender: 'M'
+    gender: 'M',
+    liked_posts: '1,2'
   }],
   currentLoggedIn: null
 }
