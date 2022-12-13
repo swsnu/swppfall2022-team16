@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Nav, Stack } from 'react-bootstrap'
+import { Badge, Button, Form, Nav, Stack } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import { selectUser, signout } from '../store/slices/user'
@@ -105,7 +105,7 @@ export default function TopBar (): JSX.Element {
           <Nav.Link href = '/payment'>
             <Stack direction = 'horizontal'>
               <img alt = 'shoppingcart' src = '/shoppingcart.png' width = '20' height = '20' className='shoppingcart' ></img>
-              {loggedIn ? items.length : 0}
+              {loggedIn ? (items.length > 0 ? <Badge pill bg='danger'>{items.length}</Badge> : items.length) : 0}
               <div className = 'spacing3'></div>
               </Stack>
             </Nav.Link>

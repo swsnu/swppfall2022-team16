@@ -126,7 +126,10 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
             ordered_amount: Number(quantity),
             purchased_at: new Date(),
             fast_shipping: true
-          }))
+          })).unwrap()
+            .then((result) => {
+              window.alert('Added to your cart!')
+            })
         } }>Add to Cart</Button>
         <Button variant='grad' onClick = { () => {
           dispatch(addToCart({

@@ -87,7 +87,7 @@ def usershop(request):
     return JsonResponse(response_dict, safe=False, status=200)
 
 @ensure_csrf_cookie
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(['GET', 'POST', 'DELETE'])
 def cart(request):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
@@ -98,7 +98,7 @@ def cart(request):
         cart_all_list = [get_userorder_json(order) for order in cart]
 
         return JsonResponse(cart_all_list, safe=False, status=200)
-    else: # 'POST'
+    elif request.method == 'POST':
         body = request.body.decode()
         userorder_user = request.user
         userorder_item = json.loads(body)['item_id']
@@ -123,6 +123,11 @@ def cart(request):
         cart_all_list = [get_userorder_json(order) for order in cart]
 
         return JsonResponse(cart_all_list, safe=False, status=200)
+    else: # 'DELETE'
+        cart = UserOrder.objects.filter(user=request.user, order_status=int(constants.OrderStatus.PRE_ORDER))
+        cart.delete()
+
+        return HttpResponse(status=204)
 
 def cartitem(request, order_id):
     if not request.user.is_authenticated:

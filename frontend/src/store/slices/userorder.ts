@@ -50,7 +50,7 @@ export const fetchCart = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   'userorder/addToCart',
   async (order: UserOrderInfo) => {
-    const response = await axios.post('/api/cart/', order)
+    const response = await axios.post<UserOrderInfo[]>('/api/cart/', order)
     return response.data
   }
 )
@@ -60,6 +60,14 @@ export const deleteFromCart = createAsyncThunk(
   async (orderID: number, { dispatch }) => {
     const response = await axios.delete(`/api/cart/${orderID}/`)
     dispatch(userOrderActions.deleteFromCart({ targetId: orderID }))
+    return response.data
+  }
+)
+
+export const clearCart = createAsyncThunk(
+  'userorder/clearCart',
+  async () => {
+    const response = await axios.delete('/api/cart/')
     return response.data
   }
 )
@@ -93,6 +101,9 @@ export const userOrderSlice = createSlice({
     })
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.cart = action.payload
+    })
+    builder.addCase(clearCart.fulfilled, (state, action) => {
+      state.cart = []
     })
   }
 })

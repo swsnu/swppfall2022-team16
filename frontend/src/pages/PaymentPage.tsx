@@ -13,7 +13,7 @@ import { fetchUsers, selectUser, User } from '../store/slices/user'
 import '../css/Footer.css'
 import '../css/paymentpage.css'
 import { selectShopItemDetail } from '../store/slices/shopitemdetail'
-import { fetchCart, purchaseWithCredit, selectUserOrder } from '../store/slices/userorder'
+import { clearCart, fetchCart, purchaseWithCredit, selectUserOrder } from '../store/slices/userorder'
 import usershop, { fetchUserShop, selectUserShop } from '../store/slices/usershop'
 
 export default function PaymentPage (): JSX.Element {
@@ -136,7 +136,7 @@ export default function PaymentPage (): JSX.Element {
                 )
               }
               <div className = 'deleteWholeCart'>
-                <Button variant = 'gradients' >
+                <Button variant = 'gradients' onClick={() => { dispatch(clearCart()) }} >
                   Delete Cart
                 </Button>
               </div>
