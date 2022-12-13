@@ -596,6 +596,36 @@ def addlikes(request, post_id):
 
     return JsonResponse(get_user_json(customUser), safe=False, status=200)
 
+@ensure_csrf_cookie
+@require_http_methods(['POST'])
+def removelike(request, post_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+
+    customUser = CustomUser.objects.get(id=request.user.id)
+
+    liked_posts_list = []
+
+    if len(customUser.liked_posts) > 0:
+        liked_posts_list = [int(num) for num in customUser.liked_posts.split(',')]
+    
+    if not liked_posts_list.__contains__(int(post_id)):
+        return HttpResponse(status=400)
+
+    liked_posts_list.remove(int(post_id))
+
+    customUser.liked_posts = ','.join(str(item) for item in liked_posts_list)
+
+    customUser.save()
+
+    post = Review.objects.get(id=post_id)
+
+    post.likes = post.likes - 1
+
+    post.save()
+
+    return JsonResponse(get_user_json(customUser), safe=False, status=200)    
+
 def get_review_json(review):
     return {'id': review.id, 'rating': review.rating, 'review_item': review.review_item.id, 'title': review.title,
             'content': review.content, 'author': review.author.id, 'likes': review.likes,

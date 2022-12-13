@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import * as Icon from 'react-bootstrap-icons'
 import { AppDispatch } from '../store'
-import { fetchReviews, likePost, selectReview } from '../store/slices/review'
+import { fetchReviews, likePost, removeLikePost, selectReview } from '../store/slices/review'
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { fetchUsers, selectUser, User } from '../store/slices/user'
 import { fetchMainItems, selectShopItem } from '../store/slices/shopitem'
@@ -61,7 +61,7 @@ export default function Post (props: IProps): JSX.Element {
       // }
 
       if (alreadyLiked) {
-        alert('You already liked the post.')
+        await dispatch(removeLikePost(review!.id))
       } else await dispatch(likePost(review!.id))
     }
     // console.debug(props.id)

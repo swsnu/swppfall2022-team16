@@ -68,6 +68,11 @@ export const userSlice = createSlice({
       if (state.currentLoggedIn !== null) {
         state.currentLoggedIn = action.payload
       }
+    },
+    removeLikePost: (state, action: PayloadAction<User>) => {
+      if (state.currentLoggedIn !== null) {
+        state.currentLoggedIn = action.payload
+      }
     }
   },
   extraReducers: (builder) => {

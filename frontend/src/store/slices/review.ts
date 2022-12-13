@@ -83,6 +83,13 @@ export const likePost = createAsyncThunk(
     dispatch(userActions.likePost(response.data))
   })
 
+export const removeLikePost = createAsyncThunk(
+  'review/removeLikePost', async (postID: number, { dispatch }) => {
+    const response = await axios.post(`/api/removelike/${postID}/`)
+    dispatch(reviewActions.removeLikePost({ targetId: postID }))
+    dispatch(userActions.removeLikePost(response.data))
+  })
+
 export const reviewSlice = createSlice({
   name: 'review',
   initialState,
@@ -109,6 +116,13 @@ export const reviewSlice = createSlice({
       )
 
       if (review !== undefined) { review.likes++ }
+    },
+    removeLikePost: (state, action: PayloadAction<{ targetId: Number }>) => {
+      const review = state.reviews.find(
+        (value) => { return value.id === action.payload.targetId }
+      )
+
+      if (review !== undefined) { review.likes-- }
     }
   },
   extraReducers: (builder) => {
