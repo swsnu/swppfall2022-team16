@@ -26,6 +26,16 @@ export default function ReviewForm (props: IProps): JSX.Element {
   const navigate = useNavigate()
   // const reviewState = useSelector(selectReview)
 
+  const handleSubmit = (event: any): void => {
+    const form = event.currentTarget
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (form.checkValidity() === true) {
+      postReviewButtonHandler()
+    }
+  }
+
   const postReviewButtonHandler = async (): Promise<void> => {
     // console.log(title, description, props.shopItemId, rating)
     // console.log(selectedImage)
@@ -43,14 +53,14 @@ export default function ReviewForm (props: IProps): JSX.Element {
 
   return (
     <div>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className='Title' controlId = "reviewForm">
         <Form.Label>Title</Form.Label>
-        <Form.Control type = "title" placeholder='Karinas outfit from LA' onChange={(e) => setTitle(e.target.value)}/>
+        <Form.Control type = "title" placeholder='Karinas outfit from LA' onChange={(e) => setTitle(e.target.value)} required/>
         </Form.Group>
         <Form.Group className='Description' controlId = "reviewForm">
         <Form.Label>Description</Form.Label>
-        <Form.Control type = "description" placeholder='This is amazing' onChange={(e) => setDescription(e.target.value)}/>
+        <Form.Control type = "description" placeholder='This is amazing' onChange={(e) => setDescription(e.target.value)} required/>
         </Form.Group>
         <Form.Group className='Upload_Photo' controlId = "reviewForm">
         <Form.Label>Upload Your Photo</Form.Label>
@@ -69,7 +79,7 @@ export default function ReviewForm (props: IProps): JSX.Element {
             }
           </span>
         </div>
-        <Button variant = "secondary" onClick={async () => await postReviewButtonHandler()}>
+        <Button variant='secondary' type='submit'>
           Post Your Review
         </Button>
       </Form>
