@@ -34,7 +34,7 @@ export default function TopBar (): JSX.Element {
 
   const items = userOrderState.cart
   const userId = userState.currentLoggedIn?.id
-  const path = '/user/' + String(userId)
+  const path = '/user'
   const userName = userState.currentLoggedIn?.nickname
   const loggingout = async (): Promise<void> => {
     setloggedIn(false)
