@@ -1,8 +1,8 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.contrib.auth import logout, authenticate, login
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.db.models import Q
 
 import json
 import pandas as pd
@@ -491,7 +491,7 @@ def search(request):
     matched_items = ShopItem.objects
 
     if text is not None and text != "":
-        matched_items = matched_items.filter(name__icontains=text)
+        matched_items = matched_items.filter(name__icontains=text) | matched_items.filter(tags__name__in=[text])
 
     if tags is not None and len(tags) > 0:
         for tag in tags:
