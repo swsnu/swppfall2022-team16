@@ -30,7 +30,7 @@ export default function Review (props: { review: ReviewInfo }): JSX.Element {
 
     return <div>
       <Card onClick = {() => navigate(`/community/${review.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-        <Card.Img alt = 'review image' variant="top" src={review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Img alt = 'review image' variant="top" src={review.image_url === '' ? '/bridgeUsLogo.png' : review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
           <Card.Title >{review.content}</Card.Title>
           <Card.Text >{findAuthorName(review.author)}</Card.Text>

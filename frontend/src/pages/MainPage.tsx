@@ -114,14 +114,20 @@ export default function MainPage (): JSX.Element {
           </Row>
           </div>
         </Row>
-        <div className ='showmore'>
-          {
-            // change 8 below to however we want
-            showMoreCount === 8
-              ? <></>
-              : <Button data-testid='show-more' variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
-          }
-        </div>
+        {
+          shopItemState.top_results?.length > 0
+            ? <div className ='showmore'>
+                {
+                  // change 8 below to however we want
+                  showMoreCount === 8
+                    ? <></>
+                    : <Button data-testid='show-more' variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
+                }
+              </div>
+            : <div>
+                <h1 className="Header">There is no result.</h1>
+              </div>
+        }
         <div className = 'spacingbetweensection'></div>
         </div>
       </Container>

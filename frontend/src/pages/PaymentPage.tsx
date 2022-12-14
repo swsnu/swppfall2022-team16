@@ -56,7 +56,7 @@ export default function PaymentPage (): JSX.Element {
       // console.log(`shippingOption: ${shippingOption}`)
       const result = await dispatch(purchaseWithCredit(shippingOption === 'Fast' ? 10 : 5))
       if (result.type === `${purchaseWithCredit.typePrefix}/fulfilled`) {
-        navigate('/user/8')
+        navigate('/user')
       } else {
         alert('Your purchase has errors. Please try again!')
       }

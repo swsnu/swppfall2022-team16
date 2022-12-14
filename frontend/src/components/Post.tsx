@@ -33,13 +33,13 @@ export default function Post (props: IProps): JSX.Element {
   }, [dispatch])
 
   if (loaded) {
-    const review = reviewState.reviews.find((review) => review.id === props.id)
+    const review = reviewState.reviews.find((review) => review.id === props.id)!
 
     const findAuthorName = (ID: number | undefined): string | undefined => {
       return userState.users.find((user: User) => { return (user.id === ID) })?.nickname
     }
 
-    const alreadyLiked = userState.currentLoggedIn?.liked_posts?.split(',')?.includes(review!.id.toString()) ?? true
+    const alreadyLiked = userState.currentLoggedIn?.liked_posts?.split(',')?.includes(review.id.toString()) ?? true
 
     const likeButtonHandler = async (): Promise<void> => {
       if (userState.currentLoggedIn === null) {
@@ -61,15 +61,15 @@ export default function Post (props: IProps): JSX.Element {
       // }
 
       if (alreadyLiked) {
-        await dispatch(removeLikePost(review!.id))
-      } else await dispatch(likePost(review!.id))
+        await dispatch(removeLikePost(review.id))
+      } else await dispatch(likePost(review.id))
     }
     // console.debug(props.id)
     // console.debug(itemState.shopitems)
 
     return <div>
       <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-        <Card.Img alt = "postimage" variant="top" src={review?.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Img alt = "postimage" variant="top" src={review.image_url === '' ? '/bridgeUsLogo.png' : review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
         <Card.Body>
           <Stack direction = 'horizontal'>
           <Stack direction = 'vertical'>

@@ -16,11 +16,11 @@ import { selectUser, User } from '../store/slices/user'
 
 export default function MyPage (): JSX.Element {
   const [loaded, setLoaded] = useState<boolean>(false)
-  const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const userOrderState = useSelector(selectUserOrder)
   const commentState = useSelector(selectComment)
   const userState = useSelector(selectUser)
+  const id = userState.currentLoggedIn?.id
 
   const time = new Date()
 
