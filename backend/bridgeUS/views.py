@@ -497,7 +497,7 @@ def search(request):
         for tag in tags:
             matched_items = matched_items.filter(tags__name__in=[tag])
 
-    ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
+    ordered_items = matched_items.order_by('-rating').distinct()[:constants.SEARCH_RESULT_COUNT]
 
     return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items], safe=False, status=200)
 
