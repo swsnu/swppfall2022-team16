@@ -14,9 +14,9 @@ jest.mock('react-redux', () => ({
 
 const renderMyPage = (userOrderState: UserOrderState, commentState: CommentState, userState: UserState) => {
   renderWithProviders(
-    <MemoryRouter initialEntries={['/user/1']}>
+    <MemoryRouter initialEntries={['/user']}>
       <Routes>
-        <Route path="/user/:id" element={<MyPage />} />
+        <Route path="/user" element={<MyPage />} />
       </Routes>
     </MemoryRouter>, { preloadedState: { userorder: userOrderState, comment: commentState, user: userState } }
   )

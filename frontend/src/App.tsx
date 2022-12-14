@@ -24,7 +24,7 @@ function App (): JSX.Element {
           <Route path="/search/:text" element={<SearchPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/user/:id" element={<MyPage />} />
+          <Route path="/user" element={<MyPage />} />
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/community/:id" element={<PostPage />} />
           <Route path="/review/:id" element={<ReviewPage />} />
