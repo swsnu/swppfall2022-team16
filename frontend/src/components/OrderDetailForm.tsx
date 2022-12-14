@@ -26,10 +26,41 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
   const dispatch = useDispatch<AppDispatch>()
   const userState = useSelector(selectUser)
   const [color, setColor] = useState<string>(props.colors[0])
-  const [quantity, setQuantity] = useState<string>('1')
-  const [size, setSize] = useState<string>('S')
+  const [quantity, setQuantity] = useState<string>('')
+  const [size, setSize] = useState<string>('')
 
   const rating = props.rating ?? 0
+
+  const clickHandler = (cart: boolean): void => {
+    if (userState.currentLoggedIn === null) {
+      window.alert('Please login to buy it :)')
+      navigate('/login')
+    } else {
+      if (quantity === '' || size === '') {
+        window.alert('Please select proper options :)')
+        return
+      }
+      dispatch(addToCart({
+        id: 0,
+        user_id: userState.currentLoggedIn.id,
+        item_id: props.itemID!,
+        single_price: props.price!,
+        status: 0,
+        color,
+        size,
+        ordered_amount: Number(quantity),
+        purchased_at: new Date(),
+        fast_shipping: true
+      })).unwrap()
+        .then((result) => {
+          if (cart) {
+            window.alert('Added to your cart!')
+          } else {
+            navigate('/payment')
+          }
+        })
+    }
+  }
 
   return (
     <>
@@ -97,7 +128,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
           <br/>
           <Stack direction = "horizontal" gap = {5}>
             <Form.Select aria-label = "Quantity" onChange={(e) => setQuantity(e.target.value)}>
-              <option>Quantity</option>
+              <option value = ''>Quantity</option>
               <option value = "1">1</option>
               <option value = "2">2</option>
               <option value = "3">3</option>
@@ -105,7 +136,7 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
               <option value = "5">5</option>
             </Form.Select>
             <Form.Select aria-label = "Size" onChange={(e) => setSize(e.target.value)}>
-              <option>Size</option>
+              <option value = ''>Size</option>
               <option value = "S">S</option>
               <option value = "M">M</option>
               <option value = "L">L</option>
@@ -114,48 +145,8 @@ export default function OrderDetailForm (props: OrderDetailProps): JSX.Element {
         </Form>
         <div className = 'spacingbet'></div>
         <Stack direction = 'horizontal' gap = {1}>
-        <Button variant='cart' onClick = { () => {
-          if (userState.currentLoggedIn === null) {
-            window.alert('Please login to buy it :)')
-            navigate('/login')
-          } else {
-            dispatch(addToCart({
-              id: 0,
-              user_id: userState.currentLoggedIn.id,
-              item_id: props.itemID!,
-              single_price: props.price!,
-              status: 0,
-              color,
-              size,
-              ordered_amount: Number(quantity),
-              purchased_at: new Date(),
-              fast_shipping: true
-            })).unwrap()
-              .then((result) => {
-                window.alert('Added to your cart!')
-              })
-          }
-        } }>Add to Cart</Button>
-        <Button variant='grad' onClick = { () => {
-          if (userState.currentLoggedIn === null) {
-            window.alert('Please login to buy it :)')
-            navigate('/login')
-          } else {
-            dispatch(addToCart({
-              id: 0,
-              user_id: userState.currentLoggedIn.id,
-              item_id: props.itemID!,
-              single_price: props.price!,
-              status: 0,
-              color,
-              size,
-              ordered_amount: Number(quantity),
-              purchased_at: new Date(),
-              fast_shipping: true
-            }))
-            navigate('/payment')
-          }
-        } }>Buy Now</Button>
+        <Button variant='cart' onClick = { () => { clickHandler(true) } }>Add to Cart</Button>
+        <Button variant='grad' onClick = { () => { clickHandler(false) } }>Buy Now</Button>
         </Stack>
       </Card.Body>
     </Card>
