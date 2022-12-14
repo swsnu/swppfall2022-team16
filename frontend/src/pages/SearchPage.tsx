@@ -24,14 +24,14 @@ export default function SearchPage (): JSX.Element {
   const [showMoreCount, setShowMoreCount] = useState(4)
 
   useEffect(() => {
+    setLoaded(false)
     const fetchRequired = async (): Promise<void> => {
-      await dispatch(fetchMainItems())
       await dispatch(fetchTopResult({ text, tags: [] }))
       await dispatch(fetchRecommendation(8))
       setLoaded(true)
     }
     fetchRequired().catch(() => {})
-  }, [dispatch])
+  }, [dispatch, text])
 
   if (loaded) {
     const showMoreHandler = (): void => {
@@ -103,12 +103,12 @@ export default function SearchPage (): JSX.Element {
           }
         </Row>
         {
-          shopItemState.top_results?.length > 0 
-          ? <div className ='showmore'>
-            <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
-            </div>
+          shopItemState.top_results?.length > 0
+            ? <div className ='showmore'>
+                <Button variant = 'showmore' onClick={() => { showMoreHandler() }}>Show More</Button>
+              </div>
             : <div>
-              <h1 className="Header">There is no result.</h1>  
+                <h1 className="Header">There is no result.</h1>
               </div>
         }
         <Row className="Header-row">
