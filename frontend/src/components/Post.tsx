@@ -69,7 +69,7 @@ export default function Post (props: IProps): JSX.Element {
 
     return <div>
       <Card onClick = {() => navigate(`/community/${props.id}`)} style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-        <Card.Img alt = "postimage" variant="top" src={review.image_url === '' ? '/bridgeUsLogo.png' : review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Img alt = "postimage" variant="top" src={review.image_url === '' ? '/bridgeUsLogo.png' : review.image_url} style={{ width: '17.9rem', height: '24rem', objectFit: review.image_url === '' ? 'contain' : 'cover' }} />
         <Card.Body>
           <Stack direction = 'horizontal'>
           <Stack direction = 'vertical'>

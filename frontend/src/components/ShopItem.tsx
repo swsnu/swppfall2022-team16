@@ -50,7 +50,7 @@ export default function ShopItem (props: { shopItem: ShopItemInfo | undefined })
   } else {
     return <div data-testid='card-with-placeholder'>
       <Card style={{ width: '18rem' }} border={hover ? 'primary' : ''} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-        <Card.Img variant="top" src='/bridgeUsLogo.png' alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'cover' }} />
+        <Card.Img variant="top" src='/bridgeUsLogo.png' alt="Product Image" style={{ width: '17.9rem', height: '24rem', objectFit: 'contain' }} />
         <Card.Body>
           <Placeholder as={Card.Title} animation='glow'>
             <Placeholder xs={6} />
