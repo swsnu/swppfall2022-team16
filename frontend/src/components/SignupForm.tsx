@@ -34,10 +34,10 @@ export default function SignupForm (): JSX.Element {
   const handleSignUpFormSubmit = (): boolean => {
     alertMessage = 'You must correct:\n\n'
 
-    const nameValid = (name.match(/^[A-Z]([a-z]+)$/) !== null)
+    const nameValid = (name.match(/^[a-zA-Z]+$/) !== null)
 
     if (!nameValid) {
-      alertMessage = alertMessage + 'Name :\nFirst letter must be Capital \n'
+      alertMessage = alertMessage + 'Name :\nLetters must be alphabets \n'
     }
 
     const emailValid = (email.match(/^[^@\s]+@[^.@\s]+.[a-zA-Z]{2,3}$/) !== null)
