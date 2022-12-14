@@ -491,13 +491,13 @@ def search(request):
     matched_items = ShopItem.objects
 
     if text is not None and text != "":
-        matched_items = matched_items.filter(name__icontains=text) | matched_items.filter(tags__name__in=[text])
+        matched_items = matched_items.filter(Q(name__icontains=text) | Q(tags__name__in=[text]))
 
     if tags is not None and len(tags) > 0:
         for tag in tags:
             matched_items = matched_items.filter(tags__name__in=[tag])
 
-    ordered_items = matched_items.order_by('-rating')[:constants.SEARCH_RESULT_COUNT]
+    ordered_items = matched_items.order_by('-rating').distinct()[:constants.SEARCH_RESULT_COUNT]
 
     return JsonResponse([get_shopitem_json(ordered_item) for ordered_item in ordered_items], safe=False, status=200)
 

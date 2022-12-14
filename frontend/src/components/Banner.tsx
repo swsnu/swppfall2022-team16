@@ -45,7 +45,7 @@ export default function Banner (): JSX.Element {
     <Carousel.Item>
       <img
         className="d-block w-100"
-        src="./thirdbanner.jpg"
+        src="./thirdbanner.png"
         alt="Third slide"
       />
       <Carousel.Caption>
