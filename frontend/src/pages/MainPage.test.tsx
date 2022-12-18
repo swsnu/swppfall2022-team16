@@ -23,7 +23,7 @@ const renderMainPage = (shopItemState: ShopItemState, reviewState: ReviewState )
   )
 }
 
-describe('<MyPage />', () => {
+describe('<MainPage />', () => {
   it('should render without error', async () => {
     renderMainPage(stubShopItemState, stubReviewState)
     await screen.findByText('Trending')

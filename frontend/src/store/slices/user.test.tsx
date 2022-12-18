@@ -15,6 +15,15 @@ describe('user reducer', () => {
     })
   })
   it('should handle fetchUsers', async () => {
+    store = getMockStore({ user: stubLoginUserState })
+    const users = stubLoginUserState.users
+    axios.get = jest.fn().mockResolvedValueOnce({
+      data: users
+    })
+    await store.dispatch(fetchUsers())
+  })
+  it('should handle fetchUsers', async () => {
+    store = getMockStore({ user: stubUserState })
     const users = stubUserState.users
     axios.get = jest.fn().mockResolvedValueOnce({
       data: users
@@ -58,5 +67,7 @@ describe('user reducer', () => {
   it('should handle likePost', async () => {
     reducer(stubUserState, userActions.likePost({ ...stubUserState.users[0], liked_posts: '1,2' }))
     reducer(stubLoginUserState, userActions.likePost({ ...stubLoginUserState.currentLoggedIn!, liked_posts: '1,2' }))
+    reducer(stubUserState, userActions.removeLikePost({ ...stubUserState.users[0], liked_posts: '1'}))
+    reducer(stubLoginUserState, userActions.removeLikePost({ ...stubLoginUserState.users[0], liked_posts: '1'}))
   })
 })
